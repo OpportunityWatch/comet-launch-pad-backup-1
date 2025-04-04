@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,6 +96,10 @@
 @layer components {
   .hero-glow {
     text-shadow: 0 0 10px rgba(0, 160, 228, 0.7), 0 0 20px rgba(0, 160, 228, 0.5);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 8px currentColor;
   }
   
   .comet-trail {

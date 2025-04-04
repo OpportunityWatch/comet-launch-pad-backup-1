@@ -42,9 +42,9 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-center md:text-left">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white tracking-tight hero-glow animate-fade-in">
-              <span className="bg-gradient-to-r from-comet-pink via-purple-500 to-comet-blue bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(0,160,228,0.8)]">Comet</span>
-              <span className="bg-gradient-to-r from-comet-blue via-yellow-400 to-comet-red bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(255,58,92,0.8)]">Copters</span>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 text-white tracking-tighter animate-fade-in">
+              <span className="inline-block bg-gradient-to-br from-fuchsia-500 via-comet-pink to-comet-blue bg-clip-text text-transparent drop-shadow-[0_4px_5px_rgba(0,160,228,0.9)]">Comet</span>
+              <span className="inline-block bg-gradient-to-br from-comet-blue via-amber-400 to-comet-red bg-clip-text text-transparent drop-shadow-[0_4px_5px_rgba(255,58,92,0.9)]">Copters</span>
             </h1>
             <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.2s' }}>
               LED Slingshot Helicopters that soar up to <span className="font-bold text-comet-blue text-glow">150+ feet</span> into the night sky like a shooting star!
