@@ -42,40 +42,40 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <Testimonial 
-            quote="My kids are absolutely obsessed with these! We take them to the park every weekend and they've become the coolest family in the neighborhood."
-            author="Sarah M."
+            quote="These fly very high at night, you can easily see the blue LED light. My daughter loves them. These are for ages 5+, but I would recommend parents help the younger ones. These are easy to operate."
+            author="Belinda"
+            rating={5}
+            location="Verified Buyer"
+          />
+          <Testimonial 
+            quote="They're incredibly fun, and I'm really impressed with how durable they are. They withstand many crashes and are easy to straighten out when bent."
+            author="Amber H."
             rating={5}
             location="San Diego, CA"
           />
           <Testimonial 
-            quote="Bought these for my nephew's birthday and now I'm the favorite uncle. The light show these things create at night is genuinely impressive."
-            author="Michael T."
+            quote="A friend had these at a get-together and all the kids went crazy for them. Great customer service! Product received shortly after ordered."
+            author="Steve M."
             rating={5}
-            location="Phoenix, AZ"
+            location="Verified Buyer"
           />
           <Testimonial 
-            quote="We used these at our community event and they were the highlight of the night. Worth every penny - they really do fly super high!"
-            author="Jessica L."
+            quote="Great family fun for our camping trip! They really do fly over 100 feet when launched correctly. The LED makes them fantastic to use at night."
+            author="Darren W."
             rating={5}
             location="Portland, OR"
           />
           <Testimonial 
-            quote="I've tried other LED helicopter toys before, but CometCopters are far more durable and create a much more impressive light display."
-            author="Robert K."
-            rating={4}
+            quote="Amazing! My nephews love these. We took them to the beach and the park and they were a huge hit wherever we went. Very cool and entertaining!"
+            author="Melissa T."
+            rating={5}
+            location="Verified Buyer"
+          />
+          <Testimonial 
+            quote="We got these for a family gathering and they were the hit of the evening. The kids (and adults) had a blast launching them into the night sky. They really do soar!"
+            author="James K."
+            rating={5}
             location="Chicago, IL"
-          />
-          <Testimonial 
-            quote="Best outdoor toy purchase I've made in years! My whole family loves them and they're surprisingly durable even after many launches."
-            author="Amanda B."
-            rating={5}
-            location="Miami, FL"
-          />
-          <Testimonial 
-            quote="Bought these for a camping trip and they created the most amazing atmosphere at night. Our friends were all asking where they could get their own!"
-            author="David W."
-            rating={5}
-            location="Austin, TX"
           />
         </div>
       </div>

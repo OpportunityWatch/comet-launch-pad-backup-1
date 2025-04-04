@@ -43,7 +43,8 @@ const Hero = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white hero-glow animate-fade-in">
-              <span className="text-comet-blue">Comet</span>Copters
+              <span className="bg-gradient-to-r from-comet-pink via-comet-blue to-comet-green bg-clip-text text-transparent">Comet</span>
+              <span className="bg-gradient-to-r from-comet-blue via-comet-yellow to-comet-red bg-clip-text text-transparent">Copters</span>
             </h1>
             <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
               LED Slingshot Helicopters that soar up to <span className="font-bold text-comet-blue">150+ feet</span> into the night sky like a shooting star!
@@ -52,7 +53,7 @@ const Hero = () => {
               Perfect for outdoor events, family gatherings, and creating spectacular light shows anywhere
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-              <Button className="bg-comet-blue hover:bg-comet-blue/80 text-white text-lg py-6 px-8">
+              <Button className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8">
                 Get Your CometCopters
               </Button>
               <Button variant="outline" className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 text-lg py-6 px-8">
@@ -66,7 +67,7 @@ const Hero = () => {
               alt="CometCopter in action" 
               className="w-full max-w-md mx-auto animate-float"
             />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-comet-blue/20 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-comet-blue/30 via-comet-pink/20 to-comet-green/20 rounded-full blur-3xl -z-10"></div>
           </div>
         </div>
         

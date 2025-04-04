@@ -39,10 +39,10 @@ const Navbar = () => {
             {mobileMenuOpen && (
               <div className="absolute top-full left-0 right-0 bg-comet-darkblue/95 backdrop-blur-md p-4 animate-fade-in border-b border-comet-blue/20">
                 <div className="flex flex-col space-y-4">
-                  <a href="#features" className="text-white hover:text-comet-blue py-2" onClick={() => setMobileMenuOpen(false)}>Features</a>
-                  <a href="#pricing" className="text-white hover:text-comet-blue py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
-                  <a href="#faq" className="text-white hover:text-comet-blue py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-                  <Button className="bg-comet-blue hover:bg-comet-blue/80 text-white w-full">
+                  <a href="#features" className="text-white hover:text-comet-pink py-2" onClick={() => setMobileMenuOpen(false)}>Features</a>
+                  <a href="#pricing" className="text-white hover:text-comet-green py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+                  <a href="#faq" className="text-white hover:text-comet-yellow py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+                  <Button className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white w-full">
                     Buy Now
                   </Button>
                 </div>
@@ -52,11 +52,11 @@ const Navbar = () => {
         ) : (
           <div className="flex items-center space-x-8">
             <div className="hidden md:flex space-x-8">
-              <a href="#features" className="text-white hover:text-comet-blue transition-colors">Features</a>
-              <a href="#pricing" className="text-white hover:text-comet-blue transition-colors">Pricing</a>
-              <a href="#faq" className="text-white hover:text-comet-blue transition-colors">FAQ</a>
+              <a href="#features" className="text-white hover:text-comet-pink transition-colors">Features</a>
+              <a href="#pricing" className="text-white hover:text-comet-green transition-colors">Pricing</a>
+              <a href="#faq" className="text-white hover:text-comet-yellow transition-colors">FAQ</a>
             </div>
-            <Button className="bg-comet-blue hover:bg-comet-blue/80 text-white">
+            <Button className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white">
               Buy Now
             </Button>
           </div>
