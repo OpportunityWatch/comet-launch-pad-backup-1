@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
 const Hero = () => {
+  console.log('Hero Component Rendered');
+
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden space-bg flex items-center">
       {/* Fewer floating dots - reduced from 5 to 3 */}
@@ -32,6 +33,8 @@ const Hero = () => {
           // Random delay within each wave group
           const groupDelay = waveGroup * 6 + Math.random() * 2;
           
+          console.log(`Comet ${i} - Angle: ${angle}, Delay: ${groupDelay}`);
+
           return (
             <div 
               key={`comet-${i}`} 
@@ -46,7 +49,7 @@ const Hero = () => {
                 width: `${48 + Math.random() * 24}px`,   // Doubled width: 48-72px (was 24-36px)
                 borderRadius: "4px",
                 zIndex: 5,
-                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Fixed: Using bottom-to-top gradient for vertical movement
+                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Vertical gradient
               }}
             />
           );

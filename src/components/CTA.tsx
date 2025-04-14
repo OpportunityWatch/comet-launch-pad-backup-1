@@ -1,8 +1,9 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
 const CTA = () => {
+  console.log('CTA Component Rendered');
+
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
       {/* Background effects - fewer dots, more prominent comets */}
@@ -33,6 +34,8 @@ const CTA = () => {
           // Random delay within each wave group
           const groupDelay = waveGroup * 5 + Math.random() * 3;
           
+          console.log(`Comet ${i} - Angle: ${angle}, Delay: ${groupDelay}`);
+
           return (
             <div 
               key={`comet-${i}`} 
@@ -43,11 +46,11 @@ const CTA = () => {
                 animationDelay: `${groupDelay}s`,
                 animationDuration: `${3 + Math.random() * 3}s`, // Faster animation: 3-6s
                 transform: `rotate(${angle}deg)`, // Aligning with movement direction
-                height: `${3 + Math.random() * 2}px`, // Doubled height: 3-5px (was 1.5-2.5px)
-                width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px (was 28-44px)
+                height: `${3 + Math.random() * 2}px`, // Doubled height: 3-5px
+                width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px
                 borderRadius: "4px",
                 zIndex: 5,
-                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Fixed: Using bottom-to-top gradient for vertical movement
+                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Vertical gradient
               }}
             />
           );
