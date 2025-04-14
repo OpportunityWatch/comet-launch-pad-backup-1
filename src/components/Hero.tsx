@@ -25,13 +25,13 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Vertical comet trails with slight angle - flying upward */}
-        {[...Array(6)].map((_, i) => (
+        {/* Reduced number of vertical comet trails with slight angle - flying upward */}
+        {[...Array(3)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
             className="absolute"
             style={{
-              left: `${10 + (i * 14)}%`,
+              left: `${20 + (i * 30)}%`,
               bottom: '-20px',
               width: '10px',
               height: '10px',

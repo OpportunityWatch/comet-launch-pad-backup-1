@@ -10,7 +10,7 @@ const CTA = () => {
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Background stars/dots */}
-        {[...Array(12)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div 
             key={`star-${i}`}
             className="absolute rounded-full bg-white animate-pulse-glow"
@@ -25,13 +25,13 @@ const CTA = () => {
           />
         ))}
         
-        {/* Vertical comet trails with slight angle - now flying upward */}
-        {[...Array(7)].map((_, i) => (
+        {/* Reduced number of vertical comet trails with slight angle - now flying upward */}
+        {[...Array(4)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
             className="absolute"
             style={{
-              left: `${15 + (i * 12)}%`,
+              left: `${25 + (i * 20)}%`,
               bottom: '-20px',
               width: '10px',
               height: '10px',
