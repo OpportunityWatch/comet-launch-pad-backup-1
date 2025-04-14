@@ -27,7 +27,7 @@ const CTA = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Ready for Your <span className="animated-gradient bg-clip-text text-transparent font-black drop-shadow-[0_2px_4px_rgba(255,255,255,0.2)]">CometCopters</span> Adventure?
           </h2>
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
