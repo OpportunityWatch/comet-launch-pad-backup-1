@@ -23,23 +23,33 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* More prominent streaking comets - increased size and count from 3 to 5 */}
-        {[...Array(5)].map((_, i) => (
-          <div 
-            key={i} 
-            className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-slow-shooting-star"
-            style={{
-              top: `${Math.random() * 70}%`,
-              left: `${Math.random() * 50}%`,
-              animationDelay: `${i * 4 + Math.random() * 3}s`,
-              animationDuration: `${8 + Math.random() * 12}s`,
-              transform: `rotate(${-50 + Math.random() * 100}deg)`, // More varied angles including upward
-              height: `${1.2 + Math.random() * 0.8}px`, // Varied heights between 1.2-2px
-              width: `${24 + Math.random() * 12}px`,   // Varied widths between 24-36px
-              borderRadius: "4px"
-            }}
-          />
-        ))}
+        {/* Enhanced, larger comet trails with varied vertical motion */}
+        {[...Array(8)].map((_, i) => {
+          // Randomize angles between -15 to 15 degrees for vertical movement
+          const angle = -15 + Math.random() * 30;
+          // Randomize grouping by creating "waves" of comets
+          const waveGroup = Math.floor(i / 3); // Groups of 2-3 comets
+          // Random delay within each wave group
+          const groupDelay = waveGroup * 6 + Math.random() * 2;
+          
+          return (
+            <div 
+              key={`comet-${i}`} 
+              className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-fast-shooting-star"
+              style={{
+                top: `${Math.random() * 70}%`,
+                left: `${Math.random() * 80}%`,
+                animationDelay: `${groupDelay}s`,
+                animationDuration: `${3 + Math.random() * 4}s`, // Faster animation: 3-7s instead of 8-20s
+                transform: `rotate(${90 + angle}deg)`, // Vertical (90deg) +/- angle
+                height: `${2.4 + Math.random() * 1.6}px`, // Doubled height: 2.4-4px (was 1.2-2px)
+                width: `${48 + Math.random() * 24}px`,   // Doubled width: 48-72px (was 24-36px)
+                borderRadius: "4px",
+                zIndex: 5
+              }}
+            />
+          );
+        })}
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">

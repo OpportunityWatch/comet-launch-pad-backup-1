@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -23,28 +24,38 @@ const CTA = () => {
           />
         ))}
         
-        {/* Added prominent streaking comets - similar to Hero component */}
-        {[...Array(4)].map((_, i) => (
-          <div 
-            key={`comet-${i}`} 
-            className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-slow-shooting-star"
-            style={{
-              top: `${Math.random() * 70}%`,
-              left: `${Math.random() * 60}%`,
-              animationDelay: `${i * 3 + Math.random() * 4}s`,
-              animationDuration: `${10 + Math.random() * 10}s`,
-              transform: `rotate(${-45 + Math.random() * 90}deg)`, // Varied angles
-              height: `${1.5 + Math.random() * 1}px`, // Larger height between 1.5-2.5px  
-              width: `${28 + Math.random() * 16}px`,  // Larger width between 28-44px
-              borderRadius: "4px"
-            }}
-          />
-        ))}
+        {/* Added prominent streaking comets - enhanced with vertical motion */}
+        {[...Array(6)].map((_, i) => {
+          // Randomize angles between -15 to 15 degrees for vertical movement
+          const angle = -15 + Math.random() * 30;
+          // Randomize grouping by creating "waves" of comets
+          const waveGroup = Math.floor(i / 2); // Groups of 2 comets
+          // Random delay within each wave group
+          const groupDelay = waveGroup * 5 + Math.random() * 3;
+          
+          return (
+            <div 
+              key={`comet-${i}`} 
+              className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-fast-shooting-star"
+              style={{
+                top: `${Math.random() * 70}%`,
+                left: `${Math.random() * 80}%`,
+                animationDelay: `${groupDelay}s`,
+                animationDuration: `${3 + Math.random() * 3}s`, // Faster animation: 3-6s
+                transform: `rotate(${90 + angle}deg)`, // Vertical (90deg) +/- angle
+                height: `${3 + Math.random() * 2}px`, // Doubled height: 3-5px (was 1.5-2.5px)
+                width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px (was 28-44px)
+                borderRadius: "4px",
+                zIndex: 5
+              }}
+            />
+          );
+        })}
       </div>
       
-      {/* Colorful comet trail effects - made more prominent */}
-      <div className="absolute top-1/4 left-0 w-full h-1 bg-gradient-to-r from-comet-blue via-comet-pink to-transparent blur-sm transform -rotate-12" />
-      <div className="absolute top-3/4 right-0 w-full h-1 bg-gradient-to-r from-transparent via-comet-green to-comet-yellow blur-sm transform rotate-12" />
+      {/* Colorful comet trail effects - made more prominent and vertical */}
+      <div className="absolute top-1/4 left-0 w-full h-2 bg-gradient-to-r from-comet-blue via-comet-pink to-transparent blur-sm transform rotate-80" />
+      <div className="absolute top-3/4 right-0 w-full h-2 bg-gradient-to-r from-transparent via-comet-green to-comet-yellow blur-sm transform rotate-100" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
