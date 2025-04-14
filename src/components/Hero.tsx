@@ -46,7 +46,7 @@ const Hero = () => {
                 width: `${48 + Math.random() * 24}px`,   // Doubled width: 48-72px (was 24-36px)
                 borderRadius: "4px",
                 zIndex: 5,
-                background: `linear-gradient(to right, transparent 0%, #00A0E4 100%)` // Proper gradient direction for trail
+                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Fixed: Using bottom-to-top gradient for vertical movement
               }}
             />
           );

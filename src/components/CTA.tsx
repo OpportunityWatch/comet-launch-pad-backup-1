@@ -47,7 +47,7 @@ const CTA = () => {
                 width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px (was 28-44px)
                 borderRadius: "4px",
                 zIndex: 5,
-                background: `linear-gradient(to right, transparent 0%, #00A0E4 100%)` // Proper gradient direction for trail
+                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Fixed: Using bottom-to-top gradient for vertical movement
               }}
             />
           );
