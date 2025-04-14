@@ -1,5 +1,40 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
+
+// Extract stars to prevent re-randomization on render
+const BackgroundStars = React.memo(() => {
+  // Pre-compute star positions
+  const starPositions = React.useMemo(() => {
+    return Array(8).fill(0).map(() => ({
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      opacity: Math.random() * 0.4 + 0.3,
+      delay: Math.random() * 4,
+    }));
+  }, []);
+
+  return (
+    <>
+      {starPositions.map((pos, i) => (
+        <div 
+          key={`star-${i}`}
+          className="absolute rounded-full bg-white animate-pulse-glow"
+          style={{
+            top: pos.top,
+            left: pos.left,
+            opacity: pos.opacity,
+            height: "3px",
+            width: "3px",
+            animationDelay: `${i * 0.5}s`,
+          }}
+        />
+      ))}
+    </>
+  );
+});
+
+BackgroundStars.displayName = 'BackgroundStars';
 
 const CTA = () => {
   console.log('CTA Component Rendered');
@@ -9,20 +44,7 @@ const CTA = () => {
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Background stars/dots */}
-        {[...Array(8)].map((_, i) => (
-          <div 
-            key={`star-${i}`}
-            className="absolute rounded-full bg-white animate-pulse-glow"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.4 + 0.3,
-              height: "3px",
-              width: "3px",
-              animationDelay: `${i * 0.5}s`,
-            }}
-          />
-        ))}
+        <BackgroundStars />
       </div>
       
       {/* Colorful comet trail effects */}
@@ -52,6 +74,7 @@ const CTA = () => {
               src="/lovable-uploads/15cb9498-bdda-4451-a15c-2ec1fa36ea2d.png"
               alt="CometCopters 3-pack" 
               className="w-full rounded-lg shadow-2xl shadow-comet-blue/20 border border-white/10"
+              loading="lazy"
             />
             <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-comet-darkblue/80 to-transparent"></div>
             <div className="absolute bottom-0 left-0 w-full p-6 text-center">
@@ -68,4 +91,4 @@ const CTA = () => {
   );
 };
 
-export default CTA;
+export default React.memo(CTA);

@@ -1,28 +1,52 @@
-import React from 'react';
+
+import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
+// Create reusable background stars to avoid regenerating on each render
+const BackgroundStars = React.memo(() => {
+  // Pre-compute random positions for stars to prevent re-randomization on render
+  const starPositions = React.useMemo(() => {
+    return Array(5).fill(0).map(() => ({
+      top: `${Math.random() * 80}%`,
+      left: `${Math.random() * 90}%`,
+    }));
+  }, []);
+
+  return (
+    <>
+      {starPositions.map((pos, i) => (
+        <div 
+          key={`star-${i}`}
+          className="absolute"
+          style={{
+            top: pos.top,
+            left: pos.left,
+            zIndex: 1
+          }}
+        >
+          <div className="w-4 h-4 rounded-full bg-comet-blue animate-pulse-glow shadow-lg shadow-comet-blue/50"></div>
+        </div>
+      ))}
+    </>
+  );
+});
+
+BackgroundStars.displayName = 'BackgroundStars';
+
 const Hero = () => {
   console.log('Hero Component Rendered');
+
+  // Use useCallback to prevent recreating functions on each render
+  const scrollToFeatures = useCallback(() => {
+    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
 
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden space-bg flex items-center">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Glowing static dots */}
-        {[...Array(5)].map((_, i) => (
-          <div 
-            key={`star-${i}`}
-            className="absolute"
-            style={{
-              top: `${Math.random() * 80}%`,
-              left: `${Math.random() * 90}%`,
-              zIndex: 1
-            }}
-          >
-            <div className="w-4 h-4 rounded-full bg-comet-blue animate-pulse-glow shadow-lg shadow-comet-blue/50"></div>
-          </div>
-        ))}
+        <BackgroundStars />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
@@ -51,19 +75,20 @@ const Hero = () => {
               src="/lovable-uploads/07954634-62b1-4700-8373-c7b4fee01733.png"
               alt="CometCopter in action" 
               className="w-full max-w-md mx-auto animate-float"
+              loading="lazy"
             />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-comet-blue/30 via-comet-pink/20 to-comet-green/20 rounded-full blur-3xl -z-10"></div>
           </div>
         </div>
         
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <a href="#features">
+          <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
-          </a>
+          </button>
         </div>
       </div>
     </section>
   );
 };
 
-export default Hero;
+export default React.memo(Hero);
