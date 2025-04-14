@@ -1,20 +1,24 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
 const CTA = () => {
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
-      {/* Background effects */}
+      {/* Background effects - updated with larger size and slow movement */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <div 
             key={i}
-            className="absolute h-1 w-1 rounded-full bg-white"
+            className="absolute rounded-full bg-white animate-slow-drift"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               opacity: Math.random() * 0.5 + 0.3,
-              animation: `pulse-glow ${2 + Math.random() * 3}s ease-in-out infinite`
+              height: "1.15px",  // 15% larger than 1px
+              width: "1.15px",   // 15% larger than 1px
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${20 + Math.random() * 30}s`
             }}
           />
         ))}

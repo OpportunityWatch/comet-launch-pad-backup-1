@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -22,17 +23,19 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Shooting star effects */}
+        {/* Shooting star effects - updated with larger size and slow movement */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={i} 
-            className="absolute h-0.5 w-16 bg-gradient-to-r from-transparent to-comet-blue opacity-70 animate-shooting-star"
+            className="absolute h-0.6 w-18 bg-gradient-to-r from-transparent to-comet-blue opacity-70 animate-slow-shooting-star"
             style={{
               top: `${Math.random() * 50}%`,
               left: `${Math.random() * 70}%`,
               animationDelay: `${i * 3 + 1}s`,
-              animationDuration: `${2 + Math.random() * 3}s`,
-              transform: `rotate(${-30 + Math.random() * 60}deg)`
+              animationDuration: `${10 + Math.random() * 15}s`,
+              transform: `rotate(${-30 + Math.random() * 60}deg)`,
+              height: "0.575px", // 15% larger than 0.5px
+              width: "18.4px"    // 15% larger than 16px
             }}
           />
         ))}
