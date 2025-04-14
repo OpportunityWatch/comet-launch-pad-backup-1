@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -45,10 +44,9 @@ const CTA = () => {
               style={{
                 left: `${leftPosition}%`,
                 top: '-40px', // Start above the viewport
-                animationDelay: `${groupDelay}s`,
                 animationDuration: `${3 + Math.random() * 3}s`,
+                animationDelay: `${groupDelay}s`, // Consolidated delay
                 animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
-                animationDelay: `${groupDelay}s`,
                 zIndex: 5,
               }}
             >
@@ -63,7 +61,7 @@ const CTA = () => {
                   left: '1px',
                   width: '1px',
                   height: `${trailLength}px`,
-                  background: 'linear-gradient(to top, transparent, #00A0E4)',
+                  background: 'linear-gradient(to bottom, transparent, #00A0E4)',
                   boxShadow: '0 0 6px 1px rgba(0,160,228,0.5)',
                   transform: 'translateX(0)', // Center the trail relative to the head
                 }}

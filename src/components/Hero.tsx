@@ -24,7 +24,6 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Completely redesigned comet trails to ensure vertical orientation */}
         {[...Array(8)].map((_, i) => {
           // Create different groups of comets with staggered timing
           const waveGroup = Math.floor(i / 3);
@@ -43,10 +42,9 @@ const Hero = () => {
               style={{
                 left: `${leftPosition}%`,
                 top: '-50px', // Start above the viewport
-                animationDelay: `${groupDelay}s`,
                 animationDuration: `${3 + Math.random() * 4}s`,
+                animationDelay: `${groupDelay}s`, // Consolidated delay
                 animation: `vertical-shooting-star ${3 + Math.random() * 4}s linear infinite`,
-                animationDelay: `${groupDelay}s`,
                 zIndex: 5,
               }}
             >
@@ -61,7 +59,7 @@ const Hero = () => {
                   left: '1px',
                   width: '1px',
                   height: `${trailLength}px`,
-                  background: 'linear-gradient(to top, transparent, #00A0E4)',
+                  background: 'linear-gradient(to bottom, transparent, #00A0E4)',
                   boxShadow: '0 0 8px 1px rgba(0,160,228,0.6)',
                   transform: 'translateX(0)', // Center the trail relative to the head
                 }}
