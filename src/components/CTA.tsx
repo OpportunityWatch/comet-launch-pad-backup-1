@@ -25,21 +25,21 @@ const CTA = () => {
           />
         ))}
         
-        {/* New vertical comet trails with inline styles and animations */}
+        {/* Vertical comet trails with slight angle in the opposite direction */}
         {[...Array(7)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
             className="absolute"
             style={{
-              left: `${10 + (i * 12)}%`,
+              left: `${15 + (i * 12)}%`,
               top: '-20px',
-              width: '8px',
-              height: '8px',
+              width: '10px',
+              height: '10px',
               borderRadius: '50%',
               background: 'white',
-              boxShadow: '0 0 15px 5px rgba(255,255,255,0.8)',
+              boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
               zIndex: 10,
-              animation: `vertical-fall ${4 + Math.random() * 3}s linear infinite`,
+              animation: `vertical-angled-fall ${4 + Math.random() * 3}s linear infinite`,
               animationDelay: `${i * 0.9}s`
             }}
           >
@@ -47,13 +47,14 @@ const CTA = () => {
             <div 
               style={{
                 position: 'absolute',
-                top: '8px',
-                left: '4px',
-                width: '2px',
-                height: '120px',
+                top: '10px',
+                left: '5px',
+                width: '3px',
+                height: '150px',
                 background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
                 boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-                transform: 'translateX(-50%)'
+                transform: 'translateX(-50%) rotate(12deg)',
+                transformOrigin: 'top center'
               }}
             ></div>
           </div>
@@ -62,9 +63,9 @@ const CTA = () => {
         {/* Add keyframe animation directly in the component */}
         <style>
           {`
-            @keyframes vertical-fall {
+            @keyframes vertical-angled-fall {
               0% {
-                transform: translateY(-30px);
+                transform: translateY(-50px) translateX(0) rotate(12deg);
                 opacity: 0;
               }
               10% {
@@ -74,7 +75,7 @@ const CTA = () => {
                 opacity: 1;
               }
               100% {
-                transform: translateY(100vh);
+                transform: translateY(100vh) translateX(20vw) rotate(12deg);
                 opacity: 0;
               }
             }
