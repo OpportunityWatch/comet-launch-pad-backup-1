@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Reduced number of vertical comet trails with trajectory corrected - flying upward and right */}
+        {/* Fixed comets with correctly positioned tails */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
@@ -43,18 +43,18 @@ const Hero = () => {
               animationDelay: `${i * 1.5}s`
             }}
           >
-            {/* Comet tail - now properly positioned to trail behind as comet moves up and right */}
+            {/* Comet tail - properly attached to head and trailing behind */}
             <div 
               style={{
                 position: 'absolute',
-                bottom: '5px', // Position tail below the head
-                right: '5px', // Position tail to the left of the head (since moving right)
+                bottom: '0', // Attached directly to the comet head
+                right: '0', // Attached directly to the comet head
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Gradient flows away from head
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', 
                 boxShadow: '0 0 10px rgba(0,160,228,0.6)',
-                transform: 'rotate(15deg)', // Angle tail downward and left
-                transformOrigin: 'top center'
+                transform: 'rotate(135deg)', // Angle tail to trail behind as comet moves up-right
+                transformOrigin: 'top left'
               }}
             ></div>
           </div>

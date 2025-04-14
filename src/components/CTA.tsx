@@ -25,7 +25,7 @@ const CTA = () => {
           />
         ))}
         
-        {/* Reduced number of vertical comet trails with trajectory corrected - flying upward and right */}
+        {/* Properly connected comets with tails */}
         {[...Array(4)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
@@ -43,18 +43,18 @@ const CTA = () => {
               animationDelay: `${i * 0.9}s`
             }}
           >
-            {/* Long visible comet tail - positioned correctly for up-right movement */}
+            {/* Properly attached tail trailing behind as comet moves up-right */}
             <div 
               style={{
                 position: 'absolute',
-                bottom: '5px', // Position tail below the head
-                right: '5px', // Position tail to the left of the head (since moving right)
+                bottom: '0', // Attached directly to the comet head
+                right: '0', // Attached directly to the comet head
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Gradient direction matches flight
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
                 boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-                transform: 'rotate(15deg)', // Angle tail downward and left
-                transformOrigin: 'top center'
+                transform: 'rotate(135deg)', // Angle to trail behind as comet moves up-right
+                transformOrigin: 'top left'
               }}
             ></div>
           </div>
