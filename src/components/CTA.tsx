@@ -24,7 +24,7 @@ const CTA = () => {
           />
         ))}
         
-        {/* Added prominent streaking comets with proper orientation aligned with movement */}
+        {/* Added prominent comet trails with proper orientation aligned with vertical movement */}
         {[...Array(6)].map((_, i) => {
           // Randomize angles between -15 to 15 degrees for vertical movement
           const angle = -15 + Math.random() * 30;
