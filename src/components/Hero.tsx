@@ -24,34 +24,49 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Enhanced, larger comet trails with proper orientation aligned with movement */}
+        {/* Completely redesigned comet trails to ensure vertical orientation */}
         {[...Array(8)].map((_, i) => {
-          // Randomize angles between -15 to 15 degrees for vertical movement
-          const angle = -15 + Math.random() * 30;
-          // Randomize grouping by creating "waves" of comets
-          const waveGroup = Math.floor(i / 3); // Groups of 2-3 comets
-          // Random delay within each wave group
+          // Create different groups of comets with staggered timing
+          const waveGroup = Math.floor(i / 3);
           const groupDelay = waveGroup * 6 + Math.random() * 2;
           
-          console.log(`Comet ${i} - Angle: ${angle}, Delay: ${groupDelay}`);
+          // Generate random positions and sizes for variety
+          const leftPosition = Math.random() * 80;
+          const trailLength = 40 + Math.random() * 30; // Length of the comet trail
+          
+          console.log(`Comet ${i} - Position: ${leftPosition}%, Delay: ${groupDelay}`);
 
           return (
             <div 
               key={`comet-${i}`} 
-              className="absolute opacity-80 animate-fast-shooting-star"
+              className="absolute"
               style={{
-                top: `${Math.random() * 70}%`,
-                left: `${Math.random() * 80}%`,
+                left: `${leftPosition}%`,
+                top: '-50px', // Start above the viewport
                 animationDelay: `${groupDelay}s`,
-                animationDuration: `${3 + Math.random() * 4}s`, // Faster animation: 3-7s instead of 8-20s
-                transform: `rotate(${angle}deg)`, // Aligning with movement direction
-                height: `${2.4 + Math.random() * 1.6}px`, // Doubled height: 2.4-4px (was 1.2-2px)
-                width: `${48 + Math.random() * 24}px`,   // Doubled width: 48-72px (was 24-36px)
-                borderRadius: "4px",
+                animationDuration: `${3 + Math.random() * 4}s`,
+                animation: `vertical-shooting-star ${3 + Math.random() * 4}s linear infinite`,
+                animationDelay: `${groupDelay}s`,
                 zIndex: 5,
-                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Vertical gradient
               }}
-            />
+            >
+              {/* Head of comet - bright dot */}
+              <div className="absolute w-3 h-3 rounded-full bg-white shadow-[0_0_10px_4px_rgba(255,255,255,0.8)] z-10"></div>
+              
+              {/* Vertical trail of comet */}
+              <div 
+                className="absolute"
+                style={{
+                  top: '0',
+                  left: '1px',
+                  width: '1px',
+                  height: `${trailLength}px`,
+                  background: 'linear-gradient(to top, transparent, #00A0E4)',
+                  boxShadow: '0 0 8px 1px rgba(0,160,228,0.6)',
+                  transform: 'translateX(0)', // Center the trail relative to the head
+                }}
+              ></div>
+            </div>
           );
         })}
       </div>

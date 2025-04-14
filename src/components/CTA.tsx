@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -25,41 +26,56 @@ const CTA = () => {
           />
         ))}
         
-        {/* Added prominent comet trails with proper orientation aligned with vertical movement */}
+        {/* Properly implemented vertical comet trails */}
         {[...Array(6)].map((_, i) => {
-          // Randomize angles between -15 to 15 degrees for vertical movement
-          const angle = -15 + Math.random() * 30;
-          // Randomize grouping by creating "waves" of comets
-          const waveGroup = Math.floor(i / 2); // Groups of 2 comets
-          // Random delay within each wave group
+          // Create different groups of comets with staggered timing
+          const waveGroup = Math.floor(i / 2);
           const groupDelay = waveGroup * 5 + Math.random() * 3;
           
-          console.log(`Comet ${i} - Angle: ${angle}, Delay: ${groupDelay}`);
+          // Generate random positions and sizes for variety
+          const leftPosition = Math.random() * 80;
+          const trailLength = 35 + Math.random() * 25; // Length of the comet trail
+          
+          console.log(`Comet ${i} - Position: ${leftPosition}%, Delay: ${groupDelay}`);
 
           return (
             <div 
               key={`comet-${i}`} 
-              className="absolute opacity-80 animate-fast-shooting-star"
+              className="absolute"
               style={{
-                top: `${Math.random() * 70}%`,
-                left: `${Math.random() * 80}%`,
+                left: `${leftPosition}%`,
+                top: '-40px', // Start above the viewport
                 animationDelay: `${groupDelay}s`,
-                animationDuration: `${3 + Math.random() * 3}s`, // Faster animation: 3-6s
-                transform: `rotate(${angle}deg)`, // Aligning with movement direction
-                height: `${3 + Math.random() * 2}px`, // Doubled height: 3-5px
-                width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px
-                borderRadius: "4px",
+                animationDuration: `${3 + Math.random() * 3}s`,
+                animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
+                animationDelay: `${groupDelay}s`,
                 zIndex: 5,
-                background: `linear-gradient(to bottom, #00A0E4 0%, transparent 100%)` // Vertical gradient
               }}
-            />
+            >
+              {/* Head of comet - bright dot */}
+              <div className="absolute w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_8px_3px_rgba(255,255,255,0.7)] z-10"></div>
+              
+              {/* Vertical trail of comet */}
+              <div 
+                className="absolute"
+                style={{
+                  top: '0',
+                  left: '1px',
+                  width: '1px',
+                  height: `${trailLength}px`,
+                  background: 'linear-gradient(to top, transparent, #00A0E4)',
+                  boxShadow: '0 0 6px 1px rgba(0,160,228,0.5)',
+                  transform: 'translateX(0)', // Center the trail relative to the head
+                }}
+              ></div>
+            </div>
           );
         })}
       </div>
       
       {/* Colorful comet trail effects - made more prominent and vertical */}
-      <div className="absolute top-1/4 left-0 w-full h-2 bg-gradient-to-r from-comet-blue via-comet-pink to-transparent blur-sm transform rotate-80" />
-      <div className="absolute top-3/4 right-0 w-full h-2 bg-gradient-to-r from-transparent via-comet-green to-comet-yellow blur-sm transform rotate-100" />
+      <div className="absolute top-1/4 left-0 w-2 h-full bg-gradient-to-b from-comet-blue via-transparent to-transparent blur-sm transform -rotate-10" />
+      <div className="absolute top-3/4 right-0 w-2 h-full bg-gradient-to-b from-comet-green via-comet-yellow to-transparent blur-sm transform rotate-10" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
