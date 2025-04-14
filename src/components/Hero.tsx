@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Fixed comets with correctly positioned tails */}
+        {/* Comets with fixed tails */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
@@ -43,18 +43,18 @@ const Hero = () => {
               animationDelay: `${i * 1.5}s`
             }}
           >
-            {/* Comet tail - properly attached to head and trailing behind */}
+            {/* Comet tail position fixed */}
             <div 
               style={{
                 position: 'absolute',
-                bottom: '0', // Attached directly to the comet head
-                right: '0', // Attached directly to the comet head
+                bottom: '0',
+                right: '0',
                 width: '3px',
-                height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', 
+                height: '120px',
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', 
                 boxShadow: '0 0 10px rgba(0,160,228,0.6)',
-                transform: 'rotate(135deg)', // Angle tail to trail behind as comet moves up-right
-                transformOrigin: 'top left'
+                transform: 'rotate(225deg)',
+                transformOrigin: 'top right'
               }}
             ></div>
           </div>

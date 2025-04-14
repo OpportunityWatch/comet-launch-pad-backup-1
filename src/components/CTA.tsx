@@ -25,7 +25,7 @@ const CTA = () => {
           />
         ))}
         
-        {/* Properly connected comets with tails */}
+        {/* Comets with fixed tails */}
         {[...Array(4)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
@@ -43,18 +43,18 @@ const CTA = () => {
               animationDelay: `${i * 0.9}s`
             }}
           >
-            {/* Properly attached tail trailing behind as comet moves up-right */}
+            {/* Comet tail position fixed */}
             <div 
               style={{
                 position: 'absolute',
-                bottom: '0', // Attached directly to the comet head
-                right: '0', // Attached directly to the comet head
+                bottom: '0',
+                right: '0',
                 width: '3px',
-                height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
+                height: '120px',
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
                 boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-                transform: 'rotate(135deg)', // Angle to trail behind as comet moves up-right
-                transformOrigin: 'top left'
+                transform: 'rotate(225deg)',
+                transformOrigin: 'top right'
               }}
             ></div>
           </div>
