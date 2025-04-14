@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -12,57 +13,48 @@ const CTA = () => {
         {[...Array(8)].map((_, i) => (
           <div 
             key={i}
-            className="absolute rounded-full bg-white animate-slow-drift"
+            className="absolute rounded-full bg-white animate-pulse-glow"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               opacity: Math.random() * 0.4 + 0.3,
-              height: "1.15px",
-              width: "1.15px",
+              height: "3px",
+              width: "3px",
               animationDelay: `${i * 0.5}s`,
-              animationDuration: `${20 + Math.random() * 30}s`
             }}
           />
         ))}
         
-        {/* Vertical shooting stars - simplified implementation */}
-        {[...Array(6)].map((_, i) => {
-          const horizontalPos = 15 + (i * 12);
-          const duration = 2 + Math.random() * 2;
-          const delay = i * 1 + Math.random() * 3;
-          
-          return (
-            <div 
-              key={`cta-comet-${i}`} 
-              className="absolute"
-              style={{
-                left: `${horizontalPos}%`,
-                top: '-40px',
-                zIndex: 5
-              }}
-            >
+        {/* Visible vertical comet trails */}
+        {[...Array(5)].map((_, i) => (
+          <div 
+            key={`cta-comet-${i}`} 
+            className="absolute"
+            style={{
+              left: `${15 + (i * 18)}%`,
+              top: '-20px',
+              zIndex: 5,
+              animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
+              animationDelay: `${i * 0.8}s`,
+            }}
+          >
+            {/* Comet head (bright dot) */}
+            <div className="relative">
+              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_5px_rgba(255,255,255,0.8)]"></div>
+              
+              {/* Comet tail (visible gradient) */}
               <div 
-                className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_3px_rgba(255,255,255,0.7)]"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2"
                 style={{
-                  animation: `vertical-shooting-star ${duration}s linear infinite`,
-                  animationDelay: `${delay}s`,
+                  width: '2px',
+                  height: '100px',
+                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.5), transparent)',
+                  boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
                 }}
-              >
-                {/* Comet tail */}
-                <div 
-                  className="absolute w-[1px] h-30 origin-top"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(0,160,228,0.3), transparent)',
-                    boxShadow: '0 0 6px 1px rgba(0,160,228,0.5)',
-                    transform: 'translateX(-50%)',
-                  }}
-                ></div>
-              </div>
+              ></div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
       
       {/* Colorful comet trail effects */}

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -9,15 +10,14 @@ const Hero = () => {
     <section className="relative min-h-screen pt-20 overflow-hidden space-bg flex items-center">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Background dots */}
-        {[...Array(3)].map((_, i) => (
+        {/* Glowing static dots */}
+        {[...Array(5)].map((_, i) => (
           <div 
-            key={i}
-            className="absolute animate-float"
+            key={`star-${i}`}
+            className="absolute"
             style={{
               top: `${Math.random() * 80}%`,
               left: `${Math.random() * 90}%`,
-              animationDelay: `${i * 0.5}s`,
               zIndex: 1
             }}
           >
@@ -25,44 +25,36 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Vertical shooting stars */}
-        {[...Array(8)].map((_, i) => {
-          const horizontalPos = 10 + (i * 10);
-          const duration = 2 + Math.random() * 3;
-          const delay = i * 0.5 + Math.random() * 2;
-          
-          return (
-            <div 
-              key={`comet-${i}`} 
-              className="absolute"
-              style={{
-                left: `${horizontalPos}%`,
-                top: '-50px',
-                zIndex: 5
-              }}
-            >
+        {/* Visible comet trails */}
+        {[...Array(6)].map((_, i) => (
+          <div 
+            key={`comet-${i}`} 
+            className="absolute"
+            style={{
+              left: `${10 + (i * 15)}%`,
+              top: '-20px',
+              zIndex: 5,
+              animation: `vertical-shooting-star ${3 + Math.random() * 2}s linear infinite`,
+              animationDelay: `${i * 0.7}s`,
+            }}
+          >
+            {/* Comet head (bright dot) */}
+            <div className="relative">
+              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_5px_rgba(255,255,255,0.8)]"></div>
+              
+              {/* Comet tail (visible gradient) */}
               <div 
-                className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_4px_rgba(255,255,255,0.8)]"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2"
                 style={{
-                  animation: `vertical-shooting-star ${duration}s linear infinite`,
-                  animationDelay: `${delay}s`,
+                  width: '2px',
+                  height: '80px',
+                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.5), transparent)',
+                  boxShadow: '0 0 8px 2px rgba(0,160,228,0.6)',
                 }}
-              >
-                {/* Comet tail */}
-                <div 
-                  className="absolute w-[1px] h-40 origin-top"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)',
-                    boxShadow: '0 0 8px 2px rgba(0,160,228,0.6)',
-                    transform: 'translateX(-50%)',
-                  }}
-                ></div>
-              </div>
+              ></div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
