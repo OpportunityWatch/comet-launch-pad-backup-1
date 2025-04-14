@@ -6,9 +6,9 @@ import { ArrowDown } from "lucide-react";
 const Hero = () => {
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden space-bg flex items-center">
-      {/* Floating CometCopters animation */}
+      {/* Fewer floating dots - reduced from 5 to 3 */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(3)].map((_, i) => (
           <div 
             key={i}
             className="absolute animate-float"
@@ -23,19 +23,20 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Shooting star effects - updated with larger size and slow movement */}
-        {[...Array(3)].map((_, i) => (
+        {/* More prominent streaking comets - increased size and count from 3 to 5 */}
+        {[...Array(5)].map((_, i) => (
           <div 
             key={i} 
-            className="absolute h-0.6 w-18 bg-gradient-to-r from-transparent to-comet-blue opacity-70 animate-slow-shooting-star"
+            className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-slow-shooting-star"
             style={{
-              top: `${Math.random() * 50}%`,
-              left: `${Math.random() * 70}%`,
-              animationDelay: `${i * 3 + 1}s`,
-              animationDuration: `${10 + Math.random() * 15}s`,
-              transform: `rotate(${-30 + Math.random() * 60}deg)`,
-              height: "0.575px", // 15% larger than 0.5px
-              width: "18.4px"    // 15% larger than 16px
+              top: `${Math.random() * 70}%`,
+              left: `${Math.random() * 50}%`,
+              animationDelay: `${i * 4 + Math.random() * 3}s`,
+              animationDuration: `${8 + Math.random() * 12}s`,
+              transform: `rotate(${-50 + Math.random() * 100}deg)`, // More varied angles including upward
+              height: `${1.2 + Math.random() * 0.8}px`, // Varied heights between 1.2-2px
+              width: `${24 + Math.random() * 12}px`,   // Varied widths between 24-36px
+              borderRadius: "4px"
             }}
           />
         ))}

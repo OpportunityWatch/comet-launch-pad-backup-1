@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,7 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// CometCopters custom colors
 				comet: {
 					blue: '#00A0E4',
 					red: '#FF3A5C',
@@ -129,17 +127,20 @@ export default {
 				},
 				'slow-shooting-star': {
 					'0%': {
-						transform: 'translateX(-5vw)',
+						transform: 'translateX(-15vw)',
 						opacity: '0'
 					},
 					'5%': {
+						opacity: '0.7'
+					},
+					'10%': {
 						opacity: '1'
 					},
-					'95%': {
+					'90%': {
 						opacity: '1'
 					},
 					'100%': {
-						transform: 'translateX(105vw)',
+						transform: 'translateX(115vw)',
 						opacity: '0'
 					}
 				},
@@ -176,7 +177,7 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'float': 'float 6s ease-in-out infinite',
 				'shooting-star': 'shooting-star 2s ease-out',
-				'slow-shooting-star': 'slow-shooting-star 25s linear infinite',
+				'slow-shooting-star': 'slow-shooting-star 18s linear infinite',
 				'slow-drift': 'slow-drift 30s linear infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
 				'spin-slow': 'spin-slow 10s linear infinite'

@@ -1,32 +1,50 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
 const CTA = () => {
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
-      {/* Background effects - updated with larger size and slow movement */}
+      {/* Background effects - fewer dots, more prominent comets */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {/* Reduced number of background dots from 20 to 8 */}
+        {[...Array(8)].map((_, i) => (
           <div 
             key={i}
             className="absolute rounded-full bg-white animate-slow-drift"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.5 + 0.3,
-              height: "1.15px",  // 15% larger than 1px
-              width: "1.15px",   // 15% larger than 1px
+              opacity: Math.random() * 0.4 + 0.3,
+              height: "1.15px",
+              width: "1.15px",
               animationDelay: `${i * 0.5}s`,
               animationDuration: `${20 + Math.random() * 30}s`
             }}
           />
         ))}
+        
+        {/* Added prominent streaking comets - similar to Hero component */}
+        {[...Array(4)].map((_, i) => (
+          <div 
+            key={`comet-${i}`} 
+            className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-slow-shooting-star"
+            style={{
+              top: `${Math.random() * 70}%`,
+              left: `${Math.random() * 60}%`,
+              animationDelay: `${i * 3 + Math.random() * 4}s`,
+              animationDuration: `${10 + Math.random() * 10}s`,
+              transform: `rotate(${-45 + Math.random() * 90}deg)`, // Varied angles
+              height: `${1.5 + Math.random() * 1}px`, // Larger height between 1.5-2.5px  
+              width: `${28 + Math.random() * 16}px`,  // Larger width between 28-44px
+              borderRadius: "4px"
+            }}
+          />
+        ))}
       </div>
       
-      {/* Colorful comet trail effects */}
-      <div className="absolute top-1/4 left-0 w-full h-0.5 bg-gradient-to-r from-comet-blue via-comet-pink to-transparent blur-sm transform -rotate-12" />
-      <div className="absolute top-3/4 right-0 w-full h-0.5 bg-gradient-to-r from-transparent via-comet-green to-comet-yellow blur-sm transform rotate-12" />
+      {/* Colorful comet trail effects - made more prominent */}
+      <div className="absolute top-1/4 left-0 w-full h-1 bg-gradient-to-r from-comet-blue via-comet-pink to-transparent blur-sm transform -rotate-12" />
+      <div className="absolute top-3/4 right-0 w-full h-1 bg-gradient-to-r from-transparent via-comet-green to-comet-yellow blur-sm transform rotate-12" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
