@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -44,9 +45,8 @@ const CTA = () => {
               style={{
                 left: `${leftPosition}%`,
                 top: '-40px', // Start above the viewport
-                animationDuration: `${3 + Math.random() * 3}s`,
-                animationDelay: `${groupDelay}s`, // Consolidated delay
                 animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
+                animationDelay: `${groupDelay}s`, // Delay the start
                 zIndex: 5,
               }}
             >

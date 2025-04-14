@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -24,6 +25,7 @@ const Hero = () => {
           </div>
         ))}
         
+        {/* Vertical comet trails */}
         {[...Array(8)].map((_, i) => {
           // Create different groups of comets with staggered timing
           const waveGroup = Math.floor(i / 3);
@@ -42,9 +44,8 @@ const Hero = () => {
               style={{
                 left: `${leftPosition}%`,
                 top: '-50px', // Start above the viewport
-                animationDuration: `${3 + Math.random() * 4}s`,
-                animationDelay: `${groupDelay}s`, // Consolidated delay
                 animation: `vertical-shooting-star ${3 + Math.random() * 4}s linear infinite`,
+                animationDelay: `${groupDelay}s`, // Delay the start
                 zIndex: 5,
               }}
             >
