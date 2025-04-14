@@ -23,7 +23,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Enhanced, larger comet trails with varied vertical motion */}
+        {/* Enhanced, larger comet trails with proper orientation aligned with movement */}
         {[...Array(8)].map((_, i) => {
           // Randomize angles between -15 to 15 degrees for vertical movement
           const angle = -15 + Math.random() * 30;
@@ -35,17 +35,18 @@ const Hero = () => {
           return (
             <div 
               key={`comet-${i}`} 
-              className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-fast-shooting-star"
+              className="absolute opacity-80 animate-fast-shooting-star"
               style={{
                 top: `${Math.random() * 70}%`,
                 left: `${Math.random() * 80}%`,
                 animationDelay: `${groupDelay}s`,
                 animationDuration: `${3 + Math.random() * 4}s`, // Faster animation: 3-7s instead of 8-20s
-                transform: `rotate(${90 + angle}deg)`, // Vertical (90deg) +/- angle
+                transform: `rotate(${angle}deg)`, // Aligning with movement direction
                 height: `${2.4 + Math.random() * 1.6}px`, // Doubled height: 2.4-4px (was 1.2-2px)
                 width: `${48 + Math.random() * 24}px`,   // Doubled width: 48-72px (was 24-36px)
                 borderRadius: "4px",
-                zIndex: 5
+                zIndex: 5,
+                background: `linear-gradient(to right, transparent 0%, #00A0E4 100%)` // Proper gradient direction for trail
               }}
             />
           );

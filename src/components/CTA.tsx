@@ -24,7 +24,7 @@ const CTA = () => {
           />
         ))}
         
-        {/* Added prominent streaking comets - enhanced with vertical motion */}
+        {/* Added prominent streaking comets with proper orientation aligned with movement */}
         {[...Array(6)].map((_, i) => {
           // Randomize angles between -15 to 15 degrees for vertical movement
           const angle = -15 + Math.random() * 30;
@@ -36,17 +36,18 @@ const CTA = () => {
           return (
             <div 
               key={`comet-${i}`} 
-              className="absolute bg-gradient-to-r from-transparent to-comet-blue opacity-80 animate-fast-shooting-star"
+              className="absolute opacity-80 animate-fast-shooting-star"
               style={{
                 top: `${Math.random() * 70}%`,
                 left: `${Math.random() * 80}%`,
                 animationDelay: `${groupDelay}s`,
                 animationDuration: `${3 + Math.random() * 3}s`, // Faster animation: 3-6s
-                transform: `rotate(${90 + angle}deg)`, // Vertical (90deg) +/- angle
+                transform: `rotate(${angle}deg)`, // Aligning with movement direction
                 height: `${3 + Math.random() * 2}px`, // Doubled height: 3-5px (was 1.5-2.5px)
                 width: `${56 + Math.random() * 32}px`,  // Doubled width: 56-88px (was 28-44px)
                 borderRadius: "4px",
-                zIndex: 5
+                zIndex: 5,
+                background: `linear-gradient(to right, transparent 0%, #00A0E4 100%)` // Proper gradient direction for trail
               }}
             />
           );
