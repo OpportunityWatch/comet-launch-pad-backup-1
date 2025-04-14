@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -55,6 +54,7 @@ const CTA = () => {
                 Free Bonus!
               </span>
               <p className="text-white text-lg">Extra CometCopter with every 3-Pack</p>
+              <p className="text-white/80 text-sm mt-1">And extra set of batteries for extended play</p>
             </div>
           </div>
         </div>
