@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -213,7 +214,7 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'shooting-star': 'shooting-star 2s ease-out',
 				'slow-shooting-star': 'slow-shooting-star 18s linear infinite',
-				'fast-shooting-star': 'fast-shooting-star 5s linear infinite',
+				'fast-shooting-star': 'fast-shooting-star 1.5s linear',
 				'vertical-shooting-star': 'vertical-shooting-star 5s linear infinite',
 				'slow-drift': 'slow-drift 30s linear infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',

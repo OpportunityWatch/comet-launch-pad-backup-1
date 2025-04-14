@@ -1,5 +1,5 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
@@ -47,6 +47,70 @@ const BackgroundStars = React.memo(() => {
 
 BackgroundStars.displayName = 'BackgroundStars';
 
+// New component for shooting stars
+const ShootingStar = React.memo(() => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, delay: 0 });
+
+  useEffect(() => {
+    // Function to show a shooting star at a random horizontal position
+    const showShootingStar = () => {
+      // Random horizontal position (5% to 95% of screen width)
+      const xPosition = Math.random() * 90 + 5;
+      // Random delay for animation
+      const animationDelay = Math.random() * 0.5;
+      
+      setPosition({ x: xPosition, delay: animationDelay });
+      setIsVisible(true);
+      
+      // Hide the star after animation completes
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 1500); // Animation takes about 1.5 seconds
+    };
+    
+    // Show initial shooting star
+    showShootingStar();
+    
+    // Set up repeating interval with random timing
+    const intervalId = setInterval(() => {
+      // Random interval between 2-7 seconds
+      const nextInterval = Math.random() * 5000 + 2000;
+      
+      setTimeout(() => {
+        showShootingStar();
+      }, nextInterval);
+    }, 7000); // Outer interval just needs to be longer than longest possible delay
+    
+    return () => clearInterval(intervalId);
+  }, []);
+  
+  if (!isVisible) return null;
+  
+  return (
+    <div 
+      className="absolute z-10"
+      style={{
+        left: `${position.x}%`,
+        bottom: '0',
+        animationDelay: `${position.delay}s`,
+      }}
+    >
+      {/* Star head */}
+      <div className="relative animate-fast-shooting-star">
+        <div className="w-3 h-3 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
+        
+        {/* Star tail */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="w-1 h-36 bg-gradient-to-t from-transparent via-comet-blue/70 to-comet-blue origin-top -rotate-12 transform -translate-y-full"></div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+ShootingStar.displayName = 'ShootingStar';
+
 const Hero = () => {
   console.log('Hero Component Rendered');
 
@@ -60,6 +124,7 @@ const Hero = () => {
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <BackgroundStars />
+        <ShootingStar />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
