@@ -5,12 +5,23 @@ import { ArrowDown } from "lucide-react";
 
 // Create reusable background stars to avoid regenerating on each render
 const BackgroundStars = React.memo(() => {
-  // Pre-compute random positions for stars to prevent re-randomization on render
+  // Pre-compute random positions and sizes for stars to prevent re-randomization on render
   const starPositions = React.useMemo(() => {
-    return Array(5).fill(0).map(() => ({
-      top: `${Math.random() * 80}%`,
-      left: `${Math.random() * 90}%`,
-    }));
+    // Create an array of 80 stars with different properties
+    return Array(80).fill(0).map(() => {
+      const size = Math.random() * 2 + 0.5; // Random sizes from 0.5px to 2.5px
+      const brightness = Math.random() * 0.7 + 0.3; // Varied brightness
+      
+      return {
+        top: `${Math.random() * 95}%`,
+        left: `${Math.random() * 95}%`,
+        size,
+        opacity: brightness,
+        // Larger stars pulse more visibly
+        pulse: size > 1.5,
+        delay: Math.random() * 5, // Different animation delays
+      };
+    });
   }, []);
 
   return (
@@ -18,15 +29,17 @@ const BackgroundStars = React.memo(() => {
       {starPositions.map((pos, i) => (
         <div 
           key={`star-${i}`}
-          className="absolute"
+          className={`absolute rounded-full bg-white ${pos.pulse ? 'animate-pulse-glow' : ''}`}
           style={{
             top: pos.top,
             left: pos.left,
+            width: `${pos.size}px`,
+            height: `${pos.size}px`,
+            opacity: pos.opacity,
+            animationDelay: `${pos.delay}s`,
             zIndex: 1
           }}
-        >
-          <div className="w-4 h-4 rounded-full bg-comet-blue animate-pulse-glow shadow-lg shadow-comet-blue/50"></div>
-        </div>
+        />
       ))}
     </>
   );

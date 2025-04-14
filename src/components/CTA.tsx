@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 
 // Extract stars to prevent re-randomization on render
 const BackgroundStars = React.memo(() => {
-  // Pre-compute star positions
+  // Pre-compute star positions and sizes
   const starPositions = React.useMemo(() => {
-    return Array(8).fill(0).map(() => ({
+    return Array(50).fill(0).map(() => ({
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      opacity: Math.random() * 0.4 + 0.3,
-      delay: Math.random() * 4,
+      size: Math.random() * 2 + 0.5, // Random sizes between 0.5px and 2.5px
+      opacity: Math.random() * 0.4 + 0.3, // Varied opacity
+      delay: Math.random() * 3, // Different animation delays
     }));
   }, []);
 
@@ -24,9 +25,9 @@ const BackgroundStars = React.memo(() => {
             top: pos.top,
             left: pos.left,
             opacity: pos.opacity,
-            height: "3px",
-            width: "3px",
-            animationDelay: `${i * 0.5}s`,
+            height: `${pos.size}px`,
+            width: `${pos.size}px`,
+            animationDelay: `${pos.delay}s`,
           }}
         />
       ))}
