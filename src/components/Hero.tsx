@@ -65,7 +65,7 @@ const ShootingStar = React.memo(() => {
       // Hide the star after animation completes
       setTimeout(() => {
         setIsVisible(false);
-      }, 5000); // Increased to 5 seconds for longer visibility
+      }, 10000); // Extended to 10 seconds
     };
     
     // Show initial shooting star
@@ -79,7 +79,7 @@ const ShootingStar = React.memo(() => {
       setTimeout(() => {
         showShootingStar();
       }, nextInterval);
-    }, 7000);
+    }, 12000); // Increased interval to accommodate longer animation
     
     return () => clearInterval(intervalId);
   }, []);
