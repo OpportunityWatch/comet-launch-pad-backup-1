@@ -65,7 +65,7 @@ const ShootingStar = React.memo(() => {
       // Hide the star after animation completes
       setTimeout(() => {
         setIsVisible(false);
-      }, 4000); // Animation takes about 4 seconds (increased from 1.5s)
+      }, 5000); // Increased to 5 seconds for longer visibility
     };
     
     // Show initial shooting star
@@ -79,7 +79,7 @@ const ShootingStar = React.memo(() => {
       setTimeout(() => {
         showShootingStar();
       }, nextInterval);
-    }, 7000); // Outer interval just needs to be longer than longest possible delay
+    }, 7000);
     
     return () => clearInterval(intervalId);
   }, []);
@@ -95,14 +95,12 @@ const ShootingStar = React.memo(() => {
         animationDelay: `${position.delay}s`,
       }}
     >
-      {/* Combined star with head and tail in one container to keep them together */}
       <div className="relative animate-slow-vertical-star">
-        {/* Star head */}
-        <div className="w-4 h-4 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
+        {/* Star head - reduced to 3px */}
+        <div className="w-3 h-3 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
         
-        {/* Star tail directly attached to the head */}
+        {/* Star tail - reduced width to 2px */}
         <div className="absolute top-1/2 left-1/2">
-          {/* Increased height and adjusted positioning */}
           <div className="w-2 h-48 bg-gradient-to-t from-transparent via-comet-blue/70 to-comet-blue absolute -translate-x-1/2 translate-y-0 origin-top"></div>
         </div>
       </div>
