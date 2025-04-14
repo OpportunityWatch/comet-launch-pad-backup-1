@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -25,7 +24,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Comets with fixed tails */}
+        {/* Comets with correctly positioned tails */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
@@ -43,20 +42,17 @@ const Hero = () => {
               animationDelay: `${i * 1.5}s`
             }}
           >
-            {/* Comet tail position fixed */}
-            <div 
-              style={{
-                position: 'absolute',
-                bottom: '0',
-                right: '0',
-                width: '3px',
-                height: '120px',
-                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', 
-                boxShadow: '0 0 10px rgba(0,160,228,0.6)',
-                transform: 'rotate(225deg)',
-                transformOrigin: 'top right'
-              }}
-            ></div>
+            <div className="absolute" style={{
+              width: '3px',
+              height: '120px',
+              bottom: '5px',
+              right: '5px',
+              background: 'linear-gradient(225deg, rgba(255,255,255,0.9) 0%, rgba(0,160,228,0.6) 50%, transparent 100%)',
+              boxShadow: '0 0 10px rgba(0,160,228,0.6)',
+              transformOrigin: 'top center',
+              transform: 'rotate(45deg)',
+              zIndex: 5
+            }}></div>
           </div>
         ))}
 
