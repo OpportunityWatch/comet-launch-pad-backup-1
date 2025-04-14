@@ -25,36 +25,60 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Visible comet trails */}
+        {/* Diagonal comet trails - new implementation */}
         {[...Array(6)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
             className="absolute"
             style={{
-              left: `${10 + (i * 15)}%`,
-              top: '-20px',
+              top: '-50px',
+              left: '-50px',
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              background: 'white',
+              boxShadow: '0 0 10px 2px rgba(255,255,255,0.8)',
               zIndex: 5,
-              animation: `vertical-shooting-star ${3 + Math.random() * 2}s linear infinite`,
-              animationDelay: `${i * 0.7}s`,
+              animation: `diagonal-comet ${6 + Math.random() * 4}s linear infinite`,
+              animationDelay: `${i * 1.2}s`
             }}
           >
-            {/* Comet head (bright dot) */}
-            <div className="relative">
-              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_5px_rgba(255,255,255,0.8)]"></div>
-              
-              {/* Comet tail (visible gradient) */}
-              <div 
-                className="absolute top-0 left-1/2 transform -translate-x-1/2"
-                style={{
-                  width: '2px',
-                  height: '80px',
-                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.5), transparent)',
-                  boxShadow: '0 0 8px 2px rgba(0,160,228,0.6)',
-                }}
-              ></div>
-            </div>
+            {/* Comet tail */}
+            <div 
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '100%',
+                width: '80px',
+                height: '3px',
+                background: 'linear-gradient(to left, rgba(255,255,255,0.8), rgba(0,160,228,0.4), transparent)',
+                transform: 'translateY(-50%) rotate(15deg)',
+                transformOrigin: 'right center',
+                boxShadow: '0 0 8px rgba(0,160,228,0.6)'
+              }}
+            ></div>
           </div>
         ))}
+
+        {/* Add keyframe animation directly in the component for visibility */}
+        <style jsx>{`
+          @keyframes diagonal-comet {
+            0% {
+              transform: translate(-50px, -50px) rotate(45deg);
+              opacity: 0;
+            }
+            5% {
+              opacity: 1;
+            }
+            95% {
+              opacity: 1;
+            }
+            100% {
+              transform: translate(calc(100vw + 50px), calc(100vh + 50px)) rotate(45deg);
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">

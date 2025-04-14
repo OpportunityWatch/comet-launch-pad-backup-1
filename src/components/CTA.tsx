@@ -10,9 +10,9 @@ const CTA = () => {
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Background stars/dots */}
-        {[...Array(8)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <div 
-            key={i}
+            key={`star-${i}`}
             className="absolute rounded-full bg-white animate-pulse-glow"
             style={{
               top: `${Math.random() * 100}%`,
@@ -25,36 +25,59 @@ const CTA = () => {
           />
         ))}
         
-        {/* Visible vertical comet trails */}
-        {[...Array(5)].map((_, i) => (
+        {/* New vertical comet trails with inline styles and animations */}
+        {[...Array(7)].map((_, i) => (
           <div 
-            key={`cta-comet-${i}`} 
+            key={`cta-comet-${i}`}
             className="absolute"
             style={{
-              left: `${15 + (i * 18)}%`,
+              left: `${10 + (i * 12)}%`,
               top: '-20px',
-              zIndex: 5,
-              animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
-              animationDelay: `${i * 0.8}s`,
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              background: 'white',
+              boxShadow: '0 0 15px 5px rgba(255,255,255,0.8)',
+              zIndex: 10,
+              animation: `vertical-fall ${4 + Math.random() * 3}s linear infinite`,
+              animationDelay: `${i * 0.9}s`
             }}
           >
-            {/* Comet head (bright dot) */}
-            <div className="relative">
-              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_5px_rgba(255,255,255,0.8)]"></div>
-              
-              {/* Comet tail (visible gradient) */}
-              <div 
-                className="absolute top-0 left-1/2 transform -translate-x-1/2"
-                style={{
-                  width: '2px',
-                  height: '100px',
-                  background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.5), transparent)',
-                  boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-                }}
-              ></div>
-            </div>
+            {/* Long visible comet tail */}
+            <div 
+              style={{
+                position: 'absolute',
+                top: '8px',
+                left: '4px',
+                width: '2px',
+                height: '120px',
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
+                boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
+                transform: 'translateX(-50%)'
+              }}
+            ></div>
           </div>
         ))}
+        
+        {/* Add keyframe animation directly in the component */}
+        <style jsx>{`
+          @keyframes vertical-fall {
+            0% {
+              transform: translateY(-30px);
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(100vh);
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
       
       {/* Colorful comet trail effects */}
