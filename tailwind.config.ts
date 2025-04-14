@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -180,6 +179,22 @@ export default {
 						opacity: '0'
 					}
 				},
+				'slow-vertical-star': {
+					'0%': {
+						transform: 'translateY(100vh)',
+						opacity: '0'
+					},
+					'10%': {
+						opacity: '1'
+					},
+					'90%': {
+						opacity: '1'
+					},
+					'100%': {
+						transform: 'translateY(-20vh)',
+						opacity: '0'
+					}
+				},
 				'slow-drift': {
 					'0%': {
 						transform: 'translateX(-10px)'
@@ -216,6 +231,7 @@ export default {
 				'slow-shooting-star': 'slow-shooting-star 18s linear infinite',
 				'fast-shooting-star': 'fast-shooting-star 1.5s linear',
 				'vertical-shooting-star': 'vertical-shooting-star 5s linear infinite',
+				'slow-vertical-star': 'slow-vertical-star 4s linear',
 				'slow-drift': 'slow-drift 30s linear infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
 				'spin-slow': 'spin-slow 10s linear infinite'

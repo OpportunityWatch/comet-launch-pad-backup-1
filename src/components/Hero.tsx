@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -47,7 +46,7 @@ const BackgroundStars = React.memo(() => {
 
 BackgroundStars.displayName = 'BackgroundStars';
 
-// New component for shooting stars
+// Improved shooting star component
 const ShootingStar = React.memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ x: 0, delay: 0 });
@@ -66,7 +65,7 @@ const ShootingStar = React.memo(() => {
       // Hide the star after animation completes
       setTimeout(() => {
         setIsVisible(false);
-      }, 1500); // Animation takes about 1.5 seconds
+      }, 4000); // Animation takes about 4 seconds (increased from 1.5s)
     };
     
     // Show initial shooting star
@@ -96,13 +95,15 @@ const ShootingStar = React.memo(() => {
         animationDelay: `${position.delay}s`,
       }}
     >
-      {/* Star head */}
-      <div className="relative animate-fast-shooting-star">
-        <div className="w-3 h-3 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
+      {/* Combined star with head and tail in one container to keep them together */}
+      <div className="relative animate-slow-vertical-star">
+        {/* Star head */}
+        <div className="w-4 h-4 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
         
-        {/* Star tail */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="w-1 h-36 bg-gradient-to-t from-transparent via-comet-blue/70 to-comet-blue origin-top -rotate-12 transform -translate-y-full"></div>
+        {/* Star tail directly attached to the head */}
+        <div className="absolute top-1/2 left-1/2">
+          {/* Increased height and adjusted positioning */}
+          <div className="w-2 h-48 bg-gradient-to-t from-transparent via-comet-blue/70 to-comet-blue absolute -translate-x-1/2 translate-y-0 origin-top"></div>
         </div>
       </div>
     </div>
