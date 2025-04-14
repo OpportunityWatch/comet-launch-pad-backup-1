@@ -60,25 +60,27 @@ const Hero = () => {
           </div>
         ))}
 
-        {/* Add keyframe animation directly in the component for visibility */}
-        <style jsx>{`
-          @keyframes diagonal-comet {
-            0% {
-              transform: translate(-50px, -50px) rotate(45deg);
-              opacity: 0;
+        {/* Add keyframe animation directly in the component */}
+        <style>
+          {`
+            @keyframes diagonal-comet {
+              0% {
+                transform: translate(-50px, -50px) rotate(45deg);
+                opacity: 0;
+              }
+              5% {
+                opacity: 1;
+              }
+              95% {
+                opacity: 1;
+              }
+              100% {
+                transform: translate(calc(100vw + 50px), calc(100vh + 50px)) rotate(45deg);
+                opacity: 0;
+              }
             }
-            5% {
-              opacity: 1;
-            }
-            95% {
-              opacity: 1;
-            }
-            100% {
-              transform: translate(calc(100vw + 50px), calc(100vh + 50px)) rotate(45deg);
-              opacity: 0;
-            }
-          }
-        `}</style>
+          `}
+        </style>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">

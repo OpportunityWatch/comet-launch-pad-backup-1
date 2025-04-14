@@ -60,24 +60,26 @@ const CTA = () => {
         ))}
         
         {/* Add keyframe animation directly in the component */}
-        <style jsx>{`
-          @keyframes vertical-fall {
-            0% {
-              transform: translateY(-30px);
-              opacity: 0;
+        <style>
+          {`
+            @keyframes vertical-fall {
+              0% {
+                transform: translateY(-30px);
+                opacity: 0;
+              }
+              10% {
+                opacity: 1;
+              }
+              90% {
+                opacity: 1;
+              }
+              100% {
+                transform: translateY(100vh);
+                opacity: 0;
+              }
             }
-            10% {
-              opacity: 1;
-            }
-            90% {
-              opacity: 1;
-            }
-            100% {
-              transform: translateY(100vh);
-              opacity: 0;
-            }
-          }
-        `}</style>
+          `}
+        </style>
       </div>
       
       {/* Colorful comet trail effects */}
