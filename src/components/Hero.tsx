@@ -23,60 +23,6 @@ const Hero = () => {
             <div className="w-4 h-4 rounded-full bg-comet-blue animate-pulse-glow shadow-lg shadow-comet-blue/50"></div>
           </div>
         ))}
-        
-        {/* Comets with correctly positioned tails */}
-        {[...Array(3)].map((_, i) => (
-          <div 
-            key={`comet-${i}`} 
-            className="absolute"
-            style={{
-              left: `${20 + (i * 30)}%`,
-              bottom: '-20px',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              background: 'white',
-              boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
-              zIndex: 5,
-              animation: `diagonal-comet-up-right ${5 + Math.random() * 4}s linear infinite`,
-              animationDelay: `${i * 1.5}s`
-            }}
-          >
-            <div className="absolute" style={{
-              width: '3px',
-              height: '120px',
-              bottom: '5px',
-              right: '5px',
-              background: 'linear-gradient(225deg, rgba(255,255,255,0.9) 0%, rgba(0,160,228,0.6) 50%, transparent 100%)',
-              boxShadow: '0 0 10px rgba(0,160,228,0.6)',
-              transformOrigin: 'top center',
-              transform: 'rotate(45deg)',
-              zIndex: 5
-            }}></div>
-          </div>
-        ))}
-
-        {/* Add keyframe animation directly in the component */}
-        <style>
-          {`
-            @keyframes diagonal-comet-up-right {
-              0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-              }
-              5% {
-                opacity: 1;
-              }
-              95% {
-                opacity: 1;
-              }
-              100% {
-                transform: translateY(-100vh) translateX(20vw);
-                opacity: 0;
-              }
-            }
-          `}
-        </style>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">

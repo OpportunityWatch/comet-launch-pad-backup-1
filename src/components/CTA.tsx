@@ -6,7 +6,7 @@ const CTA = () => {
 
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
-      {/* Background effects */}
+      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Background stars/dots */}
         {[...Array(8)].map((_, i) => (
@@ -23,60 +23,6 @@ const CTA = () => {
             }}
           />
         ))}
-        
-        {/* Comets with correctly positioned tails */}
-        {[...Array(4)].map((_, i) => (
-          <div 
-            key={`cta-comet-${i}`}
-            className="absolute"
-            style={{
-              left: `${25 + (i * 20)}%`,
-              bottom: '-20px',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              background: 'white',
-              boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
-              zIndex: 10,
-              animation: `diagonal-cta-comet-up-right ${4 + Math.random() * 3}s linear infinite`,
-              animationDelay: `${i * 0.9}s`
-            }}
-          >
-            <div className="absolute" style={{
-              width: '3px',
-              height: '120px',
-              bottom: '5px',
-              right: '5px',
-              background: 'linear-gradient(225deg, rgba(255,255,255,0.9) 0%, rgba(0,160,228,0.6) 50%, transparent 100%)',
-              boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-              transformOrigin: 'top center',
-              transform: 'rotate(45deg)',
-              zIndex: 5
-            }}></div>
-          </div>
-        ))}
-        
-        {/* Add keyframe animation directly in the component */}
-        <style>
-          {`
-            @keyframes diagonal-cta-comet-up-right {
-              0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-              }
-              10% {
-                opacity: 1;
-              }
-              90% {
-                opacity: 1;
-              }
-              100% {
-                transform: translateY(-100vh) translateX(20vw);
-                opacity: 0;
-              }
-            }
-          `}
-        </style>
       </div>
       
       {/* Colorful comet trail effects */}
