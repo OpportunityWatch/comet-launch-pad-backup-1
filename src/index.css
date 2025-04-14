@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -158,12 +157,14 @@
     background-image: linear-gradient(
       -45deg,
       #00A651 0%, /* Green */
-      #FFF200 25%, /* Yellow */
-      #FF8C00 50%, /* Orange */
-      #00A0E4 75%, /* Blue */
+      #FFF200 20%, /* Yellow */
+      #FF8C00 35%, /* Orange */
+      #D946EF 50%, /* Magenta */
+      #ea384c 65%, /* Red */
+      #00A0E4 80%, /* Blue */
       #00A651 100% /* Back to Green */
     );
-    animation: gradient-animation 6s ease infinite;
+    animation: gradient-animation 8s ease infinite;
     font-weight: 900;
     letter-spacing: -1px;
   }
@@ -180,4 +181,3 @@
     }
   }
 }
-
