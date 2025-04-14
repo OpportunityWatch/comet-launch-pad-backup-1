@@ -25,21 +25,21 @@ const CTA = () => {
           />
         ))}
         
-        {/* Vertical comet trails with slight angle in the opposite direction */}
+        {/* Vertical comet trails with slight angle - now flying upward */}
         {[...Array(7)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
             className="absolute"
             style={{
               left: `${15 + (i * 12)}%`,
-              top: '-20px',
+              bottom: '-20px',
               width: '10px',
               height: '10px',
               borderRadius: '50%',
               background: 'white',
               boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
               zIndex: 10,
-              animation: `vertical-angled-fall ${4 + Math.random() * 3}s linear infinite`,
+              animation: `vertical-angled-fall-up ${4 + Math.random() * 3}s linear infinite`,
               animationDelay: `${i * 0.9}s`
             }}
           >
@@ -47,14 +47,14 @@ const CTA = () => {
             <div 
               style={{
                 position: 'absolute',
-                top: '10px',
+                bottom: '10px',
                 left: '5px',
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
                 boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
                 transform: 'translateX(-50%) rotate(12deg)',
-                transformOrigin: 'top center'
+                transformOrigin: 'bottom center'
               }}
             ></div>
           </div>
@@ -63,9 +63,9 @@ const CTA = () => {
         {/* Add keyframe animation directly in the component */}
         <style>
           {`
-            @keyframes vertical-angled-fall {
+            @keyframes vertical-angled-fall-up {
               0% {
-                transform: translateY(-50px) translateX(0) rotate(12deg);
+                transform: translateY(50px) translateX(0) rotate(12deg);
                 opacity: 0;
               }
               10% {
@@ -75,7 +75,7 @@ const CTA = () => {
                 opacity: 1;
               }
               100% {
-                transform: translateY(100vh) translateX(20vw) rotate(12deg);
+                transform: translateY(-100vh) translateX(-20vw) rotate(12deg);
                 opacity: 0;
               }
             }

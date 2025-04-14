@@ -25,21 +25,21 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Vertical comet trails with slight angle */}
+        {/* Vertical comet trails with slight angle - now flying upward */}
         {[...Array(6)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
             className="absolute"
             style={{
               left: `${10 + (i * 14)}%`,
-              top: '-20px',
+              bottom: '-20px',
               width: '10px',
               height: '10px',
               borderRadius: '50%',
               background: 'white',
               boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
               zIndex: 5,
-              animation: `vertical-angled-comet ${5 + Math.random() * 4}s linear infinite`,
+              animation: `vertical-angled-comet-up ${5 + Math.random() * 4}s linear infinite`,
               animationDelay: `${i * 1.5}s`
             }}
           >
@@ -47,14 +47,14 @@ const Hero = () => {
             <div 
               style={{
                 position: 'absolute',
-                top: '10px',
+                bottom: '10px',
                 left: '5px',
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
                 boxShadow: '0 0 10px rgba(0,160,228,0.6)',
                 transform: 'translateX(-50%) rotate(-12deg)',
-                transformOrigin: 'top center'
+                transformOrigin: 'bottom center'
               }}
             ></div>
           </div>
@@ -63,9 +63,9 @@ const Hero = () => {
         {/* Add keyframe animation directly in the component */}
         <style>
           {`
-            @keyframes vertical-angled-comet {
+            @keyframes vertical-angled-comet-up {
               0% {
-                transform: translateY(-50px) translateX(0) rotate(-12deg);
+                transform: translateY(50px) translateX(0) rotate(-12deg);
                 opacity: 0;
               }
               5% {
@@ -75,7 +75,7 @@ const Hero = () => {
                 opacity: 1;
               }
               100% {
-                transform: translateY(100vh) translateX(-20vw) rotate(-12deg);
+                transform: translateY(-100vh) translateX(20vw) rotate(-12deg);
                 opacity: 0;
               }
             }
