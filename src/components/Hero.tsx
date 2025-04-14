@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Reduced number of vertical comet trails with slight angle - flying upward */}
+        {/* Reduced number of vertical comet trails with trajectory corrected - flying upward and right */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
@@ -39,22 +39,22 @@ const Hero = () => {
               background: 'white',
               boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
               zIndex: 5,
-              animation: `vertical-angled-comet-up ${5 + Math.random() * 4}s linear infinite`,
+              animation: `diagonal-comet-up-right ${5 + Math.random() * 4}s linear infinite`,
               animationDelay: `${i * 1.5}s`
             }}
           >
-            {/* Comet tail - now properly positioned below the head */}
+            {/* Comet tail - now properly positioned to trail behind as comet moves up and right */}
             <div 
               style={{
                 position: 'absolute',
-                top: '10px', // Changed from bottom to top
-                left: '5px',
+                bottom: '5px', // Position tail below the head
+                right: '5px', // Position tail to the left of the head (since moving right)
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Changed direction
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Gradient flows away from head
                 boxShadow: '0 0 10px rgba(0,160,228,0.6)',
-                transform: 'translateX(-50%) rotate(-12deg)',
-                transformOrigin: 'top center' // Changed from bottom to top
+                transform: 'rotate(15deg)', // Angle tail downward and left
+                transformOrigin: 'top center'
               }}
             ></div>
           </div>
@@ -63,9 +63,9 @@ const Hero = () => {
         {/* Add keyframe animation directly in the component */}
         <style>
           {`
-            @keyframes vertical-angled-comet-up {
+            @keyframes diagonal-comet-up-right {
               0% {
-                transform: translateY(50px) translateX(0) rotate(-12deg);
+                transform: translateY(0) translateX(0);
                 opacity: 0;
               }
               5% {
@@ -75,7 +75,7 @@ const Hero = () => {
                 opacity: 1;
               }
               100% {
-                transform: translateY(-100vh) translateX(20vw) rotate(-12deg);
+                transform: translateY(-100vh) translateX(20vw);
                 opacity: 0;
               }
             }

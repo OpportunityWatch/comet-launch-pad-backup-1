@@ -25,7 +25,7 @@ const CTA = () => {
           />
         ))}
         
-        {/* Reduced number of vertical comet trails with slight angle - now flying upward */}
+        {/* Reduced number of vertical comet trails with trajectory corrected - flying upward and right */}
         {[...Array(4)].map((_, i) => (
           <div 
             key={`cta-comet-${i}`}
@@ -39,22 +39,22 @@ const CTA = () => {
               background: 'white',
               boxShadow: '0 0 20px 5px rgba(255,255,255,0.9)',
               zIndex: 10,
-              animation: `vertical-angled-fall-up ${4 + Math.random() * 3}s linear infinite`,
+              animation: `diagonal-cta-comet-up-right ${4 + Math.random() * 3}s linear infinite`,
               animationDelay: `${i * 0.9}s`
             }}
           >
-            {/* Long visible comet tail - now properly positioned below the head */}
+            {/* Long visible comet tail - positioned correctly for up-right movement */}
             <div 
               style={{
                 position: 'absolute',
-                top: '10px', // Changed from bottom to top
-                left: '5px',
+                bottom: '5px', // Position tail below the head
+                right: '5px', // Position tail to the left of the head (since moving right)
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Changed direction
+                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Gradient direction matches flight
                 boxShadow: '0 0 10px 3px rgba(0,160,228,0.6)',
-                transform: 'translateX(-50%) rotate(12deg)',
-                transformOrigin: 'top center' // Changed from bottom to top
+                transform: 'rotate(15deg)', // Angle tail downward and left
+                transformOrigin: 'top center'
               }}
             ></div>
           </div>
@@ -63,9 +63,9 @@ const CTA = () => {
         {/* Add keyframe animation directly in the component */}
         <style>
           {`
-            @keyframes vertical-angled-fall-up {
+            @keyframes diagonal-cta-comet-up-right {
               0% {
-                transform: translateY(50px) translateX(0) rotate(12deg);
+                transform: translateY(0) translateX(0);
                 opacity: 0;
               }
               10% {
@@ -75,7 +75,7 @@ const CTA = () => {
                 opacity: 1;
               }
               100% {
-                transform: translateY(-100vh) translateX(-20vw) rotate(12deg);
+                transform: translateY(-100vh) translateX(20vw);
                 opacity: 0;
               }
             }
