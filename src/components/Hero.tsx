@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Vertical comet trails with slight angle - now flying upward */}
+        {/* Vertical comet trails with slight angle - flying upward */}
         {[...Array(6)].map((_, i) => (
           <div 
             key={`comet-${i}`} 
@@ -43,18 +43,18 @@ const Hero = () => {
               animationDelay: `${i * 1.5}s`
             }}
           >
-            {/* Comet tail */}
+            {/* Comet tail - now properly positioned below the head */}
             <div 
               style={{
                 position: 'absolute',
-                bottom: '10px',
+                top: '10px', // Changed from bottom to top
                 left: '5px',
                 width: '3px',
                 height: '150px',
-                background: 'linear-gradient(to top, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)',
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(0,160,228,0.6), transparent)', // Changed direction
                 boxShadow: '0 0 10px rgba(0,160,228,0.6)',
                 transform: 'translateX(-50%) rotate(-12deg)',
-                transformOrigin: 'bottom center'
+                transformOrigin: 'top center' // Changed from bottom to top
               }}
             ></div>
           </div>
