@@ -1,3 +1,4 @@
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -46,26 +47,26 @@ const BackgroundStars = React.memo(() => {
 
 BackgroundStars.displayName = 'BackgroundStars';
 
-// Improved shooting star component
+// Improved shooting star component with curved path
 const ShootingStar = React.memo(() => {
   const [isVisible, setIsVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, delay: 0 });
+  const [position, setPosition] = useState({ startX: 0, delay: 0 });
 
   useEffect(() => {
-    // Function to show a shooting star at a random horizontal position
+    // Function to show a shooting star with curved path
     const showShootingStar = () => {
-      // Random horizontal position (5% to 95% of screen width)
-      const xPosition = Math.random() * 90 + 5;
+      // Start position in the lower left area (5% to 15% of screen width)
+      const startXPosition = Math.random() * 10 + 5;
       // Random delay for animation
       const animationDelay = Math.random() * 0.5;
       
-      setPosition({ x: xPosition, delay: animationDelay });
+      setPosition({ startX: startXPosition, delay: animationDelay });
       setIsVisible(true);
       
       // Hide the star after animation completes
       setTimeout(() => {
         setIsVisible(false);
-      }, 10000); // Extended to 10 seconds
+      }, 10000); // 10 seconds duration
     };
     
     // Show initial shooting star
@@ -79,7 +80,7 @@ const ShootingStar = React.memo(() => {
       setTimeout(() => {
         showShootingStar();
       }, nextInterval);
-    }, 12000); // Increased interval to accommodate longer animation
+    }, 12000); // Interval matches animation duration
     
     return () => clearInterval(intervalId);
   }, []);
@@ -88,18 +89,18 @@ const ShootingStar = React.memo(() => {
   
   return (
     <div 
-      className="absolute z-10"
+      className="absolute z-10 animate-curved-star-path"
       style={{
-        left: `${position.x}%`,
-        bottom: '0',
+        left: `${position.startX}%`,
+        bottom: '5%', // Start from slightly above the bottom
         animationDelay: `${position.delay}s`,
       }}
     >
-      <div className="relative animate-slow-vertical-star">
-        {/* Star head - reduced to 3px */}
+      <div className="relative">
+        {/* Star head - 3px as requested */}
         <div className="w-3 h-3 rounded-full bg-comet-blue shadow-lg shadow-comet-blue/70"></div>
         
-        {/* Star tail - reduced width to 2px */}
+        {/* Star tail - 2px width as requested */}
         <div className="absolute top-1/2 left-1/2">
           <div className="w-2 h-48 bg-gradient-to-t from-transparent via-comet-blue/70 to-comet-blue absolute -translate-x-1/2 translate-y-0 origin-top"></div>
         </div>

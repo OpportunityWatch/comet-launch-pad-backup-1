@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -125,6 +126,25 @@ export default {
 						opacity: '0'
 					}
 				},
+				'curved-star-path': {
+					'0%': {
+						transform: 'translateY(0) translateX(0)',
+						opacity: '0'
+					},
+					'10%': {
+						opacity: '1'
+					},
+					'30%': {
+						transform: 'translateY(-30vh) translateX(15vw)',
+					},
+					'60%': {
+						transform: 'translateY(-50vh) translateX(45vw)',
+					},
+					'100%': {
+						transform: 'translateY(-60vh) translateX(85vw)',
+						opacity: '0'
+					}
+				},
 				'slow-shooting-star': {
 					'0%': {
 						transform: 'translateX(-15vw)',
@@ -228,6 +248,7 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'float': 'float 6s ease-in-out infinite',
 				'shooting-star': 'shooting-star 2s ease-out',
+				'curved-star-path': 'curved-star-path 10s ease-out forwards',
 				'slow-shooting-star': 'slow-shooting-star 18s linear infinite',
 				'fast-shooting-star': 'fast-shooting-star 1.5s linear',
 				'vertical-shooting-star': 'vertical-shooting-star 5s linear infinite',
