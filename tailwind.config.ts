@@ -165,7 +165,7 @@ export default {
 				},
 				'vertical-shooting-star': {
 					'0%': {
-						transform: 'translateY(0)',
+						transform: 'translateY(-50px)',
 						opacity: '0'
 					},
 					'10%': {

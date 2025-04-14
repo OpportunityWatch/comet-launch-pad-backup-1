@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -7,9 +6,9 @@ const CTA = () => {
 
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
-      {/* Background effects - fewer dots, more prominent comets */}
+      {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Reduced number of background dots from 20 to 8 */}
+        {/* Background stars/dots */}
         {[...Array(8)].map((_, i) => (
           <div 
             key={i}
@@ -26,52 +25,47 @@ const CTA = () => {
           />
         ))}
         
-        {/* Properly implemented vertical comet trails */}
+        {/* Vertical shooting stars - simplified implementation */}
         {[...Array(6)].map((_, i) => {
-          // Create different groups of comets with staggered timing
-          const waveGroup = Math.floor(i / 2);
-          const groupDelay = waveGroup * 5 + Math.random() * 3;
+          const horizontalPos = 15 + (i * 12);
+          const duration = 2 + Math.random() * 2;
+          const delay = i * 1 + Math.random() * 3;
           
-          // Generate random positions and sizes for variety
-          const leftPosition = Math.random() * 80;
-          const trailLength = 35 + Math.random() * 25; // Length of the comet trail
-          
-          console.log(`Comet ${i} - Position: ${leftPosition}%, Delay: ${groupDelay}`);
-
           return (
             <div 
-              key={`comet-${i}`} 
+              key={`cta-comet-${i}`} 
               className="absolute"
               style={{
-                left: `${leftPosition}%`,
-                top: '-40px', // Start above the viewport
-                animation: `vertical-shooting-star ${3 + Math.random() * 3}s linear infinite`,
-                animationDelay: `${groupDelay}s`, // Delay the start
-                zIndex: 5,
+                left: `${horizontalPos}%`,
+                top: '-40px',
+                zIndex: 5
               }}
             >
-              {/* Head of comet - bright dot */}
-              <div className="absolute w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_8px_3px_rgba(255,255,255,0.7)] z-10"></div>
-              
-              {/* Vertical trail of comet */}
               <div 
-                className="absolute"
+                className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_3px_rgba(255,255,255,0.7)]"
                 style={{
-                  top: '0',
-                  left: '1px',
-                  width: '1px',
-                  height: `${trailLength}px`,
-                  background: 'linear-gradient(to bottom, transparent, #00A0E4)',
-                  boxShadow: '0 0 6px 1px rgba(0,160,228,0.5)',
-                  transform: 'translateX(0)', // Center the trail relative to the head
+                  animation: `vertical-shooting-star ${duration}s linear infinite`,
+                  animationDelay: `${delay}s`,
                 }}
-              ></div>
+              >
+                {/* Comet tail */}
+                <div 
+                  className="absolute w-[1px] h-30 origin-top"
+                  style={{
+                    top: '50%',
+                    left: '50%',
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(0,160,228,0.3), transparent)',
+                    boxShadow: '0 0 6px 1px rgba(0,160,228,0.5)',
+                    transform: 'translateX(-50%)',
+                  }}
+                ></div>
+              </div>
             </div>
           );
         })}
       </div>
       
-      {/* Colorful comet trail effects - made more prominent and vertical */}
+      {/* Colorful comet trail effects */}
       <div className="absolute top-1/4 left-0 w-2 h-full bg-gradient-to-b from-comet-blue via-transparent to-transparent blur-sm transform -rotate-10" />
       <div className="absolute top-3/4 right-0 w-2 h-full bg-gradient-to-b from-comet-green via-comet-yellow to-transparent blur-sm transform rotate-10" />
       

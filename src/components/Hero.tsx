@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -8,8 +7,9 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden space-bg flex items-center">
-      {/* Fewer floating dots - reduced from 5 to 3 */}
+      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Background dots */}
         {[...Array(3)].map((_, i) => (
           <div 
             key={i}
@@ -25,46 +25,41 @@ const Hero = () => {
           </div>
         ))}
         
-        {/* Vertical comet trails */}
+        {/* Vertical shooting stars */}
         {[...Array(8)].map((_, i) => {
-          // Create different groups of comets with staggered timing
-          const waveGroup = Math.floor(i / 3);
-          const groupDelay = waveGroup * 6 + Math.random() * 2;
+          const horizontalPos = 10 + (i * 10);
+          const duration = 2 + Math.random() * 3;
+          const delay = i * 0.5 + Math.random() * 2;
           
-          // Generate random positions and sizes for variety
-          const leftPosition = Math.random() * 80;
-          const trailLength = 40 + Math.random() * 30; // Length of the comet trail
-          
-          console.log(`Comet ${i} - Position: ${leftPosition}%, Delay: ${groupDelay}`);
-
           return (
             <div 
               key={`comet-${i}`} 
               className="absolute"
               style={{
-                left: `${leftPosition}%`,
-                top: '-50px', // Start above the viewport
-                animation: `vertical-shooting-star ${3 + Math.random() * 4}s linear infinite`,
-                animationDelay: `${groupDelay}s`, // Delay the start
-                zIndex: 5,
+                left: `${horizontalPos}%`,
+                top: '-50px',
+                zIndex: 5
               }}
             >
-              {/* Head of comet - bright dot */}
-              <div className="absolute w-3 h-3 rounded-full bg-white shadow-[0_0_10px_4px_rgba(255,255,255,0.8)] z-10"></div>
-              
-              {/* Vertical trail of comet */}
               <div 
-                className="absolute"
+                className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_4px_rgba(255,255,255,0.8)]"
                 style={{
-                  top: '0',
-                  left: '1px',
-                  width: '1px',
-                  height: `${trailLength}px`,
-                  background: 'linear-gradient(to bottom, transparent, #00A0E4)',
-                  boxShadow: '0 0 8px 1px rgba(0,160,228,0.6)',
-                  transform: 'translateX(0)', // Center the trail relative to the head
+                  animation: `vertical-shooting-star ${duration}s linear infinite`,
+                  animationDelay: `${delay}s`,
                 }}
-              ></div>
+              >
+                {/* Comet tail */}
+                <div 
+                  className="absolute w-[1px] h-40 origin-top"
+                  style={{
+                    top: '50%',
+                    left: '50%',
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)',
+                    boxShadow: '0 0 8px 2px rgba(0,160,228,0.6)',
+                    transform: 'translateX(-50%)',
+                  }}
+                ></div>
+              </div>
             </div>
           );
         })}
