@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -150,4 +151,33 @@
   .shine:hover::after {
     transform: rotate(30deg) translate(100%, 100%);
   }
+  
+  /* Animated gradient for CometCopters title */
+  .animated-gradient {
+    background-size: 300% 300%;
+    background-image: linear-gradient(
+      -45deg,
+      #00A651 0%, /* Green */
+      #FFF200 25%, /* Yellow */
+      #FF8C00 50%, /* Orange */
+      #00A0E4 75%, /* Blue */
+      #00A651 100% /* Back to Green */
+    );
+    animation: gradient-animation 6s ease infinite;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+  
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
+

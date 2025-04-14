@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -41,8 +42,8 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-center md:text-left">
-            <h1 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter animate-fade-in">
-              <span className="bg-gradient-to-br from-purple-600 via-comet-pink to-comet-blue/80 via-yellow-300/30 bg-clip-text text-transparent drop-shadow-[0_4px_5px_rgba(0,160,228,0.5)]">CometCopters</span>
+            <h1 className="text-4xl md:text-5xl font-black mb-6 text-white tracking-tighter animate-fade-in">
+              <span className="animated-gradient bg-clip-text text-transparent drop-shadow-[0_4px_5px_rgba(255,255,255,0.25)]">CometCopters</span>
             </h1>
             <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.2s' }}>
               LED Slingshot Helicopters that soar up to <span className="font-bold text-comet-blue text-glow">150+ feet</span> into the night sky like a shooting star!
