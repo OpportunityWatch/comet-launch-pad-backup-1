@@ -1,10 +1,15 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Star } from "lucide-react";
+import { ArrowDown, Star, Maximize2, X } from "lucide-react";
 
 const Hero = () => {
   console.log('Hero Component Rendered');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
 
   // Use useCallback to prevent recreating functions on each render
   const scrollToFeatures = useCallback(() => {
@@ -16,11 +21,11 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-screen pt-16 overflow-hidden flex items-center">
+    <section className="relative h-screen pt-16 overflow-hidden flex flex-col">
       {/* Star background layer - behind everything */}
       
-      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
-        <div className="flex flex-col items-center text-center -mt-24 md:-mt-36">
+      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16 flex-1 flex items-center">
+        <div className="flex flex-col items-center text-center -mt-24 md:-mt-36 w-full">
           {/* 4th of July Sale Banner - Above Title */}
           <div className="mb-10 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
@@ -75,12 +80,61 @@ const Hero = () => {
             </Button>
           </div>
         </div>
+      </div>
         
-        <div className="absolute -bottom-12 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
+      <div className="relative flex flex-col items-center pb-8">
+        <div className="flex justify-center animate-bounce mb-8">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
         </div>
+
+        {/* Video section with yellow glow - bridging sections */}
+        <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
+          <div 
+            className="relative rounded-xl overflow-hidden cursor-pointer group shadow-[0_0_30px_rgba(255,242,0,0.3)] hover:shadow-[0_0_40px_rgba(255,242,0,0.5)] transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/50"
+            onClick={toggleFullscreen}
+          >
+            <div className="relative" style={{ position: 'relative', aspectRatio: '9/16' }}>
+              <iframe 
+                loading="lazy" 
+                title="Gumlet video player"
+                src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              />
+              {/* Fullscreen button overlay */}
+              <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-black/50 backdrop-blur-sm rounded-lg p-2 text-white hover:bg-black/70 transition-colors">
+                  <Maximize2 size={20} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Fullscreen modal */}
+        {isFullscreen && (
+          <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+            <button
+              onClick={toggleFullscreen}
+              className="absolute top-4 right-4 z-10 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white hover:bg-black/70 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="w-full h-full max-w-md max-h-[90vh] md:max-w-2xl relative">
+              <div className="relative w-full h-full rounded-xl overflow-hidden">
+                <iframe 
+                  loading="lazy" 
+                  title="Gumlet video player - Fullscreen"
+                  src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                  style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
