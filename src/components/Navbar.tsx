@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -13,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-comet-darkblue/90 backdrop-blur-sm border-b border-comet-blue/20">
+    <nav className="fixed w-full top-0 z-50 bg-[#1a1a2e]/90 backdrop-blur-sm border-b border-comet-blue/20">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
           <a href="/" className="flex items-center">
@@ -37,7 +36,7 @@ const Navbar = () => {
             </Button>
             
             {mobileMenuOpen && (
-              <div className="absolute top-full left-0 right-0 bg-comet-darkblue/95 backdrop-blur-md p-4 animate-fade-in border-b border-comet-blue/20">
+              <div className="absolute top-full left-0 right-0 bg-[#1a1a2e]/95 backdrop-blur-md p-4 animate-fade-in border-b border-comet-blue/20">
                 <div className="flex flex-col space-y-4">
                   <a href="#features" className="text-white hover:text-comet-pink py-2" onClick={() => setMobileMenuOpen(false)}>Features</a>
                   <a href="#pricing" className="text-white hover:text-comet-green py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
