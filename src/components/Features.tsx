@@ -16,7 +16,7 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 
 const Features = () => {
   return (
-    <section id="features" className="py-20 bg-gradient-to-b from-transparent via-comet-space to-comet-darkblue relative">
+    <section id="features" className="py-20 bg-gradient-to-b from-comet-darkblue via-comet-space to-comet-darkblue relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Amazing Features</h2>
