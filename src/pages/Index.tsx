@@ -1,5 +1,5 @@
 import React from 'react';
-import NightSkyBackground from '@/components/NightSkyBackground';
+import NightSkyBackground from '../components/NightSkyBackground';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
