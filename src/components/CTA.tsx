@@ -15,7 +15,7 @@ const CTA = () => {
           <div className="flex items-center justify-center gap-2">
             <p className="text-comet-blue font-semibold flex items-center gap-2">
               <AmericanFlag size="md" />
-              Use code JULY4 for 25% off + Free Shipping!
+              Use code <span className="text-yellow-300">JULY4</span> for <span className="text-yellow-300">25%</span> off + Free Shipping!
               <AmericanFlag size="md" />
             </p>
           </div>
