@@ -4,6 +4,7 @@ import { useShootingStars } from '../hooks/useShootingStars';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const NightSkyBackground: React.FC = () => {
+  console.log('🚀 NightSkyBackground component is loading!');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const isMobile = useIsMobile();
