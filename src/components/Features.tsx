@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Rocket, Moon, Users, Gift, Award, Zap, Maximize2, X } from "lucide-react";
 
@@ -93,6 +94,14 @@ const Features = () => {
         </div>
 
         <div id="experience-magic" className="mt-16">
+          {/* Text section above video */}
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience the Magic</h3>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+              Watch as CometCopters transform an ordinary night into an extraordinary light show.
+            </p>
+          </div>
+
           {/* Video section with yellow glow */}
           <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
             <div 

@@ -7,8 +7,6 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
   const [nextClusterTime, setNextClusterTime] = useState(0);
   const [isInCluster, setIsInCluster] = useState(false);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
-  const lastUpdateRef = useRef<number>(0);
-  const timeoutRef = useRef<NodeJS.Timeout>();
   
   // Keep ref in sync with state
   useEffect(() => {
@@ -43,55 +41,24 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
     return () => clearInterval(interval);
   }, [nextClusterTime, isInCluster, spawnShootingStarCluster]);
   
-  // Clean up timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-  
-  // Return a function that updates the ref directly without causing re-renders
+  // Return a function that can be called to get updated stars without causing re-renders
   const getUpdatedShootingStars = useCallback(() => {
-    const now = Date.now();
-    
-    // Throttle updates to prevent excessive re-renders (max 60fps)
-    if (now - lastUpdateRef.current < 16) {
-      return shootingStarsRef.current;
-    }
-    
-    lastUpdateRef.current = now;
-    
     const currentStars = shootingStarsRef.current;
     const updated = currentStars
       .map(updateShootingStar)
       .filter(star => !shouldRemoveShootingStar(star, height));
     
-    // Update the ref immediately for smooth animation
+    // Update the ref immediately
     shootingStarsRef.current = updated;
     
-    // Only update state when there's a meaningful change
-    const shouldUpdateState = (
-      updated.length !== currentStars.length ||
-      (updated.length === 0 && currentStars.length > 0)
-    );
-    
-    if (shouldUpdateState) {
-      // Clear any existing timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+    // Only update state if there's a meaningful change
+    if (updated.length !== currentStars.length || updated.length === 0) {
+      setShootingStars(updated);
       
-      // Use setTimeout to break out of the current render cycle
-      timeoutRef.current = setTimeout(() => {
-        setShootingStars(updated);
-        
-        // Check if cluster is complete
-        if (isInCluster && updated.length === 0) {
-          setIsInCluster(false);
-        }
-      }, 0);
+      // Check if cluster is complete
+      if (isInCluster && updated.length === 0) {
+        setIsInCluster(false);
+      }
     }
     
     return updated;

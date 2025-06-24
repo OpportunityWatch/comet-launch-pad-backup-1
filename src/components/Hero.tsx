@@ -76,21 +76,10 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Bouncing arrow */}
-        <div className="absolute bottom-32 md:bottom-40 left-0 right-0 flex justify-center animate-bounce">
+        <div className="absolute -bottom-12 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
-        </div>
-
-        {/* Experience the Magic section - below the bouncing arrow */}
-        <div className="absolute bottom-4 md:bottom-8 left-0 right-0">
-          <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience the Magic</h3>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
-              Watch as CometCopters transform an ordinary night into an extraordinary light show.
-            </p>
-          </div>
         </div>
       </div>
     </section>
