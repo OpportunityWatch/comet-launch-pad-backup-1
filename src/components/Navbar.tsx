@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-[#1a1a2e]/90 backdrop-blur-sm">
+    <nav className="fixed w-full top-0 z-50 bg-[#1a1a2e]/70 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
           <a href="/" className="flex items-center">
