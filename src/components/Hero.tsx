@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -14,7 +13,7 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden flex items-center">
-      {/* Star background layer - contained within Hero section */}
+      {/* Star background layer - behind everything */}
       <StarBackground />
       
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
