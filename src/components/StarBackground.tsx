@@ -1,37 +1,54 @@
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { useStaticStars } from '../hooks/useStaticStars';
 import { useShootingStars } from '../hooks/useShootingStars';
 
 const StarBackground = React.memo(() => {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
   
-  const { canvasRef: staticStarsRef } = useStaticStars(dimensions.width, dimensions.height);
-  const { canvasRef: shootingStarsRef } = useShootingStars(dimensions.width, dimensions.height);
+  // Memoize dimensions to prevent unnecessary re-renders
+  const stableDimensions = useMemo(() => dimensions, [dimensions.width, dimensions.height]);
+  
+  const { canvasRef: staticStarsRef } = useStaticStars(stableDimensions);
+  const { canvasRef: shootingStarsRef } = useShootingStars(stableDimensions);
 
   useEffect(() => {
     const updateDimensions = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      console.log('Setting dimensions:', { width, height });
-      setDimensions({ width, height });
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const newWidth = rect.width || window.innerWidth;
+        const newHeight = rect.height || window.innerHeight;
+        
+        console.log('StarBackground dimensions:', { width: newWidth, height: newHeight });
+        setDimensions({ width: newWidth, height: newHeight });
+      }
     };
 
-    // Set dimensions immediately
+    // Use ResizeObserver for better performance
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    // Initial setup
     updateDimensions();
+
+    // Fallback for window resize
     window.addEventListener('resize', updateDimensions);
 
-    return () => window.removeEventListener('resize', updateDimensions);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
 
-  // Don't render until we have dimensions
-  if (dimensions.width === 0 || dimensions.height === 0) {
-    return null;
-  }
-
   return (
-    <div className="fixed inset-0 pointer-events-none z-0">
-      {/* Gradient background layer */}
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 pointer-events-none z-0 w-full h-full"
+    >
+      {/* Gradient background */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{
@@ -39,23 +56,28 @@ const StarBackground = React.memo(() => {
         }}
       />
       
-      {/* Static twinkling stars layer */}
-      <canvas
-        ref={staticStarsRef}
-        width={dimensions.width}
-        height={dimensions.height}
-        className="absolute inset-0 z-10"
-        style={{ display: 'block' }}
-      />
-      
-      {/* Shooting stars layer */}
-      <canvas
-        ref={shootingStarsRef}
-        width={dimensions.width}
-        height={dimensions.height}
-        className="absolute inset-0 z-20"
-        style={{ display: 'block' }}
-      />
+      {/* Only render canvases when we have valid dimensions */}
+      {dimensions.width > 0 && dimensions.height > 0 && (
+        <>
+          {/* Static stars */}
+          <canvas
+            ref={staticStarsRef}
+            width={dimensions.width}
+            height={dimensions.height}
+            className="absolute inset-0 w-full h-full"
+            style={{ display: 'block' }}
+          />
+          
+          {/* Shooting stars */}
+          <canvas
+            ref={shootingStarsRef}
+            width={dimensions.width}
+            height={dimensions.height}
+            className="absolute inset-0 w-full h-full"
+            style={{ display: 'block' }}
+          />
+        </>
+      )}
     </div>
   );
 });

@@ -3,32 +3,41 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Star } from '../types/stars';
 import { generateStars, updateStarTwinkle } from '../utils/starGeneration';
 
-export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
+export const useStaticStars = (dimensions: { width: number; height: number }) => {
   const [stars, setStars] = useState<Star[]>([]);
   const animationFrameRef = useRef<number>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Star[]>([]);
+  const { width: canvasWidth, height: canvasHeight } = dimensions;
 
   // Reduce star count on mobile for performance
   const starCount = canvasWidth < 768 ? 75 : 150;
 
-  // Update stars ref when stars change
+  // Generate stars when dimensions change
   useEffect(() => {
-    starsRef.current = stars;
-  }, [stars]);
+    if (canvasWidth > 0 && canvasHeight > 0) {
+      console.log('Generating static stars:', { canvasWidth, canvasHeight, starCount });
+      const newStars = generateStars(starCount, canvasWidth, canvasHeight);
+      setStars(newStars);
+    }
+  }, [canvasWidth, canvasHeight, starCount]);
 
+  // Animation function
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || canvasWidth === 0 || canvasHeight === 0) return;
+    if (!canvas || canvasWidth === 0 || canvasHeight === 0 || stars.length === 0) {
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Clear canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     const time = Date.now() * 0.001;
 
-    starsRef.current.forEach((star) => {
+    // Draw stars
+    stars.forEach((star) => {
       const twinkleOpacity = Math.max(0, Math.min(1, updateStarTwinkle(star, time)));
       
       ctx.beginPath();
@@ -38,16 +47,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
     });
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [canvasWidth, canvasHeight]);
-
-  // Generate stars when dimensions are available
-  useEffect(() => {
-    if (canvasWidth > 0 && canvasHeight > 0) {
-      console.log('Generating stars with dimensions:', { canvasWidth, canvasHeight, starCount });
-      const newStars = generateStars(starCount, canvasWidth, canvasHeight);
-      setStars(newStars);
-    }
-  }, [canvasWidth, canvasHeight, starCount]);
+  }, [canvasWidth, canvasHeight, stars]);
 
   // Start animation when stars are ready
   useEffect(() => {
@@ -61,7 +61,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [animate, stars.length, canvasWidth, canvasHeight]);
+  }, [animate, stars.length]);
 
   return { canvasRef };
 };
