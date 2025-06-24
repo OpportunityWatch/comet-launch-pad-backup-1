@@ -1,78 +1,9 @@
+
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Flag } from "lucide-react";
 import PaymentMethodDialog from './PaymentMethodDialog';
-
-interface PricingPlanProps {
-  title: string;
-  price: string;
-  description: string;
-  features: string[];
-  buttonText: string;
-  popular?: boolean;
-  image: string;
-  quantity: string;
-  onBuyNow: () => void;
-}
-
-const PricingPlan: React.FC<PricingPlanProps> = ({
-  title,
-  price,
-  description,
-  features,
-  buttonText,
-  popular,
-  image,
-  quantity,
-  onBuyNow
-}) => {
-  return (
-    <div className={`relative rounded-xl overflow-hidden transition-transform hover:scale-105 ${
-      popular ? "border-2 border-comet-blue shadow-xl shadow-comet-blue/20" : "border border-white/10"
-    }`}>
-      {popular && (
-        <div className="absolute top-0 right-0 bg-comet-blue text-white py-1 px-4 text-sm font-medium">
-          Best Value
-        </div>
-      )}
-      <div className="bg-white/5 backdrop-blur-sm h-full flex flex-col">
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-          <div className="flex items-end mb-4">
-            <span className="text-3xl font-bold text-white">{price}</span>
-            <span className="text-white/70 ml-1 mb-1">{quantity}</span>
-          </div>
-          <p className="text-white/70 mb-6">{description}</p>
-          <img 
-            src={image}
-            alt={title}
-            className="w-full aspect-square object-contain mb-6 rounded-lg bg-gradient-to-b from-transparent to-comet-blue/10 p-2"
-          />
-          <ul className="space-y-3 mb-6">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-start">
-                <Check className="h-5 w-5 text-comet-blue shrink-0 mr-2" />
-                <span className="text-white/80">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-auto p-6 pt-0">
-          <Button 
-            onClick={onBuyNow}
-            className={`w-full py-6 ${
-              popular 
-                ? "bg-comet-blue hover:bg-comet-blue/80 text-white" 
-                : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-            }`}
-          >
-            {buttonText}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import PricingPlan from './PricingPlan';
+import ProductGuarantee from './ProductGuarantee';
 
 const Pricing = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -92,7 +23,11 @@ const Pricing = () => {
             Select the perfect CometCopters package for your next adventure
           </p>
           <div className="mt-4 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
-            <p className="text-comet-blue font-semibold">🇺🇸 Use code JULY4 for 25% off + Free Shipping! 🇺🇸</p>
+            <div className="flex items-center justify-center gap-2">
+              <Flag className="h-4 w-4 text-comet-blue" />
+              <p className="text-comet-blue font-semibold">🇺🇸 Use code JULY4 for 25% off + Free Shipping! 🇺🇸</p>
+              <Flag className="h-4 w-4 text-comet-blue" />
+            </div>
           </div>
         </div>
 
@@ -113,7 +48,7 @@ const Pricing = () => {
             buttonText="Buy Now"
             onBuyNow={() => handleBuyNow({
               name: "Single CometCopter",
-              price: 695, // in cents
+              price: 695,
               quantity: 1
             })}
           />
@@ -135,7 +70,7 @@ const Pricing = () => {
             popular={true}
             onBuyNow={() => handleBuyNow({
               name: "3-Pack + 1 FREE CometCopters",
-              price: 1595, // in cents
+              price: 1595,
               quantity: 4
             })}
           />
@@ -156,32 +91,15 @@ const Pricing = () => {
             buttonText="Buy Now"
             onBuyNow={() => handleBuyNow({
               name: "9-Pack Party Bundle CometCopters",
-              price: 3995, // in cents
+              price: 3995,
               quantity: 12
             })}
           />
         </div>
         
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 mt-16 border border-white/10 max-w-3xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="mb-6 md:mb-0 md:mr-6">
-              <div className="w-16 h-16 bg-comet-blue/20 rounded-full flex items-center justify-center text-comet-blue">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2">100% Product Replacement Guarantee</h3>
-              <p className="text-white/70">
-                We're confident you'll love your CometCopters. If you're not completely satisfied with your purchase, contact us within 30 days for a full product replacement.
-              </p>
-            </div>
-          </div>
-        </div>
+        <ProductGuarantee />
       </div>
 
-      {/* Payment Method Dialog */}
       {selectedProduct && (
         <PaymentMethodDialog
           isOpen={isPaymentDialogOpen}
