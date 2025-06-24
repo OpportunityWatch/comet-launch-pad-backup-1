@@ -7,6 +7,7 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
   const [nextClusterTime, setNextClusterTime] = useState(0);
   const [isInCluster, setIsInCluster] = useState(false);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
+  const lastUpdateRef = useRef<number>(0);
   
   // Keep ref in sync with state
   useEffect(() => {
@@ -41,24 +42,42 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
     return () => clearInterval(interval);
   }, [nextClusterTime, isInCluster, spawnShootingStarCluster]);
   
-  // Return a function that can be called to get updated stars without causing re-renders
+  // Return a function that updates the ref directly without causing re-renders
   const getUpdatedShootingStars = useCallback(() => {
+    const now = Date.now();
+    
+    // Throttle updates to prevent excessive re-renders (max 60fps)
+    if (now - lastUpdateRef.current < 16) {
+      return shootingStarsRef.current;
+    }
+    
+    lastUpdateRef.current = now;
+    
     const currentStars = shootingStarsRef.current;
     const updated = currentStars
       .map(updateShootingStar)
       .filter(star => !shouldRemoveShootingStar(star, height));
     
-    // Update the ref immediately
+    // Update the ref immediately for smooth animation
     shootingStarsRef.current = updated;
     
-    // Only update state if there's a meaningful change
-    if (updated.length !== currentStars.length || updated.length === 0) {
-      setShootingStars(updated);
-      
-      // Check if cluster is complete
-      if (isInCluster && updated.length === 0) {
-        setIsInCluster(false);
-      }
+    // Only update state occasionally to prevent infinite loops
+    // Update state only when there's a meaningful change AND not too frequently
+    const shouldUpdateState = (
+      updated.length !== currentStars.length ||
+      (updated.length === 0 && currentStars.length > 0)
+    );
+    
+    if (shouldUpdateState) {
+      // Use setTimeout to break out of the current render cycle
+      setTimeout(() => {
+        setShootingStars(updated);
+        
+        // Check if cluster is complete
+        if (isInCluster && updated.length === 0) {
+          setIsInCluster(false);
+        }
+      }, 0);
     }
     
     return updated;
