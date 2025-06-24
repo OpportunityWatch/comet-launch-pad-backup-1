@@ -11,19 +11,21 @@ const NightSkyBackground: React.FC = () => {
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
   const { stars, getStarOpacity } = useStars(dimensions.width, dimensions.height, isMobile);
   const { getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
-  
+  -
   useEffect(() => {
     const updateDimensions = () => {
-      setDimensions({
+      const newDims = {
         width: window.innerWidth,
         height: window.innerHeight,
-      });
+      };
+      console.log('🌟 Canvas dimensions:', newDims);
+      setDimensions(newDims);
     };
-    
+  
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
+  }, []);  
   
   useEffect(() => {
     const canvas = canvasRef.current;
