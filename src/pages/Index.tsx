@@ -27,8 +27,8 @@ const Index = () => {
         <Navbar />
         <Hero />
         <VideoBridge />
-        <Features />
         <HowItWorks />
+        <Features />
         <Pricing />
         <Testimonials />
         <FAQ />
