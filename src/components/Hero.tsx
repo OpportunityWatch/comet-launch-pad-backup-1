@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
@@ -16,7 +15,7 @@ const Hero = () => {
       {/* Star background layer - behind everything */}
       
       <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
-        <div className="flex flex-col items-center text-center -mt-32 md:-mt-36">
+        <div className="flex flex-col items-center text-center -mt-24 md:-mt-36">
           {/* 4th of July Sale Banner - Above Title */}
           <div className="mb-10 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
@@ -72,7 +71,7 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-16 md:bottom-2 left-0 right-0 flex justify-center animate-bounce">
+        <div className="absolute bottom-16 left-0 right-0 flex justify-center animate-bounce" style={{ bottom: window.innerWidth >= 768 ? '40px' : '4rem' }}>
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
