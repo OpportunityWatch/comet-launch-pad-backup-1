@@ -1,6 +1,8 @@
+
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
+import AmericanFlag from './AmericanFlag';
 
 const Hero = () => {
   const scrollToFeatures = useCallback(() => {
@@ -36,8 +38,10 @@ const Hero = () => {
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <span className="text-yellow-300 font-bold text-sm tracking-wide">4TH OF JULY SPECIAL</span>
                 </div>
-                <div className="text-2xl font-black text-white mb-2">
-                  🇺🇸 25% OFF 🇺🇸
+                <div className="text-2xl font-black text-white mb-2 flex items-center justify-center gap-2">
+                  <AmericanFlag size="md" />
+                  25% OFF
+                  <AmericanFlag size="md" />
                 </div>
                 <div className="text-lg font-black text-yellow-300 mb-1">
                   Code: JULY4 at checkout!
