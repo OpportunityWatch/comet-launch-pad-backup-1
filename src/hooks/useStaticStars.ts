@@ -7,9 +7,15 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
   const [stars, setStars] = useState<Star[]>([]);
   const animationFrameRef = useRef<number>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const starsRef = useRef<Star[]>([]);
 
   // Reduce star count on mobile for performance
   const starCount = canvasWidth < 768 ? 75 : 150;
+
+  // Update stars ref when stars change
+  useEffect(() => {
+    starsRef.current = stars;
+  }, [stars]);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
@@ -22,7 +28,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
 
     const time = Date.now() * 0.001;
 
-    stars.forEach((star) => {
+    starsRef.current.forEach((star) => {
       const twinkleOpacity = Math.max(0, Math.min(1, updateStarTwinkle(star, time)));
       
       ctx.beginPath();
@@ -32,7 +38,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
     });
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [stars, canvasWidth, canvasHeight]);
+  }, [canvasWidth, canvasHeight]);
 
   // Generate stars when dimensions are available
   useEffect(() => {

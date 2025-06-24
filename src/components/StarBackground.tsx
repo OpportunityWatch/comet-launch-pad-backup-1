@@ -1,10 +1,11 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useStaticStars } from '../hooks/useStaticStars';
 import { useShootingStars } from '../hooks/useShootingStars';
 
-const StarBackground = () => {
+const StarBackground = React.memo(() => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  
   const { canvasRef: staticStarsRef } = useStaticStars(dimensions.width, dimensions.height);
   const { canvasRef: shootingStarsRef } = useShootingStars(dimensions.width, dimensions.height);
 
@@ -23,8 +24,7 @@ const StarBackground = () => {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  console.log('StarBackground render - dimensions:', dimensions);
-
+  // Don't render until we have dimensions
   if (dimensions.width === 0 || dimensions.height === 0) {
     return null;
   }
@@ -58,6 +58,8 @@ const StarBackground = () => {
       />
     </div>
   );
-};
+});
+
+StarBackground.displayName = 'StarBackground';
 
 export default StarBackground;

@@ -8,6 +8,12 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
   const animationFrameRef = useRef<number>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nextClusterTimeRef = useRef<number>(Date.now() + Math.random() * 5000 + 3000);
+  const clustersRef = useRef<ShootingStarCluster[]>([]);
+
+  // Update clusters ref when clusters change
+  useEffect(() => {
+    clustersRef.current = clusters;
+  }, [clusters]);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
@@ -35,52 +41,53 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
     }
 
     // Update and draw clusters
-    setClusters(prevClusters => {
-      const updatedClusters = prevClusters.map(cluster => {
-        const updatedStars = cluster.stars.map(star => ({
-          ...star,
-          x: star.x + Math.cos(star.angle) * star.speed,
-          y: star.y + Math.sin(star.angle) * star.speed,
-          opacity: Math.max(0, star.opacity - 0.008),
-        }));
+    const updatedClusters = clustersRef.current.map(cluster => {
+      const updatedStars = cluster.stars.map(star => ({
+        ...star,
+        x: star.x + Math.cos(star.angle) * star.speed,
+        y: star.y + Math.sin(star.angle) * star.speed,
+        opacity: Math.max(0, star.opacity - 0.008),
+      }));
 
-        return { ...cluster, stars: updatedStars };
-      }).filter(cluster => 
-        cluster.stars.some(star => 
-          star.opacity > 0 &&
-          star.x > -200 && star.x < canvasWidth + 200 &&
-          star.y > -200 && star.y < canvasHeight + 200
-        )
-      );
+      return { ...cluster, stars: updatedStars };
+    }).filter(cluster => 
+      cluster.stars.some(star => 
+        star.opacity > 0 &&
+        star.x > -200 && star.x < canvasWidth + 200 &&
+        star.y > -200 && star.y < canvasHeight + 200
+      )
+    );
 
-      // Draw shooting stars
-      updatedClusters.forEach(cluster => {
-        cluster.stars.forEach(star => {
-          if (star.opacity > 0) {
-            const gradient = ctx.createLinearGradient(
-              star.x,
-              star.y,
-              star.x - Math.cos(star.angle) * star.length,
-              star.y - Math.sin(star.angle) * star.length
-            );
-            
-            gradient.addColorStop(0, `${star.color}${Math.floor(star.opacity * 255).toString(16).padStart(2, '0')}`);
-            gradient.addColorStop(1, `${star.color}00`);
+    // Update state only if different
+    if (updatedClusters.length !== clustersRef.current.length) {
+      setClusters(updatedClusters);
+    }
 
-            ctx.beginPath();
-            ctx.moveTo(star.x, star.y);
-            ctx.lineTo(
-              star.x - Math.cos(star.angle) * star.length,
-              star.y - Math.sin(star.angle) * star.length
-            );
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-          }
-        });
+    // Draw shooting stars
+    updatedClusters.forEach(cluster => {
+      cluster.stars.forEach(star => {
+        if (star.opacity > 0) {
+          const gradient = ctx.createLinearGradient(
+            star.x,
+            star.y,
+            star.x - Math.cos(star.angle) * star.length,
+            star.y - Math.sin(star.angle) * star.length
+          );
+          
+          gradient.addColorStop(0, `${star.color}${Math.floor(star.opacity * 255).toString(16).padStart(2, '0')}`);
+          gradient.addColorStop(1, `${star.color}00`);
+
+          ctx.beginPath();
+          ctx.moveTo(star.x, star.y);
+          ctx.lineTo(
+            star.x - Math.cos(star.angle) * star.length,
+            star.y - Math.sin(star.angle) * star.length
+          );
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
       });
-
-      return updatedClusters;
     });
 
     animationFrameRef.current = requestAnimationFrame(animate);
