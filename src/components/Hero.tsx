@@ -75,6 +75,16 @@ const Hero = () => {
             </Button>
           </div>
         </div>
+
+        {/* Experience the Magic section - above the bouncing arrow */}
+        <div className="mt-16 mb-8">
+          <div className="text-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience the Magic</h3>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+              Watch as CometCopters transform an ordinary night into an extraordinary light show.
+            </p>
+          </div>
+        </div>
         
         <div className="absolute -bottom-12 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
