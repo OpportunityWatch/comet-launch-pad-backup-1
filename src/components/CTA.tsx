@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
-// Extract stars to prevent re-randomization on render
 const BackgroundStars = React.memo(() => {
-  // Pre-compute star positions and sizes
   const starPositions = React.useMemo(() => {
-    return Array(50).fill(0).map(() => ({
+    return Array(50).fill(0).map((_, i) => ({
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      size: Math.random() * 2 + 0.5, // Random sizes between 0.5px and 2.5px
-      opacity: Math.random() * 0.4 + 0.3, // Varied opacity
-      delay: Math.random() * 3, // Different animation delays
+      size: Math.random() * 2 + 0.5,
+      opacity: Math.random() * 0.4 + 0.3,
+      delay: Math.random() * 3,
     }));
   }, []);
 
@@ -19,7 +16,7 @@ const BackgroundStars = React.memo(() => {
     <>
       {starPositions.map((pos, i) => (
         <div 
-          key={`star-${i}`}
+          key={i}
           className="absolute rounded-full bg-white animate-pulse-glow"
           style={{
             top: pos.top,
@@ -38,13 +35,9 @@ const BackgroundStars = React.memo(() => {
 BackgroundStars.displayName = 'BackgroundStars';
 
 const CTA = () => {
-  console.log('CTA Component Rendered');
-
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-comet-darkblue to-comet-space">
-      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Background stars/dots */}
         <BackgroundStars />
       </div>
       

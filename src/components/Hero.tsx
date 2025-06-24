@@ -1,12 +1,8 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
 
 const Hero = () => {
-  console.log('Hero Component Rendered');
-
-  // Use useCallback to prevent recreating functions on each render
   const scrollToFeatures = useCallback(() => {
     document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
@@ -17,11 +13,9 @@ const Hero = () => {
 
   return (
     <section className="relative h-[120vh] pt-16 overflow-hidden flex items-center">
-      {/* Star background layer - behind everything */}
-      
       <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
         <div className="flex flex-col items-center text-center -mt-44 md:-mt-56">
-          {/* 4th of July Sale Banner - Above Title */}
+          {/* 4th of July Sale Banner */}
           <div className="mb-10 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
               {/* Stars decoration */}
@@ -60,6 +54,7 @@ const Hero = () => {
           <h1 className="text-5xl md:text-6xl font-black mb-6 text-white tracking-tighter animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <span className="animated-gradient bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(255,255,255,0.2)]">CometCopters</span>
           </h1>
+          
           <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.4s' }}>
             LED Slingshot Helicopters that soar up to <span className="font-bold text-comet-blue text-glow">150+ feet</span> into the night sky like a shooting star!
           </p>
@@ -74,6 +69,7 @@ const Hero = () => {
               Watch Demo
             </Button>
           </div>
+          
         </div>
         
         <div className="absolute bottom-8 sm:-bottom-12 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
