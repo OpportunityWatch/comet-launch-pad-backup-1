@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Check, Flag } from "lucide-react";
+import { Check } from "lucide-react";
 import PaymentMethodDialog from './PaymentMethodDialog';
 
 interface PricingPlanProps {
@@ -92,11 +92,7 @@ const Pricing = () => {
             Select the perfect CometCopters package for your next adventure
           </p>
           <div className="mt-4 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
-            <div className="flex items-center justify-center gap-2">
-              <Flag className="h-4 w-4 text-comet-blue" />
-              <p className="text-comet-blue font-semibold">🎉 Use code JULY4 for 25% off + Free Shipping!</p>
-              <Flag className="h-4 w-4 text-comet-blue" />
-            </div>
+            <p className="text-comet-blue font-semibold">🇺🇸 Use code JULY4 for 25% off + Free Shipping! 🇺🇸</p>
           </div>
         </div>
 
@@ -176,9 +172,9 @@ const Pricing = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">100% Satisfaction Guarantee</h3>
+              <h3 className="text-xl font-bold text-white mb-2">100% Product Replacement Guarantee</h3>
               <p className="text-white/70">
-                We're confident you'll love your CometCopters. If you're not completely satisfied with your purchase, contact us within 30 days for a full refund.
+                We're confident you'll love your CometCopters. If you're not completely satisfied with your purchase, contact us within 30 days for a full product replacement.
               </p>
             </div>
           </div>

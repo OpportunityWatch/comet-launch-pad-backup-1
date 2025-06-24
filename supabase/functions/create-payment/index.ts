@@ -98,6 +98,35 @@ serve(async (req) => {
       throw new Error("Failed to save order");
     }
 
+    // Send order notification email
+    try {
+      const notificationResponse = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/send-order-notification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+        },
+        body: JSON.stringify({
+          email,
+          productName,
+          quantity,
+          amount,
+          finalAmount,
+          discountCode,
+          paymentMethod: "stripe"
+        }),
+      });
+
+      if (!notificationResponse.ok) {
+        console.error("Failed to send order notification");
+      } else {
+        console.log("Order notification sent successfully");
+      }
+    } catch (notificationError) {
+      console.error("Error sending order notification:", notificationError);
+      // Don't throw here - the order was successful even if notification failed
+    }
+
     console.log("Order saved successfully, session created:", session.id);
 
     return new Response(

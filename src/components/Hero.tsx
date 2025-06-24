@@ -1,7 +1,6 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Star, Flag } from "lucide-react";
+import { ArrowDown, Star } from "lucide-react";
 
 const Hero = () => {
   const scrollToFeatures = useCallback(() => {
@@ -35,9 +34,7 @@ const Hero = () => {
               
               <div className="bg-gradient-to-r from-red-700 via-blue-900 to-red-700 rounded-lg px-6 py-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Flag className="h-4 w-4 text-yellow-300 fill-yellow-300" />
                   <span className="text-yellow-300 font-bold text-sm tracking-wide">4TH OF JULY SPECIAL</span>
-                  <Flag className="h-4 w-4 text-yellow-300 fill-yellow-300" />
                 </div>
                 <div className="text-2xl font-black text-white mb-2">
                   🇺🇸 25% OFF 🇺🇸
