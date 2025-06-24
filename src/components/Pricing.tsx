@@ -25,9 +25,9 @@ const Pricing = () => {
           <div className="mt-4 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
             <div className="flex items-center justify-center gap-2">
               <p className="text-comet-blue font-semibold flex items-center gap-2">
-                <AmericanFlag size="sm" />
+                <AmericanFlag size="md" />
                 Use code JULY4 for 25% off + Free Shipping!
-                <AmericanFlag size="sm" />
+                <AmericanFlag size="md" />
               </p>
             </div>
           </div>
