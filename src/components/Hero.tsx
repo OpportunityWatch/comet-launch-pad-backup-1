@@ -76,7 +76,8 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-24 md:bottom-32 left-0 right-0 flex justify-center animate-bounce">
+        {/* Bouncing arrow */}
+        <div className="absolute bottom-32 md:bottom-40 left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
