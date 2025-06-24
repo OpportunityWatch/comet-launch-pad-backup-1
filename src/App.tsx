@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,14 +7,12 @@ import { useEffect, useMemo } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// Configure the query client with optimized settings
 const App = () => {
-  // Create the query client with memoization to prevent recreation on re-renders
   const queryClient = useMemo(() => new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60000, // 1 minute
-        gcTime: 5 * 60 * 1000, // 5 minutes (replaces cacheTime)
+        staleTime: 60000,
+        gcTime: 5 * 60 * 1000,
         retry: 1,
         refetchOnWindowFocus: false,
       },
@@ -23,10 +20,8 @@ const App = () => {
   }), []);
 
   useEffect(() => {
-    // Set default metadata
     document.title = "CometCopters - LED Slingshot Helicopters | Up to 150+ Feet High";
     
-    // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute("content", 
@@ -43,7 +38,6 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
