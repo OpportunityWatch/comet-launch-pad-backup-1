@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
@@ -19,8 +18,8 @@ const Hero = () => {
     <section className="relative h-[120vh] pt-16 overflow-hidden">
       {/* Star background layer - behind everything */}
       
-      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
-        <div className="flex flex-col items-center text-center -mt-6 md:mt-8">
+      <div className="container mx-auto px-4 relative z-10 py-12 md:pt-24 md:pb-16">
+        <div className="flex flex-col items-center text-center -mt-6 md:mt-0">
           {/* 4th of July Sale Banner - Above Title */}
           <div className="mb-10 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-auto">
