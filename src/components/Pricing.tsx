@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import PaymentMethodDialog from './PaymentMethodDialog';
 
 interface PricingPlanProps {
   title: string;
@@ -12,6 +13,7 @@ interface PricingPlanProps {
   popular?: boolean;
   image: string;
   quantity: string;
+  onBuyNow: () => void;
 }
 
 const PricingPlan: React.FC<PricingPlanProps> = ({
@@ -22,7 +24,8 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
   buttonText,
   popular,
   image,
-  quantity
+  quantity,
+  onBuyNow
 }) => {
   return (
     <div className={`relative rounded-xl overflow-hidden transition-transform hover:scale-105 ${
@@ -57,6 +60,7 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
         </div>
         <div className="mt-auto p-6 pt-0">
           <Button 
+            onClick={onBuyNow}
             className={`w-full py-6 ${
               popular 
                 ? "bg-comet-blue hover:bg-comet-blue/80 text-white" 
@@ -72,6 +76,14 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
 };
 
 const Pricing = () => {
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+
+  const handleBuyNow = (productData: any) => {
+    setSelectedProduct(productData);
+    setIsPaymentDialogOpen(true);
+  };
+
   return (
     <section id="pricing" className="py-20 space-bg">
       <div className="container mx-auto px-4">
@@ -80,6 +92,9 @@ const Pricing = () => {
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Select the perfect CometCopters package for your next adventure
           </p>
+          <div className="mt-4 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
+            <p className="text-comet-blue font-semibold">🎉 Use code JULY4 for 25% off + Free Shipping!</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -97,6 +112,11 @@ const Pricing = () => {
               "$4.95 shipping & handling"
             ]}
             buttonText="Buy Now"
+            onBuyNow={() => handleBuyNow({
+              name: "Single CometCopter",
+              price: 695, // in cents
+              quantity: 1
+            })}
           />
           
           <PricingPlan
@@ -114,6 +134,11 @@ const Pricing = () => {
             ]}
             buttonText="Buy Now"
             popular={true}
+            onBuyNow={() => handleBuyNow({
+              name: "3-Pack + 1 FREE CometCopters",
+              price: 1595, // in cents
+              quantity: 4
+            })}
           />
           
           <PricingPlan
@@ -130,6 +155,11 @@ const Pricing = () => {
               "FREE shipping & handling"
             ]}
             buttonText="Buy Now"
+            onBuyNow={() => handleBuyNow({
+              name: "9-Pack Party Bundle CometCopters",
+              price: 3995, // in cents
+              quantity: 12
+            })}
           />
         </div>
         
@@ -151,6 +181,18 @@ const Pricing = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Method Dialog */}
+      {selectedProduct && (
+        <PaymentMethodDialog
+          isOpen={isPaymentDialogOpen}
+          onClose={() => {
+            setIsPaymentDialogOpen(false);
+            setSelectedProduct(null);
+          }}
+          product={selectedProduct}
+        />
+      )}
     </section>
   );
 };
