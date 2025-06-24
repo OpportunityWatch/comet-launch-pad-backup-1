@@ -23,10 +23,10 @@ const StarBackground = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none z-0">
       {/* Gradient background layer */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 w-full h-full"
         style={{
           background: 'radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)',
         }}
@@ -37,7 +37,8 @@ const StarBackground = () => {
         ref={staticStarsRef}
         width={dimensions.width}
         height={dimensions.height}
-        className="absolute inset-0"
+        className="absolute inset-0 z-10"
+        style={{ display: 'block' }}
       />
       
       {/* Shooting stars layer */}
@@ -45,7 +46,8 @@ const StarBackground = () => {
         ref={shootingStarsRef}
         width={dimensions.width}
         height={dimensions.height}
-        className="absolute inset-0"
+        className="absolute inset-0 z-20"
+        style={{ display: 'block' }}
       />
     </div>
   );
