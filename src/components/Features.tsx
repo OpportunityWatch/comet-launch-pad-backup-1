@@ -74,12 +74,12 @@ const Features = () => {
           </div>
 
           {/* Video section with yellow glow */}
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-md mx-auto md:max-w-2xl">
             <div 
               className="relative rounded-xl overflow-hidden cursor-pointer group shadow-[0_0_30px_rgba(255,242,0,0.3)] hover:shadow-[0_0_40px_rgba(255,242,0,0.5)] transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/50"
               onClick={toggleFullscreen}
             >
-              <div className="relative" style={{ position: 'relative', aspectRatio: '53/30' }}>
+              <div className="relative" style={{ position: 'relative', aspectRatio: '9/16' }}>
                 <iframe 
                   loading="lazy" 
                   title="Gumlet video player"
@@ -107,7 +107,7 @@ const Features = () => {
             >
               <X size={24} />
             </button>
-            <div className="w-full h-full max-w-6xl max-h-[90vh] relative">
+            <div className="w-full h-full max-w-md max-h-[90vh] md:max-w-2xl relative">
               <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <iframe 
                   loading="lazy" 
