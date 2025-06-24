@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Rocket, Moon, Users, Gift, Award, Zap } from "lucide-react";
 
@@ -59,14 +60,16 @@ const Features = () => {
 
         <div id="experience-magic" className="mt-16 relative">
           <div className="rounded-xl overflow-hidden">
-            <div className="aspect-video relative">
-              <img 
-                src="/lovable-uploads/7799f13d-b7be-4962-9a63-1224ae453060.png" 
-                alt="CometCopters in action at night" 
-                className="w-full h-full object-cover"
+            <div className="relative" style={{ position: 'relative', aspectRatio: '53/30' }}>
+              <iframe 
+                loading="lazy" 
+                title="Gumlet video player"
+                src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-comet-darkblue/80 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+              <div className="absolute inset-0 bg-gradient-to-t from-comet-darkblue/80 to-transparent pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 pointer-events-none">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Experience the Magic</h3>
                 <p className="text-white/80 mb-4 max-w-xl">
                   Watch as CometCopters transform an ordinary night into an extraordinary light show.
