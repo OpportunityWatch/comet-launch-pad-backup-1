@@ -71,7 +71,7 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-16 left-0 right-0 flex justify-center animate-bounce" style={{ bottom: window.innerWidth >= 768 ? '40px' : '4rem' }}>
+        <div className="absolute bottom-16 md:bottom-[40px] left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
