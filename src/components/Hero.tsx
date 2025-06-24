@@ -36,14 +36,14 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center animate-bounce">
+        <div className="absolute bottom-20 left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
         </div>
 
         {/* 4th of July Sale CTA */}
-        <div className="absolute bottom-20 left-0 right-0 flex justify-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-sm mx-4">
             {/* Stars decoration */}
             <div className="absolute -top-2 -left-2">
