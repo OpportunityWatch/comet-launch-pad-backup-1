@@ -1,7 +1,9 @@
+
 import React from 'react';
 import NightSkyBackground from '../components/NightSkyBackground';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import VideoBridge from '@/components/VideoBridge';
 import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import Pricing from '@/components/Pricing';
@@ -24,6 +26,7 @@ const Index = () => {
       <div className="min-h-screen relative z-10">
         <Navbar />
         <Hero />
+        <VideoBridge />
         <Features />
         <HowItWorks />
         <Pricing />

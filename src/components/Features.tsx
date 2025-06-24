@@ -16,7 +16,6 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 };
 
 const Features = () => {
-  const [isFullscreenHero, setIsFullscreenHero] = useState(false);
   const [isFullscreenFeatures, setIsFullscreenFeatures] = useState(false);
 
   const videoSrc = "https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false";
@@ -24,16 +23,6 @@ const Features = () => {
   return (
     <section id="features" className="py-20 space-bg">
       <div className="container mx-auto px-4">
-        {/* Video section straddling Hero and Features sections */}
-        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 -mt-64 md:-mt-96 mb-16">
-          <VideoPlayer
-            src={videoSrc}
-            title="Gumlet video player - Hero Bridge"
-            isFullscreen={isFullscreenHero}
-            onToggleFullscreen={() => setIsFullscreenHero(!isFullscreenHero)}
-          />
-        </div>
-
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Amazing Features</h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
