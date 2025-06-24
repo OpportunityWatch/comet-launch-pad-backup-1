@@ -24,8 +24,8 @@ const Features = () => {
   return (
     <section id="features" className="py-20 space-bg">
       <div className="container mx-auto px-4">
-        {/* Video section overlapping from Hero */}
-        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 -mt-32 mb-16">
+        {/* Video section straddling Hero and Features sections */}
+        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 -mt-48 md:-mt-64 mb-16">
           <VideoPlayer
             src={videoSrc}
             title="Gumlet video player - Hero Bridge"
