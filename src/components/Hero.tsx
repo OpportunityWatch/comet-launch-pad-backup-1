@@ -16,7 +16,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-screen pt-16 overflow-hidden flex items-center">
+    <section className="relative h-[120vh] pt-16 overflow-hidden flex items-center">
       {/* Star background layer - behind everything */}
       
       <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
