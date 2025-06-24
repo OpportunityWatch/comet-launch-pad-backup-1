@@ -1,3 +1,4 @@
+
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
@@ -18,11 +19,11 @@ const Hero = () => {
     <section className="relative h-[120vh] pt-16 overflow-hidden">
       {/* Star background layer - behind everything */}
       
-      <div className="container mx-auto px-4 relative z-10 py-12 md:pt-24 md:pb-16">
-        <div className="flex flex-col items-center text-center -mt-6 md:mt-0">
+      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
+        <div className="flex flex-col items-center text-center -mt-6 md:pt-12">
           {/* 4th of July Sale Banner - Above Title */}
           <div className="mb-10 animate-fade-in">
-            <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-auto">
+            <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
               {/* Stars decoration */}
               <div className="absolute -top-2 -left-2">
                 <Star className="h-4 w-4 text-yellow-300 fill-yellow-300 animate-pulse" />
@@ -59,10 +60,10 @@ const Hero = () => {
           <h1 className="text-5xl md:text-6xl font-black mb-6 text-white tracking-tighter animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <span className="animated-gradient bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(255,255,255,0.2)]">CometCopters</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl mx-auto font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.4s' }}>
+          <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.4s' }}>
             LED Slingshot Helicopters that soar up to <span className="font-bold text-comet-blue text-glow">150+ feet</span> into the night sky like a shooting star!
           </p>
-          <p className="text-lg mb-8 text-white/80 max-w-xl mx-auto animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
+          <p className="text-lg mb-8 text-white/80 max-w-xl animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
             Perfect for outdoor events, family gatherings, and creating spectacular light shows anywhere
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.8s' }}>
@@ -75,7 +76,7 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-2 sm:bottom-20 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
+        <div className="absolute bottom-8 sm:bottom-20 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
           <button onClick={scrollToFeatures} aria-label="Scroll to features">
             <ArrowDown className="h-8 w-8 text-white/70" />
           </button>
