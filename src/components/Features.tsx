@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Rocket, Moon, Users, Gift, Award, Zap } from "lucide-react";
 
@@ -58,7 +57,7 @@ const Features = () => {
           />
         </div>
 
-        <div className="mt-16 relative">
+        <div id="experience-magic" className="mt-16 relative">
           <div className="rounded-xl overflow-hidden">
             <div className="aspect-video relative">
               <img 

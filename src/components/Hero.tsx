@@ -11,6 +11,10 @@ const Hero = () => {
     document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const scrollToExperienceSection = useCallback(() => {
+    document.getElementById('experience-magic')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   return (
     <section className="relative h-screen pt-16 overflow-hidden flex items-center">
       {/* Star background layer - behind everything */}
@@ -66,7 +70,7 @@ const Hero = () => {
             <Button className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30">
               Get Your CometCopters
             </Button>
-            <Button variant="outline" className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 text-lg py-6 px-8 font-semibold shadow-md">
+            <Button onClick={scrollToExperienceSection} variant="outline" className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 text-lg py-6 px-8 font-semibold shadow-md">
               Watch Demo
             </Button>
           </div>
