@@ -1,13 +1,9 @@
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import AmericanFlag from './AmericanFlag';
 
 const Hero = () => {
-  const scrollToFeatures = useCallback(() => {
-    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
   const scrollToExperienceSection = useCallback(() => {
     document.getElementById('experience-magic')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
@@ -69,13 +65,6 @@ const Hero = () => {
             <Button onClick={scrollToExperienceSection} variant="outline" className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 text-lg py-6 px-8 font-semibold shadow-md">
               Watch Demo
             </Button>
-          </div>
-          
-          {/* Bouncing Arrow - positioned below buttons */}
-          <div className="mt-12 flex justify-center animate-bounce">
-            <button onClick={scrollToFeatures} aria-label="Scroll to features">
-              <ArrowDown className="h-8 w-8 text-white/70" />
-            </button>
           </div>
         </div>
       </div>
