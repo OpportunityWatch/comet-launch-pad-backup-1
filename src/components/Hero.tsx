@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Star } from "lucide-react";
@@ -72,12 +71,12 @@ const Hero = () => {
             </Button>
           </div>
           
-        </div>
-        
-        <div className="absolute bottom-8 sm:-bottom-12 md:bottom-4 left-0 right-0 flex justify-center animate-bounce">
-          <button onClick={scrollToFeatures} aria-label="Scroll to features">
-            <ArrowDown className="h-8 w-8 text-white/70" />
-          </button>
+          {/* Bouncing Arrow - positioned below buttons */}
+          <div className="mt-12 flex justify-center animate-bounce">
+            <button onClick={scrollToFeatures} aria-label="Scroll to features">
+              <ArrowDown className="h-8 w-8 text-white/70" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
