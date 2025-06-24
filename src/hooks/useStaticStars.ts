@@ -12,56 +12,59 @@ export const useStaticStars = (dimensions: { width: number; height: number }) =>
   // Reduce star count on mobile for performance
   const starCount = canvasWidth < 768 ? 75 : 150;
 
-  // Generate stars when dimensions change
+  // Generate stars when dimensions change - use string key to prevent object comparison issues
+  const dimensionKey = `${canvasWidth}x${canvasHeight}`;
+  
   useEffect(() => {
     if (canvasWidth > 0 && canvasHeight > 0) {
       console.log('Generating static stars:', { canvasWidth, canvasHeight, starCount });
       const newStars = generateStars(starCount, canvasWidth, canvasHeight);
       setStars(newStars);
     }
-  }, [canvasWidth, canvasHeight, starCount]);
+  }, [dimensionKey, starCount]);
 
-  // Animation function
-  const animate = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || canvasWidth === 0 || canvasHeight === 0 || stars.length === 0) {
+  // Animation function with stable dependencies
+  useEffect(() => {
+    if (stars.length === 0 || canvasWidth === 0 || canvasHeight === 0) {
       return;
     }
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    let animationId: number;
 
-    // Clear canvas
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    const animate = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-    const time = Date.now() * 0.001;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    // Draw stars
-    stars.forEach((star) => {
-      const twinkleOpacity = Math.max(0, Math.min(1, updateStarTwinkle(star, time)));
-      
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${twinkleOpacity})`;
-      ctx.fill();
-    });
+      // Clear canvas
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    animationFrameRef.current = requestAnimationFrame(animate);
-  }, [canvasWidth, canvasHeight, stars]);
+      const time = Date.now() * 0.001;
 
-  // Start animation when stars are ready
-  useEffect(() => {
-    if (stars.length > 0 && canvasWidth > 0 && canvasHeight > 0) {
-      console.log('Starting static stars animation with', stars.length, 'stars');
-      animate();
-    }
+      // Draw stars
+      stars.forEach((star) => {
+        const twinkleOpacity = Math.max(0, Math.min(1, updateStarTwinkle(star, time)));
+        
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${twinkleOpacity})`;
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    console.log('Starting static stars animation with', stars.length, 'stars');
+    animationId = requestAnimationFrame(animate);
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
       }
     };
-  }, [animate, stars.length]);
+  }, [stars, canvasWidth, canvasHeight]);
 
   return { canvasRef };
 };
