@@ -15,10 +15,10 @@ const Hero = () => {
 
   return (
     <section className="relative h-[120vh] pt-16 overflow-hidden flex items-start">
-      <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-24">
+      <div className="container mx-auto px-4 relative z-10 pt-20 md:pt-28">
         <div className="flex flex-col items-center text-center">
           {/* 4th of July Sale Banner */}
-          <div className="mb-10 animate-fade-in">
+          <div className="mb-16 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
               {/* Stars decoration */}
               <div className="absolute -top-2 -left-2">
