@@ -11,7 +11,7 @@ const NightSkyBackground: React.FC = () => {
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
   const { stars, getStarOpacity } = useStars(dimensions.width, dimensions.height, isMobile);
   const { getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
-  -
+  
   useEffect(() => {
     const updateDimensions = () => {
       const newDims = {
@@ -26,8 +26,10 @@ const NightSkyBackground: React.FC = () => {
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);  
-  
+  --
   useEffect(() => {
+    console.log('🎨 Animation effect running, dimensions:', dimensions);
+    console.log('⭐ Stars count:', stars.length);  
     const canvas = canvasRef.current;
     if (!canvas) return;
     
