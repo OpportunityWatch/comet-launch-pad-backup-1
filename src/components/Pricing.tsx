@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Flag } from "lucide-react";
 import PaymentMethodDialog from './PaymentMethodDialog';
@@ -24,9 +23,7 @@ const Pricing = () => {
           </p>
           <div className="mt-4 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
             <div className="flex items-center justify-center gap-2">
-              <Flag className="h-4 w-4 text-comet-blue" />
               <p className="text-comet-blue font-semibold">🇺🇸 Use code JULY4 for 25% off + Free Shipping! 🇺🇸</p>
-              <Flag className="h-4 w-4 text-comet-blue" />
             </div>
           </div>
         </div>
