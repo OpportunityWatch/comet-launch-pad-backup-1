@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { useStars } from '../hooks/useStars';
 import { useShootingStars } from '../hooks/useShootingStars';
@@ -125,7 +126,14 @@ const NightSkyBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 0 }}
+      style={{ 
+        zIndex: 0,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh'
+      }}
     />
   );
 };
