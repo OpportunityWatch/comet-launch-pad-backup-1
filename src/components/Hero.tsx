@@ -14,9 +14,9 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-[120vh] pt-16 overflow-hidden flex items-center">
-      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
-        <div className="flex flex-col items-center text-center mt-4 md:mt-8">
+    <section className="relative h-[120vh] pt-16 overflow-hidden flex items-start">
+      <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-24">
+        <div className="flex flex-col items-center text-center">
           {/* 4th of July Sale Banner */}
           <div className="mb-10 animate-fade-in">
             <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
