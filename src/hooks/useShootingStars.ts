@@ -8,6 +8,7 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
   const [isInCluster, setIsInCluster] = useState(false);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
   const lastUpdateRef = useRef<number>(0);
+  const timeoutRef = useRef<NodeJS.Timeout>();
   
   // Keep ref in sync with state
   useEffect(() => {
@@ -42,6 +43,15 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
     return () => clearInterval(interval);
   }, [nextClusterTime, isInCluster, spawnShootingStarCluster]);
   
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+  
   // Return a function that updates the ref directly without causing re-renders
   const getUpdatedShootingStars = useCallback(() => {
     const now = Date.now();
@@ -61,16 +71,20 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
     // Update the ref immediately for smooth animation
     shootingStarsRef.current = updated;
     
-    // Only update state occasionally to prevent infinite loops
-    // Update state only when there's a meaningful change AND not too frequently
+    // Only update state when there's a meaningful change
     const shouldUpdateState = (
       updated.length !== currentStars.length ||
       (updated.length === 0 && currentStars.length > 0)
     );
     
     if (shouldUpdateState) {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
       // Use setTimeout to break out of the current render cycle
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setShootingStars(updated);
         
         // Check if cluster is complete
