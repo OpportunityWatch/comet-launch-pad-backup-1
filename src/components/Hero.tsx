@@ -1,7 +1,7 @@
-
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import StarBackground from './StarBackground';
 
 const Hero = () => {
   console.log('Hero Component Rendered');
@@ -13,6 +13,9 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen pt-20 overflow-hidden flex items-center">
+      {/* Star background layer - behind everything */}
+      <StarBackground />
+      
       <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
         <div className="flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl font-black mb-6 text-white tracking-tighter animate-fade-in">
