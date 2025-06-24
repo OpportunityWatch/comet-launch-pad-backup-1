@@ -10,20 +10,27 @@ const StarBackground = () => {
 
   useEffect(() => {
     const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      console.log('Setting dimensions:', { width, height });
+      setDimensions({ width, height });
     };
 
+    // Set dimensions immediately
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
 
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
+  console.log('StarBackground render - dimensions:', dimensions);
+
+  if (dimensions.width === 0 || dimensions.height === 0) {
+    return null;
+  }
+
   return (
-    <div className="absolute inset-0 pointer-events-none z-0">
+    <div className="fixed inset-0 pointer-events-none z-0">
       {/* Gradient background layer */}
       <div 
         className="absolute inset-0 w-full h-full"

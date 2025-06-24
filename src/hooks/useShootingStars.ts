@@ -11,7 +11,7 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || canvasWidth === 0 || canvasHeight === 0) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -22,8 +22,9 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
 
     // Generate new cluster if it's time
     if (now >= nextClusterTimeRef.current) {
+      console.log('Creating new shooting star cluster');
       const newCluster = generateShootingStarCluster(
-        Date.now(),
+        now,
         Math.floor(Math.random() * 3) + 2,
         canvasWidth,
         canvasHeight
@@ -40,7 +41,7 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
           ...star,
           x: star.x + Math.cos(star.angle) * star.speed,
           y: star.y + Math.sin(star.angle) * star.speed,
-          opacity: Math.max(0, star.opacity - 0.01),
+          opacity: Math.max(0, star.opacity - 0.008),
         }));
 
         return { ...cluster, stars: updatedStars };
@@ -85,8 +86,10 @@ export const useShootingStars = (canvasWidth: number, canvasHeight: number) => {
     animationFrameRef.current = requestAnimationFrame(animate);
   }, [canvasWidth, canvasHeight]);
 
+  // Start animation when dimensions are available
   useEffect(() => {
     if (canvasWidth > 0 && canvasHeight > 0) {
+      console.log('Starting shooting stars animation with dimensions:', { canvasWidth, canvasHeight });
       animate();
     }
 

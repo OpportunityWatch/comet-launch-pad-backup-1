@@ -13,7 +13,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || canvasWidth === 0 || canvasHeight === 0) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -34,14 +34,19 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
     animationFrameRef.current = requestAnimationFrame(animate);
   }, [stars, canvasWidth, canvasHeight]);
 
+  // Generate stars when dimensions are available
   useEffect(() => {
     if (canvasWidth > 0 && canvasHeight > 0) {
-      setStars(generateStars(starCount, canvasWidth, canvasHeight));
+      console.log('Generating stars with dimensions:', { canvasWidth, canvasHeight, starCount });
+      const newStars = generateStars(starCount, canvasWidth, canvasHeight);
+      setStars(newStars);
     }
   }, [canvasWidth, canvasHeight, starCount]);
 
+  // Start animation when stars are ready
   useEffect(() => {
-    if (stars.length > 0) {
+    if (stars.length > 0 && canvasWidth > 0 && canvasHeight > 0) {
+      console.log('Starting static stars animation with', stars.length, 'stars');
       animate();
     }
 
@@ -50,7 +55,7 @@ export const useStaticStars = (canvasWidth: number, canvasHeight: number) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [animate, stars.length]);
+  }, [animate, stars.length, canvasWidth, canvasHeight]);
 
   return { canvasRef };
 };
