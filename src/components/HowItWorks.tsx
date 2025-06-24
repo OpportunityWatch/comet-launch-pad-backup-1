@@ -33,13 +33,6 @@ const HowItWorks = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-comet-darkblue to-comet-space">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Getting your CometCopter ready for flight is easy! Follow these simple steps
-          </p>
-        </div>
-
         <div className="max-w-5xl mx-auto">
           {steps.map((step, index) => (
             <StepCard 
