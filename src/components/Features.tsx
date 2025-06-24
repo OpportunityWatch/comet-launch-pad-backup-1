@@ -15,15 +15,44 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 };
 
 const Features = () => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreenHero, setIsFullscreenHero] = useState(false);
+  const [isFullscreenFeatures, setIsFullscreenFeatures] = useState(false);
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const toggleFullscreenHero = () => {
+    setIsFullscreenHero(!isFullscreenHero);
+  };
+
+  const toggleFullscreenFeatures = () => {
+    setIsFullscreenFeatures(!isFullscreenFeatures);
   };
 
   return (
     <section id="features" className="py-20 space-bg">
       <div className="container mx-auto px-4">
+        {/* Video section overlapping from Hero - with negative margin */}
+        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 -mt-32 mb-16">
+          <div 
+            className="relative rounded-xl overflow-hidden cursor-pointer group shadow-[0_0_30px_rgba(255,242,0,0.3)] hover:shadow-[0_0_40px_rgba(255,242,0,0.5)] transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/50"
+            onClick={toggleFullscreenHero}
+          >
+            <div className="relative" style={{ position: 'relative', aspectRatio: '9/16' }}>
+              <iframe 
+                loading="lazy" 
+                title="Gumlet video player - Hero Bridge"
+                src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              />
+              {/* Fullscreen button overlay */}
+              <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-black/50 backdrop-blur-sm rounded-lg p-2 text-white hover:bg-black/70 transition-colors">
+                  <Maximize2 size={20} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Amazing Features</h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
@@ -74,10 +103,10 @@ const Features = () => {
           </div>
 
           {/* Video section with yellow glow */}
-          <div className="relative max-w-md mx-auto md:max-w-2xl">
+          <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
             <div 
               className="relative rounded-xl overflow-hidden cursor-pointer group shadow-[0_0_30px_rgba(255,242,0,0.3)] hover:shadow-[0_0_40px_rgba(255,242,0,0.5)] transition-all duration-300 border-2 border-yellow-400/30 hover:border-yellow-400/50"
-              onClick={toggleFullscreen}
+              onClick={toggleFullscreenFeatures}
             >
               <div className="relative" style={{ position: 'relative', aspectRatio: '9/16' }}>
                 <iframe 
@@ -98,11 +127,11 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Fullscreen modal */}
-        {isFullscreen && (
+        {/* Fullscreen modal for Hero video */}
+        {isFullscreenHero && (
           <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
             <button
-              onClick={toggleFullscreen}
+              onClick={toggleFullscreenHero}
               className="absolute top-4 right-4 z-10 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white hover:bg-black/70 transition-colors"
             >
               <X size={24} />
@@ -111,7 +140,30 @@ const Features = () => {
               <div className="relative w-full h-full rounded-xl overflow-hidden">
                 <iframe 
                   loading="lazy" 
-                  title="Gumlet video player - Fullscreen"
+                  title="Gumlet video player - Hero Bridge Fullscreen"
+                  src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                  style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Fullscreen modal for Features video */}
+        {isFullscreenFeatures && (
+          <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+            <button
+              onClick={toggleFullscreenFeatures}
+              className="absolute top-4 right-4 z-10 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white hover:bg-black/70 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="w-full h-full max-w-md max-h-[90vh] md:max-w-2xl relative">
+              <div className="relative w-full h-full rounded-xl overflow-hidden">
+                <iframe 
+                  loading="lazy" 
+                  title="Gumlet video player - Features Fullscreen"
                   src="https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
                   style={{ border: 'none', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
                   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
