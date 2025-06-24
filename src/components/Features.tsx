@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Rocket, Moon, Users, Gift, Award, Zap } from "lucide-react";
 import VideoPlayer from './VideoPlayer';
@@ -21,7 +20,7 @@ const Features = () => {
   const videoSrc = "https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false";
 
   return (
-    <section id="features" className="py-20 space-bg">
+    <section id="features" className="py-20 bg-gradient-to-b from-transparent via-black/20 to-transparent backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Amazing Features</h2>
