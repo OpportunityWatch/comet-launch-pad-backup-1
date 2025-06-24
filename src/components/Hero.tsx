@@ -1,3 +1,4 @@
+
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
@@ -11,12 +12,12 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-20 overflow-hidden flex items-center">
+    <section className="relative h-screen pt-16 overflow-hidden flex items-center">
       {/* Star background layer - behind everything */}
       
-      <div className="container mx-auto px-4 relative z-10 py-16 md:py-20">
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl font-black mb-6 text-white tracking-tighter animate-fade-in">
+      <div className="container mx-auto px-4 relative z-10 py-12 md:py-16">
+        <div className="flex flex-col items-center text-center -mt-8">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 text-white tracking-tighter animate-fade-in">
             <span className="animated-gradient bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(255,255,255,0.2)]">CometCopters</span>
           </h1>
           <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl font-semibold animate-fade-in leading-relaxed" style={{ animationDelay: '0.2s' }}>
