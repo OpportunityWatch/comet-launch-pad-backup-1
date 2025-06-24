@@ -63,14 +63,14 @@ const Features = () => {
           />
         </div>
 
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 mt-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Getting your CometCopter ready for flight is easy! Follow these simple steps
           </p>
         </div>
 
-        <div id="experience-magic" className="mt-16">
+        <div id="experience-magic" className="mt-8">
           <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
             <VideoPlayer
               src={videoSrc}
