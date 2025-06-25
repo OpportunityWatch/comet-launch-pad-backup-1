@@ -19,13 +19,13 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
   onPayment
 }) => {
   return (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
+    <div className="space-y-3 p-1">
+      <div className="text-center mb-3">
         <h3 className="font-semibold">Choose Payment Method</h3>
         <p className="text-sm text-gray-600">Total: ${(total / 100).toFixed(2)}</p>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {/* Credit Card Option */}
         <Card 
           className={`cursor-pointer transition-colors ${
@@ -33,7 +33,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
           }`}
           onClick={() => onPaymentMethodChange('stripe')}
         >
-          <CardContent className="p-3">
+          <CardContent className="p-2">
             <div className="flex items-center space-x-2">
               <input
                 type="radio"
@@ -56,7 +56,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
           }`}
           onClick={() => onPaymentMethodChange('venmo')}
         >
-          <CardContent className="p-3">
+          <CardContent className="p-2">
             <div className="flex items-center space-x-2">
               <input
                 type="radio"
@@ -66,7 +66,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
               />
               <div>
                 <h4 className="font-medium text-sm">Venmo</h4>
-                <p className="text-xs text-gray-600">Pay via Venmo - instructions sent to email</p>
+                <p className="text-xs text-gray-600">Payment instructions sent to email</p>
               </div>
             </div>
           </CardContent>
@@ -79,7 +79,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
           }`}
           onClick={() => onPaymentMethodChange('paypal')}
         >
-          <CardContent className="p-3">
+          <CardContent className="p-2">
             <div className="flex items-center space-x-2">
               <input
                 type="radio"
@@ -89,7 +89,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
               />
               <div>
                 <h4 className="font-medium text-sm">PayPal</h4>
-                <p className="text-xs text-gray-600">Pay via PayPal - instructions sent to email</p>
+                <p className="text-xs text-gray-600">Payment instructions sent to email</p>
               </div>
             </div>
           </CardContent>
@@ -102,7 +102,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
           }`}
           onClick={() => onPaymentMethodChange('zelle')}
         >
-          <CardContent className="p-3">
+          <CardContent className="p-2">
             <div className="flex items-center space-x-2">
               <input
                 type="radio"
@@ -112,7 +112,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
               />
               <div>
                 <h4 className="font-medium text-sm">Zelle</h4>
-                <p className="text-xs text-gray-600">Pay via Zelle - instructions sent to email</p>
+                <p className="text-xs text-gray-600">Payment instructions sent to email</p>
               </div>
             </div>
           </CardContent>
@@ -122,7 +122,7 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
       <Button 
         onClick={onPayment}
         disabled={isProcessing}
-        className="w-full mt-4"
+        className="w-full mt-3"
       >
         {isProcessing ? 'Processing...' : 
          paymentMethod === 'stripe' ? 
