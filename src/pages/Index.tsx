@@ -28,8 +28,8 @@ const Index = () => {
         <Hero />
         <VideoBridge />
         <Features />
-        <HowItWorks />
         <Pricing />
+        <HowItWorks />
         <Testimonials />
         <FAQ />
         <CTA />
