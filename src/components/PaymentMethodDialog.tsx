@@ -4,10 +4,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { CreditCard, Smartphone, DollarSign, Send, Plus, Minus } from "lucide-react";
+import { useOrderCalculations } from "@/hooks/useOrderCalculations";
+import OrderSummary from "./OrderSummary";
+import PaymentMethodSelector from "./PaymentMethodSelector";
 
 interface PaymentMethodDialogProps {
   isOpen: boolean;
@@ -32,19 +33,11 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
   const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
 
-  const calculateTotal = () => {
-    const baseAmount = product.price * quantity;
-    const discount = discountCode === 'JULY4' ? baseAmount * 0.25 : 0;
-    const shipping = (discountCode === 'JULY4' || baseAmount >= 1795) ? 0 : 495; // Free shipping for JULY4 or orders $17.95+
-    return {
-      baseAmount,
-      discount,
-      shipping,
-      total: baseAmount - discount + shipping
-    };
-  };
-
-  const { baseAmount, discount, shipping, total } = calculateTotal();
+  const { baseAmount, discount, shipping, total } = useOrderCalculations({
+    basePrice: product.price,
+    quantity,
+    discountCode
+  });
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity >= 1) {
@@ -147,62 +140,17 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
         </DialogHeader>
         
         <div className="space-y-6">
-          {/* Product Summary */}
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-semibold">{product.name}</h3>
-            <div className="text-sm text-gray-600 space-y-1">
-              {product.coptersIncluded && (
-                <div className="flex justify-between">
-                  <span>CometCopters included:</span>
-                  <span>{product.coptersIncluded} per pack</span>
-                </div>
-              )}
-              
-              {/* Quantity Selector */}
-              <div className="flex justify-between items-center">
-                <span>Quantity:</span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8"
-                    onClick={() => handleQuantityChange(quantity - 1)}
-                    disabled={quantity <= 1}
-                  >
-                    <Minus className="h-4 w-4" />
-                  </Button>
-                  <span className="w-8 text-center">{quantity}</span>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8"
-                    onClick={() => handleQuantityChange(quantity + 1)}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              
-              <div className="flex justify-between">
-                <span>Subtotal:</span>
-                <span>${(baseAmount / 100).toFixed(2)}</span>
-              </div>
-              {discount > 0 && (
-                <div className="flex justify-between text-green-600">
-                  <span>JULY4 Discount (25%):</span>
-                  <span>-${(discount / 100).toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex justify-between">
-                <span>Shipping:</span>
-                <span>{shipping === 0 ? 'FREE' : `$${(shipping / 100).toFixed(2)}`}</span>
-              </div>
-              <div className="flex justify-between font-bold border-t pt-1">
-                <span>Total:</span>
-                <span>${(total / 100).toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
+          <OrderSummary
+            productName={product.name}
+            coptersIncluded={product.coptersIncluded}
+            quantity={quantity}
+            onQuantityChange={handleQuantityChange}
+            baseAmount={baseAmount}
+            discount={discount}
+            shipping={shipping}
+            total={total}
+            discountCode={discountCode}
+          />
 
           {/* Email Input */}
           <div>
@@ -231,55 +179,10 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
             )}
           </div>
 
-          {/* Payment Method Selection */}
-          <div>
-            <Label>Select Payment Method</Label>
-            <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="mt-2">
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                <RadioGroupItem value="venmo" id="venmo" />
-                <div className="flex items-center space-x-2 flex-1">
-                  <Smartphone className="w-5 h-5 text-blue-600" />
-                  <div className="flex-1">
-                    <Label htmlFor="venmo" className="font-medium">Venmo</Label>
-                    <p className="text-sm text-gray-600">@robbiescramble - No fees!</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                <RadioGroupItem value="cashapp" id="cashapp" />
-                <div className="flex items-center space-x-2 flex-1">
-                  <DollarSign className="w-5 h-5 text-green-600" />
-                  <div className="flex-1">
-                    <Label htmlFor="cashapp" className="font-medium">Cash App</Label>
-                    <p className="text-sm text-gray-600">$RetroPatriot - No fees!</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                <RadioGroupItem value="paypal" id="paypal" />
-                <div className="flex items-center space-x-2 flex-1">
-                  <Send className="w-5 h-5 text-blue-500" />
-                  <div className="flex-1">
-                    <Label htmlFor="paypal" className="font-medium">PayPal</Label>
-                    <p className="text-sm text-gray-600">paypal.me/retropatriot - Friends & Family</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                <RadioGroupItem value="stripe" id="stripe" />
-                <div className="flex items-center space-x-2 flex-1">
-                  <CreditCard className="w-5 h-5 text-purple-600" />
-                  <div className="flex-1">
-                    <Label htmlFor="stripe" className="font-medium">Credit/Debit Card</Label>
-                    <p className="text-sm text-gray-600">Secure payment via Stripe</p>
-                  </div>
-                </div>
-              </div>
-            </RadioGroup>
-          </div>
+          <PaymentMethodSelector
+            paymentMethod={paymentMethod}
+            onPaymentMethodChange={setPaymentMethod}
+          />
 
           {/* Payment Button */}
           <div className="space-y-2">
