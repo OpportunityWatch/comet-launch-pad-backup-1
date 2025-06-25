@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -13,6 +12,7 @@ interface PricingPlanProps {
   image: string;
   quantity: string;
   onBuyNow: () => void;
+  className?: string;
 }
 
 const PricingPlan: React.FC<PricingPlanProps> = ({
@@ -24,7 +24,8 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
   popular,
   image,
   quantity,
-  onBuyNow
+  onBuyNow,
+  className = ""
 }) => {
   const isThreePack = title.includes('3-Pack');
   
@@ -32,7 +33,7 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
     <div 
       className={`relative rounded-xl overflow-hidden transition-transform hover:scale-105 ${
         popular ? "border-2 border-comet-blue shadow-xl shadow-comet-blue/20" : "border border-white/10"
-      }`}
+      } ${className}`}
       data-plan={isThreePack ? "3-pack" : undefined}
     >
       {popular && (

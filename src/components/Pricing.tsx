@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
 import PricingPlan from './PricingPlan';
@@ -95,6 +96,7 @@ const Pricing = () => {
               price: 3995,
               quantity: 12
             })}
+            className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none"
           />
         </div>
         
