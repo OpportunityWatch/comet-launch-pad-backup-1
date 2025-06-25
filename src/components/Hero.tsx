@@ -3,20 +3,13 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import AmericanFlag from './AmericanFlag';
-import FloatingCartTab from './FloatingCartTab';
-import SlidingCart from './SlidingCart';
 import { useScrollTo } from '@/hooks/useScrollTo';
 
 const Hero = () => {
   const { scrollToElement, scrollToThreePack } = useScrollTo();
-  const [isCartOpen, setIsCartOpen] = React.useState(false);
 
   const scrollToExperienceSection = () => scrollToElement('experience-magic');
   const scrollToPricing = () => scrollToElement('pricing');
-
-  const handleOpenCart = () => {
-    setIsCartOpen(true);
-  };
 
   return (
     <>
@@ -86,19 +79,6 @@ const Hero = () => {
           </div>
         </div>
       </section>
-
-      {/* Floating Cart Tab */}
-      <FloatingCartTab onOpenCart={handleOpenCart} />
-
-      {/* Cart Modal */}
-      <SlidingCart 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)}
-        onCheckout={() => {
-          setIsCartOpen(false);
-          // Handle checkout
-        }} 
-      />
     </>
   );
 };
