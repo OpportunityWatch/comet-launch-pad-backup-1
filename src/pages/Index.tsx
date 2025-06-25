@@ -10,7 +10,6 @@ import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
-import CTAPlayful from '@/components/CTAPlayful';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -34,7 +33,7 @@ const Index = () => {
         <Testimonials />
         <CTA />
         <FAQ />
-        <CTAPlayful />
+        <CTA variant="playful" />
         <Footer />
       </div>
     </>

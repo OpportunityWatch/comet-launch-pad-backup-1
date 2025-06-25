@@ -3,7 +3,11 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import AmericanFlag from './AmericanFlag';
 
-const CTA = () => {
+interface CTAProps {
+  variant?: 'default' | 'playful';
+}
+
+const CTA: React.FC<CTAProps> = ({ variant = 'default' }) => {
   const scrollToThreePack = () => {
     const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
@@ -16,6 +20,16 @@ const CTA = () => {
         }
       }, 300);
     }
+  };
+
+  const descriptions = {
+    default: "Join thousands of satisfied customers who have made their events unforgettable with CometCopters",
+    playful: "Your friends will think you've discovered alien technology when they see these bad boys soar 150+ feet into the night sky!"
+  };
+
+  const buttonTexts = {
+    default: "Get Your CometCopters Now",
+    playful: "Launch Into Fun Now!"
   };
 
   return (
@@ -38,13 +52,13 @@ const CTA = () => {
           Ready to Light Up the Night?
         </h2>
         <p className="text-lg text-white/70 mb-8 max-w-2xl mx-auto">
-          Join thousands of satisfied customers who have made their events unforgettable with CometCopters
+          {descriptions[variant]}
         </p>
         <Button 
           onClick={scrollToThreePack}
           className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
         >
-          Get Your CometCopters Now
+          {buttonTexts[variant]}
         </Button>
       </div>
     </section>
