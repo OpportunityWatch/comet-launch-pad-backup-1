@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { Rocket, Moon, Users, Gift, Award, Zap } from "lucide-react";
-import VideoPlayer from './VideoPlayer';
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => {
   return (
@@ -15,10 +15,6 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 };
 
 const Features = () => {
-  const [isFullscreenFeatures, setIsFullscreenFeatures] = useState(false);
-
-  const videoSrc = "https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false";
-
   return (
     <section id="features" className="py-20 bg-gradient-to-b from-black/45 to-black/60">
       <div className="container mx-auto px-4">
@@ -29,7 +25,7 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <FeatureCard
             icon={<Rocket size={24} />}
             title="150+ Feet Flight"
@@ -60,24 +56,6 @@ const Features = () => {
             title="Easy Setup"
             description="Simple to assemble and launch for instant fun wherever you go."
           />
-        </div>
-
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Getting your CometCopter ready for flight is easy! Follow these simple steps
-          </p>
-        </div>
-
-        <div id="experience-magic" className="mt-8">
-          <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
-            <VideoPlayer
-              src={videoSrc}
-              title="Gumlet video player"
-              isFullscreen={isFullscreenFeatures}
-              onToggleFullscreen={() => setIsFullscreenFeatures(!isFullscreenFeatures)}
-            />
-          </div>
         </div>
       </div>
     </section>
