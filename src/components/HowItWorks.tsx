@@ -45,7 +45,7 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 mb-16">
+        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 mb-24">
           <VideoPlayer
             src={videoSrc}
             title="Gumlet video player - How It Works"
