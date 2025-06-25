@@ -17,6 +17,7 @@ interface PricingPlanWithCartProps {
   quantity: string;
   coptersIncluded?: number;
   className?: string;
+  onOpenCart?: () => void;
 }
 
 const PricingPlanWithCart: React.FC<PricingPlanWithCartProps> = ({
@@ -30,7 +31,8 @@ const PricingPlanWithCart: React.FC<PricingPlanWithCartProps> = ({
   image,
   quantity,
   coptersIncluded,
-  className = ""
+  className = "",
+  onOpenCart
 }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const { addToCart } = useShoppingCartContext();
@@ -47,7 +49,17 @@ const PricingPlanWithCart: React.FC<PricingPlanWithCartProps> = ({
     toast({
       title: "Added to Cart!",
       description: `${selectedQuantity}x ${title} added to your cart`,
-      duration: 3000
+      duration: 5000,
+      action: onOpenCart ? (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onOpenCart}
+          className="bg-white text-black hover:bg-gray-100"
+        >
+          View Cart
+        </Button>
+      ) : undefined
     });
   };
 
