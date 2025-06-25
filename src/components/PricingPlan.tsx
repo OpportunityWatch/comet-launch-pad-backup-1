@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -37,7 +38,7 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
       data-plan={isThreePack ? "3-pack" : undefined}
     >
       {popular && (
-        <div className="absolute top-0 right-0 bg-comet-blue text-white py-1 px-4 text-sm font-medium z-10">
+        <div className="absolute top-0 right-0 bg-gradient-to-r from-comet-blue to-comet-pink text-white py-1 px-4 text-sm font-medium z-10">
           Best Value
         </div>
       )}
