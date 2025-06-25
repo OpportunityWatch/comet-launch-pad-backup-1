@@ -37,11 +37,11 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
       data-plan={isThreePack ? "3-pack" : undefined}
     >
       {popular && (
-        <div className="absolute top-0 right-0 bg-comet-blue text-white py-1 px-4 text-sm font-medium">
+        <div className="absolute top-0 right-0 bg-comet-blue text-white py-1 px-4 text-sm font-medium z-10">
           Best Value
         </div>
       )}
-      <div className="bg-white/5 backdrop-blur-sm h-full flex flex-col">
+      <div className="bg-white/5 h-full flex flex-col">
         <div className="p-6">
           <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
           <div className="flex items-end mb-4">
