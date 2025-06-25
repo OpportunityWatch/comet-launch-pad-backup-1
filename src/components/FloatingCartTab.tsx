@@ -29,39 +29,30 @@ const FloatingCartTab: React.FC<FloatingCartTabProps> = ({ onOpenCart }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Tag Style Cart Button */}
-      <div className="relative">
-        {/* String/attachment point - always visible */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-3 bg-slate-400"></div>
+      {/* Blue Cart Tag - same width as Buy Now button */}
+      <div className="relative mt-2">
+        {/* String/attachment point */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-4 bg-slate-400"></div>
         
-        {/* Collapsed state - gray indicator - make it more visible */}
-        {!isHovered && (
-          <div className="mt-3 cursor-pointer">
-            <div className="bg-slate-400 hover:bg-slate-300 transition-colors shadow-lg rounded-sm h-4 w-16 mx-auto border-2 border-slate-300"></div>
-          </div>
-        )}
-        
-        {/* Expanded state - full tag */}
-        {isHovered && (
-          <div className="relative mt-2 animate-fade-in">
-            <Button
-              onClick={onOpenCart}
-              className="bg-slate-700 hover:bg-slate-600 text-white shadow-lg rounded-sm h-8 px-4 min-w-[120px] text-sm border border-slate-600"
-              size="sm"
-            >
-              <ShoppingCart className="w-3 h-3 mr-1.5" />
-              Cart ({getCartItemCount()})
-              {getCartItemCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">
-                  {getCartItemCount()}
-                </span>
-              )}
-            </Button>
+        {/* Cart Tag */}
+        <div className="mt-4">
+          <Button
+            onClick={onOpenCart}
+            className="bg-comet-blue hover:bg-comet-blue/80 text-white shadow-lg rounded-md h-10 px-8 border border-slate-300 relative"
+            style={{ width: '140px' }} // Same width as Buy Now button
+          >
+            <ShoppingCart className="w-4 h-4 mr-2" />
+            Cart ({getCartItemCount()})
             
-            {/* Tag hole */}
-            <div className="absolute top-1 left-2 w-1.5 h-1.5 rounded-full border border-slate-500 bg-transparent"></div>
-          </div>
-        )}
+            {/* Cart count badge */}
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+              {getCartItemCount()}
+            </span>
+          </Button>
+          
+          {/* Tag hole for realistic tag appearance */}
+          <div className="absolute top-2 left-3 w-2 h-2 rounded-full border-2 border-slate-300 bg-transparent"></div>
+        </div>
       </div>
     </div>
   );
