@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
 import PricingPlan from './PricingPlan';
@@ -33,7 +32,7 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-y-12 max-w-6xl mx-auto">
           <PricingPlan
             title="Single CometCopter"
             price="$6.95"
@@ -53,6 +52,7 @@ const Pricing = () => {
               price: 695,
               quantity: 1
             })}
+            className="border border-white/20 backdrop-blur-sm"
           />
           
           <PricingPlan
@@ -96,7 +96,7 @@ const Pricing = () => {
               price: 3995,
               quantity: 12
             })}
-            className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none"
+            className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none border border-white/20 backdrop-blur-sm"
           />
         </div>
         
