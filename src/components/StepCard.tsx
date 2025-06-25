@@ -12,7 +12,7 @@ interface StepCardProps {
 const StepCard: React.FC<StepCardProps> = ({ number, title, description, image, isReversed = false }) => {
   return (
     <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 mb-16 last:mb-0`}>
-      <div className="w-full md:w-1/2">
+      <div className="w-full md:w-2/5">
         <div className="relative">
           <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-comet-blue/20 to-comet-red/20 blur-lg opacity-70"></div>
           <div className="relative rounded-xl overflow-hidden border border-white/10">
@@ -24,7 +24,7 @@ const StepCard: React.FC<StepCardProps> = ({ number, title, description, image, 
           </div>
         </div>
       </div>
-      <div className="w-full md:w-1/2 text-center md:text-left">
+      <div className="w-full md:w-3/5 text-center md:text-left">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-comet-blue text-white text-xl font-bold mb-4">
           {number}
         </div>
