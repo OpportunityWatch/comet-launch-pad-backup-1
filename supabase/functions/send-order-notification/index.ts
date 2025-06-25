@@ -2,8 +2,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -25,8 +23,24 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Check if RESEND_API_KEY is configured
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY not found in environment variables");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured - RESEND_API_KEY missing" }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    console.log("RESEND_API_KEY found, initializing Resend...");
+    const resend = new Resend(resendApiKey);
+
     const orderData: OrderNotificationRequest = await req.json();
-    console.log("Sending order notification:", orderData);
+    console.log("Processing order notification for:", orderData.email);
 
     const discountText = orderData.discountCode 
       ? `<p><strong>Discount Code:</strong> ${orderData.discountCode}</p>
@@ -35,7 +49,7 @@ const handler = async (req: Request): Promise<Response> => {
       : `<p><strong>Amount:</strong> $${(orderData.amount / 100).toFixed(2)}</p>`;
 
     // Send confirmation email to customer
-    console.log("Sending customer confirmation email to:", orderData.email);
+    console.log("Attempting to send customer confirmation email...");
     const customerEmailResponse = await resend.emails.send({
       from: "CometCopters <orders@cometcopters.com>",
       to: [orderData.email],
@@ -79,10 +93,10 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Customer email response:", customerEmailResponse);
+    console.log("Customer email result:", JSON.stringify(customerEmailResponse, null, 2));
 
     // Send notification to store owner
-    console.log("Sending owner notification email to: rwcampbell2@gmail.com");
+    console.log("Attempting to send owner notification email...");
     const ownerEmailResponse = await resend.emails.send({
       from: "CometCopters Store <orders@cometcopters.com>",
       to: ["rwcampbell2@gmail.com"],
@@ -116,14 +130,16 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Owner notification sent:", ownerEmailResponse);
+    console.log("Owner email result:", JSON.stringify(ownerEmailResponse, null, 2));
 
     // Check for any errors
-    if (customerEmailResponse.error) {
-      console.error("Customer email error:", customerEmailResponse.error);
-    }
-    if (ownerEmailResponse.error) {
-      console.error("Owner email error:", ownerEmailResponse.error);
+    const errors = {
+      customer: customerEmailResponse.error,
+      owner: ownerEmailResponse.error
+    };
+
+    if (errors.customer || errors.owner) {
+      console.error("Email sending errors:", errors);
     }
 
     return new Response(
@@ -131,10 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
         success: true, 
         customerEmailId: customerEmailResponse.data?.id,
         ownerEmailId: ownerEmailResponse.data?.id,
-        errors: {
-          customer: customerEmailResponse.error,
-          owner: ownerEmailResponse.error
-        }
+        errors: errors
       }),
       {
         status: 200,
@@ -142,7 +155,7 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   } catch (error) {
-    console.error("Error sending order notification:", error);
+    console.error("Error in send-order-notification function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       {
