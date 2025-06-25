@@ -1,31 +1,15 @@
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import AmericanFlag from './AmericanFlag';
+import { useScrollTo } from '@/hooks/useScrollTo';
 
 const Hero = () => {
-  const scrollToExperienceSection = useCallback(() => {
-    document.getElementById('experience-magic')?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+  const { scrollToElement, scrollToThreePack } = useScrollTo();
 
-  const scrollToPricing = useCallback(() => {
-    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
-  const scrollToThreePack = useCallback(() => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-      // Small delay to ensure pricing section is visible, then focus on 3-pack
-      setTimeout(() => {
-        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
-        if (threePackElement) {
-          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300);
-    }
-  }, []);
+  const scrollToExperienceSection = () => scrollToElement('experience-magic');
+  const scrollToPricing = () => scrollToElement('pricing');
 
   return (
     <section className="relative h-[90vh] pt-16 overflow-hidden flex items-start">
