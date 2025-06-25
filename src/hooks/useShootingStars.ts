@@ -52,7 +52,7 @@ export const useShootingStars = (width: number, height: number, isMobile: boolea
     shootingStarsRef.current = updated;
     
     // Only update state if there's a meaningful change
-    if (updated.length !== currentStars.length || updated.length === 0) {
+    if (updated.length !== currentStars.length) {
       setShootingStars(updated);
       
       // Check if cluster is complete
