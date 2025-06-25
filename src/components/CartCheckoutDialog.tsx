@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import { useOrderCalculations } from "@/hooks/useOrderCalculations";
 import { useCartPaymentForm } from "@/hooks/useCartPaymentForm";
 import CartPaymentForm from "./CartPaymentForm";
@@ -58,8 +60,16 @@ const CartCheckoutDialog: React.FC<CartCheckoutDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md mx-auto">
-        <DialogHeader>
+      <DialogContent className="max-w-md mx-auto" hideCloseButton>
+        <DialogHeader className="relative">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="absolute left-0 top-0 h-8 w-8 p-0"
+            onClick={onClose}
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
           <DialogTitle className="text-center">Checkout Cart</DialogTitle>
         </DialogHeader>
         
