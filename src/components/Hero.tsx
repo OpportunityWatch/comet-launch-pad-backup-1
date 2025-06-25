@@ -1,3 +1,4 @@
+
 import React, { useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
@@ -8,13 +9,34 @@ const Hero = () => {
     document.getElementById('experience-magic')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const scrollToPricing = useCallback(() => {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  const scrollToThreePack = useCallback(() => {
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+      // Small delay to ensure pricing section is visible, then focus on 3-pack
+      setTimeout(() => {
+        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
+        if (threePackElement) {
+          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+  }, []);
+
   return (
     <section className="relative h-[90vh] pt-16 overflow-hidden flex items-start">
       <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-20">
         <div className="flex flex-col items-center text-center">
-          {/* 4th of July Sale Banner */}
+          {/* 4th of July Sale Banner - Now Clickable */}
           <div className="mb-12 animate-fade-in">
-            <div className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4">
+            <div 
+              onClick={scrollToThreePack}
+              className="relative bg-gradient-to-r from-red-600 via-white to-blue-600 p-1 rounded-xl shadow-2xl max-w-md mx-4 cursor-pointer hover:scale-105 transition-transform"
+            >
               {/* Stars decoration */}
               <div className="absolute -top-2 -left-2">
                 <Star className="h-4 w-4 text-yellow-300 fill-yellow-300 animate-pulse" />
@@ -42,7 +64,7 @@ const Hero = () => {
                   Code: JULY4 at checkout!
                 </div>
                 <div className="text-xs text-white/90 font-semibold">
-                  Limited Time Only!
+                  Limited Time Only! Click Here
                 </div>
               </div>
             </div>
@@ -59,7 +81,10 @@ const Hero = () => {
             Perfect for outdoor events, family gatherings, and creating spectacular light shows anywhere
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <Button className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30">
+            <Button 
+              onClick={scrollToThreePack}
+              className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
+            >
               Get Your CometCopters
             </Button>
             <Button onClick={scrollToExperienceSection} variant="outline" className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 text-lg py-6 px-8 font-semibold shadow-md">

@@ -5,8 +5,8 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import VideoBridge from '@/components/VideoBridge';
 import Features from '@/components/Features';
-import HowItWorks from '@/components/HowItWorks';
 import Pricing from '@/components/Pricing';
+import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
@@ -28,8 +28,8 @@ const Index = () => {
         <Hero />
         <VideoBridge />
         <Features />
-        <HowItWorks />
         <Pricing />
+        <HowItWorks />
         <Testimonials />
         <FAQ />
         <CTA />

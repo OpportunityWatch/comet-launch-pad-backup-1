@@ -4,14 +4,27 @@ import { Button } from "@/components/ui/button";
 import AmericanFlag from './AmericanFlag';
 
 const CTA = () => {
-  const scrollToPricing = () => {
-    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToThreePack = () => {
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+      // Small delay to ensure pricing section is visible, then focus on 3-pack
+      setTimeout(() => {
+        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
+        if (threePackElement) {
+          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
   };
 
   return (
     <section className="py-20 space-bg border-t border-white/10">
       <div className="container mx-auto px-4 text-center">
-        <div className="mb-8 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto">
+        <div 
+          onClick={scrollToThreePack}
+          className="mb-8 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto cursor-pointer hover:scale-105 transition-transform"
+        >
           <div className="flex items-center justify-center gap-2">
             <p className="text-comet-blue font-semibold flex items-center gap-2">
               <AmericanFlag size="md" />
@@ -28,7 +41,7 @@ const CTA = () => {
           Join thousands of satisfied customers who have made their events unforgettable with CometCopters
         </p>
         <Button 
-          onClick={scrollToPricing}
+          onClick={scrollToThreePack}
           className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
         >
           Get Your CometCopters Now

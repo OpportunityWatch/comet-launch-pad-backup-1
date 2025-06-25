@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -9,6 +10,21 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const scrollToThreePack = () => {
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+      // Small delay to ensure pricing section is visible, then focus on 3-pack
+      setTimeout(() => {
+        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
+        if (threePackElement) {
+          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -41,7 +57,10 @@ const Navbar = () => {
                   <a href="#features" className="text-white hover:text-comet-pink py-2" onClick={() => setMobileMenuOpen(false)}>Features</a>
                   <a href="#pricing" className="text-white hover:text-comet-green py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
                   <a href="#faq" className="text-white hover:text-comet-yellow py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-                  <Button className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white w-full">
+                  <Button 
+                    onClick={scrollToThreePack}
+                    className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white w-full"
+                  >
                     Buy Now
                   </Button>
                 </div>
@@ -55,7 +74,10 @@ const Navbar = () => {
               <a href="#pricing" className="text-white hover:text-comet-green transition-colors">Pricing</a>
               <a href="#faq" className="text-white hover:text-comet-yellow transition-colors">FAQ</a>
             </div>
-            <Button className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white">
+            <Button 
+              onClick={scrollToThreePack}
+              className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white"
+            >
               Buy Now
             </Button>
           </div>

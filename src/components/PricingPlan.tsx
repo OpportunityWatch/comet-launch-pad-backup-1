@@ -26,10 +26,15 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
   quantity,
   onBuyNow
 }) => {
+  const isThreePack = title.includes('3-Pack');
+  
   return (
-    <div className={`relative rounded-xl overflow-hidden transition-transform hover:scale-105 ${
-      popular ? "border-2 border-comet-blue shadow-xl shadow-comet-blue/20" : "border border-white/10"
-    }`}>
+    <div 
+      className={`relative rounded-xl overflow-hidden transition-transform hover:scale-105 ${
+        popular ? "border-2 border-comet-blue shadow-xl shadow-comet-blue/20" : "border border-white/10"
+      }`}
+      data-plan={isThreePack ? "3-pack" : undefined}
+    >
       {popular && (
         <div className="absolute top-0 right-0 bg-comet-blue text-white py-1 px-4 text-sm font-medium">
           Best Value
