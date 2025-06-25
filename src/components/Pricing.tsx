@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
 import PricingPlan from './PricingPlan';
@@ -15,7 +14,7 @@ const Pricing = () => {
   };
 
   return (
-    <section id="pricing" className="py-20 space-bg">
+    <section id="pricing" className="py-20 bg-black/40 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Choose Your Package</h2>
