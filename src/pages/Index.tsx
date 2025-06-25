@@ -1,6 +1,5 @@
 
 import React from 'react';
-import NightSkyBackground from '../components/NightSkyBackground';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import VideoBridge from '@/components/VideoBridge';
@@ -19,8 +18,8 @@ const Index = () => {
 
   return (
     <>
-      {/* Animated Night Sky Background */}
-      <NightSkyBackground />
+      {/* Simple gradient background instead of animated stars */}
+      <div className="fixed inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#16537e]" style={{ zIndex: 0 }} />
       
       {/* Content Overlay - positioned relative to appear above background */}
       <div className="min-h-screen relative z-10">

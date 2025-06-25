@@ -10,6 +10,7 @@ const NightSkyBackground = () => {
   const lastUpdateRef = useRef<number>(0);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   
   const { stars, getStarOpacity } = useStars(dimensions.width, dimensions.height, isMobile);
   const { shootingStars, getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
@@ -28,9 +29,19 @@ const NightSkyBackground = () => {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
+  // Pause animations during document visibility changes (saves)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsPaused(document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
   const animate = useCallback((timestamp: number) => {
-    // Skip animation if document is hidden (during saves/builds)
-    if (document.hidden) {
+    // Skip animation if document is hidden or paused
+    if (document.hidden || isPaused) {
       animationRef.current = requestAnimationFrame(animate);
       return;
     }
@@ -88,7 +99,7 @@ const NightSkyBackground = () => {
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [stars, getStarOpacity, getUpdatedShootingStars, dimensions.width, dimensions.height]);
+  }, [stars, getStarOpacity, getUpdatedShootingStars, dimensions.width, dimensions.height, isPaused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
