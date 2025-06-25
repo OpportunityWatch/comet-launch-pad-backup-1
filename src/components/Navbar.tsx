@@ -3,27 +3,19 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Menu, X } from "lucide-react";
+import { useScrollTo } from '@/hooks/useScrollTo';
 
 const Navbar = () => {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { scrollToThreePack } = useScrollTo();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const scrollToThreePack = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-      // Small delay to ensure pricing section is visible, then focus on 3-pack
-      setTimeout(() => {
-        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
-        if (threePackElement) {
-          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300);
-    }
+  const handleScrollToThreePack = () => {
+    scrollToThreePack();
     setMobileMenuOpen(false);
   };
 
@@ -58,7 +50,7 @@ const Navbar = () => {
                   <a href="#pricing" className="text-white hover:text-comet-green py-2" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
                   <a href="#faq" className="text-white hover:text-comet-yellow py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
                   <Button 
-                    onClick={scrollToThreePack}
+                    onClick={handleScrollToThreePack}
                     className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white w-full"
                   >
                     Buy Now

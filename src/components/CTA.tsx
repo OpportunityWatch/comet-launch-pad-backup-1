@@ -2,25 +2,14 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import AmericanFlag from './AmericanFlag';
+import { useScrollTo } from '@/hooks/useScrollTo';
 
 interface CTAProps {
   variant?: 'default' | 'playful';
 }
 
 const CTA: React.FC<CTAProps> = ({ variant = 'default' }) => {
-  const scrollToThreePack = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-      // Small delay to ensure pricing section is visible, then focus on 3-pack
-      setTimeout(() => {
-        const threePackElement = pricingSection.querySelector('[data-plan="3-pack"]');
-        if (threePackElement) {
-          threePackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300);
-    }
-  };
+  const { scrollToThreePack } = useScrollTo();
 
   const descriptions = {
     default: "Join thousands of satisfied customers who have made their events unforgettable with CometCopters",
