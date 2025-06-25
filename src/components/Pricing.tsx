@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
 import PricingPlanWithCart from './PricingPlanWithCart';
-import SlidingCart from './SlidingCart';
 import CartCheckoutDialog from './CartCheckoutDialog';
 import ProductGuarantee from './ProductGuarantee';
 import AmericanFlag from './AmericanFlag';
@@ -34,7 +33,7 @@ const Pricing = () => {
           </div>
         </div>
 
-        {/* Product Cards - Now full width without cart column */}
+        {/* Product Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <PricingPlanWithCart
             id="single-cometcopter"
@@ -99,9 +98,6 @@ const Pricing = () => {
         
         <ProductGuarantee />
       </div>
-
-      {/* Floating Sliding Cart */}
-      <SlidingCart onCheckout={() => setIsCartCheckoutOpen(true)} />
 
       {/* Keep existing individual product dialog for backwards compatibility */}
       {selectedProduct && (

@@ -1,38 +1,26 @@
 
-import React, { useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import React from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, X, Plus, Minus } from "lucide-react";
 import { useShoppingCartContext } from '@/contexts/ShoppingCartContext';
 
 interface SlidingCartProps {
+  isOpen: boolean;
+  onClose: () => void;
   onCheckout: () => void;
 }
 
-const SlidingCart: React.FC<SlidingCartProps> = ({ onCheckout }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const SlidingCart: React.FC<SlidingCartProps> = ({ isOpen, onClose, onCheckout }) => {
   const { cartItems, getCartTotal, getCartItemCount, removeFromCart, updateQuantity } = useShoppingCartContext();
 
   const handleCheckout = () => {
     onCheckout();
-    setIsOpen(false);
+    onClose();
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      {/* Floating Cart Tab */}
-      <SheetTrigger asChild>
-        <Button
-          className="fixed right-0 top-1/2 transform -translate-y-1/2 z-40 bg-comet-blue hover:bg-comet-blue/80 text-white rounded-l-lg rounded-r-none px-3 py-6 shadow-lg"
-          style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-        >
-          <ShoppingCart className="w-5 h-5 mb-2" />
-          <span className="text-sm font-medium">
-            Cart ({getCartItemCount()})
-          </span>
-        </Button>
-      </SheetTrigger>
-
+    <Sheet open={isOpen} onOpenChange={onClose}>
       {/* Sliding Cart Panel */}
       <SheetContent 
         side="right" 
