@@ -1,141 +1,101 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useStars } from '../hooks/useStars';
 import { useShootingStars } from '../hooks/useShootingStars';
-import { useIsMobile } from '../hooks/use-mobile';
+import { useStaticStars } from '../hooks/useStaticStars';
 
-const NightSkyBackground: React.FC = () => {
+const NightSkyBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const isMobile = useIsMobile();
+  const lastUpdateRef = useRef<number>(0);
   
-  const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
-  const { stars, getStarOpacity } = useStars(dimensions.width, dimensions.height, isMobile);
-  const { getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
-  
-  useEffect(() => {
-    const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
-  
+  const { stars, updateStars } = useStars();
+  const { shootingStars, updateShootingStars } = useShootingStars();
+  const { staticStars } = useStaticStars();
+
+  const animate = useCallback((timestamp: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Throttle updates to prevent excessive re-renders
+    if (timestamp - lastUpdateRef.current < 16) { // ~60fps
+      animationRef.current = requestAnimationFrame(animate);
+      return;
+    }
+    lastUpdateRef.current = timestamp;
+
+    // Clear canvas
+    ctx.fillStyle = 'rgba(26, 26, 46, 0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw static stars
+    staticStars.forEach(star => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.fillRect(star.x, star.y, star.size, star.size);
+    });
+
+    // Draw twinkling stars
+    stars.forEach(star => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.fillRect(star.x, star.y, star.size, star.size);
+    });
+
+    // Draw shooting stars
+    shootingStars.forEach(star => {
+      const gradient = ctx.createLinearGradient(
+        star.x - star.length, star.y, star.x, star.y
+      );
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      gradient.addColorStop(1, `rgba(255, 255, 255, ${star.opacity})`);
+      
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(star.x - star.length, star.y);
+      ctx.lineTo(star.x, star.y);
+      ctx.stroke();
+    });
+
+    // Update positions with throttling
+    updateStars();
+    updateShootingStars();
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [stars, shootingStars, staticStars, updateStars, updateShootingStars]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    canvas.width = dimensions.width;
-    canvas.height = dimensions.height;
-    
-    let startTime = Date.now();
-    
-    const animate = () => {
-      const currentTime = Date.now();
-      const elapsed = (currentTime - startTime) / 1000;
-      
-      // Clear canvas
-      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
-      
-      // Draw gradient background
-      const gradient = ctx.createLinearGradient(0, 0, 0, dimensions.height);
-      gradient.addColorStop(0, '#1a1a2e');
-      gradient.addColorStop(1, '#16537e');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, dimensions.width, dimensions.height);
-      
-      // Draw twinkling stars
-      stars.forEach(star => {
-        const opacity = getStarOpacity(star, elapsed);
-        ctx.save();
-        ctx.globalAlpha = opacity;
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-      
-      // Get updated shooting stars and draw them
-      const currentShootingStars = getUpdatedShootingStars();
-      
-      currentShootingStars.forEach(star => {
-        // Calculate fade factor based on position near top of screen
-        const fadeZoneHeight = dimensions.height * 0.05;
-        const fadeStartY = fadeZoneHeight;
-        let globalFadeMultiplier = 1;
-        
-        if (star.y < fadeStartY) {
-          globalFadeMultiplier = Math.max(0, star.y / fadeStartY);
-        }
-        
-        // Draw trail with fade effect
-        star.trail.forEach((point, index) => {
-          if (point.opacity > 0) {
-            ctx.save();
-            ctx.globalAlpha = point.opacity * 0.9 * globalFadeMultiplier;
-            
-            const trailSize = isMobile ? 2 : 3;
-            const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, trailSize);
-            gradient.addColorStop(0, '#7dc8ff');
-            gradient.addColorStop(0.3, 'rgba(125, 200, 255, 0.7)');
-            gradient.addColorStop(1, 'rgba(125, 200, 255, 0)');
-            
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, trailSize * 0.8, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-          }
-        });
-        
-        // Draw shooting star core with fade effect
-        ctx.save();
-        ctx.globalAlpha = 1 * globalFadeMultiplier;
-        ctx.fillStyle = '#7dc8ff';
-        ctx.shadowColor = '#7dc8ff';
-        ctx.shadowBlur = (isMobile ? 12 : 16) * globalFadeMultiplier;
-        ctx.beginPath();
-        const coreSize = isMobile ? 2 : 3;
-        ctx.arc(star.x, star.y, coreSize, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-      
-      animationRef.current = requestAnimationFrame(animate);
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
-    
-    animate();
-    
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Start animation loop
+    animationRef.current = requestAnimationFrame(animate);
+
     return () => {
+      window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [dimensions, stars, getStarOpacity, getUpdatedShootingStars]);
-  
+  }, [animate]);
+
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ 
-        zIndex: 0,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        transform: 'translate3d(0, 0, 0)',
-        backfaceVisibility: 'hidden',
-        willChange: 'auto'
+      style={{
+        background: 'linear-gradient(to bottom, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
+        zIndex: 0
       }}
     />
   );
