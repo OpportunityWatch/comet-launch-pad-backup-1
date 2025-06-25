@@ -98,15 +98,11 @@ serve(async (req) => {
       throw new Error("Failed to save order");
     }
 
-    // Send order notification email
+    // Send order notification email with improved error handling
     try {
-      const notificationResponse = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/send-order-notification`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
-        },
-        body: JSON.stringify({
+      console.log("Attempting to send email notification...");
+      const notificationResponse = await supabaseClient.functions.invoke('send-order-notification', {
+        body: {
           email,
           productName,
           quantity,
@@ -114,11 +110,13 @@ serve(async (req) => {
           finalAmount,
           discountCode,
           paymentMethod: "stripe"
-        }),
+        },
       });
 
-      if (!notificationResponse.ok) {
-        console.error("Failed to send order notification");
+      console.log("Notification response:", notificationResponse);
+      
+      if (notificationResponse.error) {
+        console.error("Failed to send order notification:", notificationResponse.error);
       } else {
         console.log("Order notification sent successfully");
       }

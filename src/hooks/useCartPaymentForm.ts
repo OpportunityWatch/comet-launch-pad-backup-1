@@ -79,15 +79,13 @@ export const useCartPaymentForm = () => {
     setIsProcessing(true);
     try {
       // Create order summary for alternative payment
-      const orderSummary = cartItems.map(item => 
-        `${item.quantity}x ${item.name} - $${((item.price * item.quantity) / 100).toFixed(2)}`
-      ).join('\n');
+      const productName = `Cart Order: ${cartItems.length} items (${cartItems.map(item => `${item.quantity}x ${item.name}`).join(', ')})`;
 
       const { error } = await supabase
         .from('orders')
         .insert({
           email,
-          product_name: `Cart Order: ${cartItems.length} items`,
+          product_name: productName,
           quantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
           amount: baseAmount,
           discount_code: discountCode || null,
@@ -98,6 +96,30 @@ export const useCartPaymentForm = () => {
         });
 
       if (error) throw error;
+
+      // Send email notification
+      try {
+        console.log("Sending email notification for alternative payment...");
+        const { error: emailError } = await supabase.functions.invoke('send-order-notification', {
+          body: {
+            email,
+            productName,
+            quantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
+            amount: baseAmount,
+            finalAmount: total,
+            discountCode: discountCode || null,
+            paymentMethod
+          }
+        });
+
+        if (emailError) {
+          console.error("Email notification error:", emailError);
+        } else {
+          console.log("Email notification sent successfully");
+        }
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
 
       toast({
         title: "Order Created!",

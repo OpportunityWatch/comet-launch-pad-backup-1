@@ -34,10 +34,58 @@ const handler = async (req: Request): Promise<Response> => {
          <p><strong>Final Amount:</strong> $${(orderData.finalAmount / 100).toFixed(2)}</p>`
       : `<p><strong>Amount:</strong> $${(orderData.amount / 100).toFixed(2)}</p>`;
 
+    // Send confirmation email to customer
+    console.log("Sending customer confirmation email to:", orderData.email);
+    const customerEmailResponse = await resend.emails.send({
+      from: "CometCopters <orders@cometcopters.com>",
+      to: [orderData.email],
+      subject: `🚁 Your CometCopters Order Confirmation - ${orderData.productName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #3b82f6;">🚁 Thank you for your CometCopters order!</h1>
+          
+          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2 style="color: #1e40af; margin-top: 0;">Order Details</h2>
+            <p><strong>Product:</strong> ${orderData.productName}</p>
+            <p><strong>Quantity:</strong> ${orderData.quantity}</p>
+            ${discountText}
+            <p><strong>Payment Method:</strong> ${orderData.paymentMethod}</p>
+          </div>
+          
+          ${orderData.paymentMethod !== 'stripe' ? `
+          <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
+            <p style="margin: 0; color: #92400e;">
+              <strong>Payment Instructions:</strong><br>
+              Please send $${(orderData.finalAmount / 100).toFixed(2)} via ${orderData.paymentMethod} to complete your order.<br>
+              We'll send detailed payment instructions shortly.
+            </p>
+          </div>
+          ` : `
+          <div style="background: #ecfdf5; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981; margin: 20px 0;">
+            <p style="margin: 0; color: #065f46;">
+              <strong>Payment Status:</strong> Your payment has been processed successfully via Stripe.
+            </p>
+          </div>
+          `}
+          
+          <p style="margin-top: 30px; color: #6b7280;">
+            Thank you for choosing CometCopters! Your LED helicopters will soar up to 150+ feet high.
+          </p>
+          
+          <p style="color: #6b7280;">
+            Questions? Reply to this email or contact us at support@cometcopters.com
+          </p>
+        </div>
+      `,
+    });
+
+    console.log("Customer email response:", customerEmailResponse);
+
     // Send notification to store owner
+    console.log("Sending owner notification email to: rwcampbell2@gmail.com");
     const ownerEmailResponse = await resend.emails.send({
       from: "CometCopters Store <orders@cometcopters.com>",
-      to: ["robbiescramble@gmail.com"], // Replace with your actual email
+      to: ["rwcampbell2@gmail.com"],
       subject: `🚁 New CometCopters Order - ${orderData.productName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -62,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <p style="margin-top: 30px; color: #6b7280;">
-            Check your <a href="https://supabase.com/dashboard" style="color: #3b82f6;">Supabase dashboard</a> for complete order details.
+            Check your <a href="https://supabase.com/dashboard/project/rmoatawzcxejixhipvsb" style="color: #3b82f6;">Supabase dashboard</a> for complete order details.
           </p>
         </div>
       `,
@@ -70,8 +118,24 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Owner notification sent:", ownerEmailResponse);
 
+    // Check for any errors
+    if (customerEmailResponse.error) {
+      console.error("Customer email error:", customerEmailResponse.error);
+    }
+    if (ownerEmailResponse.error) {
+      console.error("Owner email error:", ownerEmailResponse.error);
+    }
+
     return new Response(
-      JSON.stringify({ success: true, emailId: ownerEmailResponse.data?.id }),
+      JSON.stringify({ 
+        success: true, 
+        customerEmailId: customerEmailResponse.data?.id,
+        ownerEmailId: ownerEmailResponse.data?.id,
+        errors: {
+          customer: customerEmailResponse.error,
+          owner: ownerEmailResponse.error
+        }
+      }),
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

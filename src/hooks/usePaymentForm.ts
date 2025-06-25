@@ -86,6 +86,30 @@ export const usePaymentForm = () => {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        console.log("Sending email notification for alternative payment...");
+        const { error: emailError } = await supabase.functions.invoke('send-order-notification', {
+          body: {
+            email,
+            productName: product.name,
+            quantity: quantity,
+            amount: Math.round(baseAmount * 100),
+            finalAmount: Math.round(total * 100),
+            discountCode: discountCode || null,
+            paymentMethod
+          }
+        });
+
+        if (emailError) {
+          console.error("Email notification error:", emailError);
+        } else {
+          console.log("Email notification sent successfully");
+        }
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
+
       toast({
         title: "Order Created!",
         description: `Please send $${total.toFixed(2)} via ${paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1)}. Check your email for payment instructions.`,
