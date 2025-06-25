@@ -48,9 +48,12 @@ const NightSkyBackground = () => {
     }
     lastUpdateRef.current = timestamp;
 
-    // Clear canvas
-    ctx.fillStyle = 'rgba(26, 26, 46, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Create the gradient background
+    const gradient = ctx.createLinearGradient(0, 0, 0, dimensions.height);
+    gradient.addColorStop(0, '#1a1a2e');
+    gradient.addColorStop(1, '#16537e');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, dimensions.width, dimensions.height);
 
     const time = Date.now() * 0.001;
 
@@ -117,7 +120,6 @@ const NightSkyBackground = () => {
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
       style={{
-        background: 'linear-gradient(to bottom, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
         zIndex: 0
       }}
     />
