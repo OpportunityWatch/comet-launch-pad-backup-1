@@ -39,55 +39,55 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      {/* Cart Summary - No scrolling needed */}
+      {/* Cart Summary - Increased font sizes */}
       <div className="bg-gray-50 p-3 rounded-lg">
-        <h3 className="font-semibold mb-2 text-sm">Order Summary</h3>
+        <h3 className="font-semibold mb-2 text-base">Order Summary</h3>
         <div className="space-y-2">
           {cartItems.map((item) => (
-            <div key={item.id} className="flex items-center justify-between text-sm border-b pb-1 last:border-b-0">
+            <div key={item.id} className="flex items-center justify-between text-sm border-b pb-2 last:border-b-0">
               <div className="flex-1">
-                <h4 className="font-medium">{item.name}</h4>
-                <p className="text-gray-600 text-xs">
+                <h4 className="font-medium text-sm">{item.name}</h4>
+                <p className="text-gray-600 text-sm">
                   ${(item.price / 100).toFixed(2)} each
                 </p>
               </div>
               
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-5 w-5 p-0"
+                  className="h-6 w-6 p-0"
                   onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
                   disabled={item.quantity <= 1}
                 >
-                  <Minus className="h-2 w-2" />
+                  <Minus className="h-3 w-3" />
                 </Button>
-                <span className="w-6 text-center text-xs">{item.quantity}</span>
+                <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-5 w-5 p-0"
+                  className="h-6 w-6 p-0"
                   onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                 >
-                  <Plus className="h-2 w-2" />
+                  <Plus className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-5 w-5 p-0 text-red-500 hover:text-red-700 ml-1"
+                  className="h-6 w-6 p-0 text-red-500 hover:text-red-700 ml-1"
                   onClick={() => onRemoveFromCart(item.id)}
                 >
-                  <X className="h-2 w-2" />
+                  <X className="h-3 w-3" />
                 </Button>
-                <span className="text-xs font-medium w-12 text-right">
+                <span className="text-sm font-medium w-14 text-right">
                   ${((item.price * item.quantity) / 100).toFixed(2)}
                 </span>
               </div>
             </div>
           ))}
           
-          {/* Order Totals */}
-          <div className="border-t pt-2 space-y-1 text-xs">
+          {/* Order Totals - Increased font sizes */}
+          <div className="border-t pt-2 space-y-1 text-sm">
             <div className="flex justify-between">
               <span>Subtotal:</span>
               <span>${(baseAmount / 100).toFixed(2)}</span>
@@ -105,7 +105,7 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
               <span>{shipping === 0 ? 'FREE' : `$${(shipping / 100).toFixed(2)}`}</span>
             </div>
             
-            <div className="flex justify-between font-bold border-t pt-1">
+            <div className="flex justify-between font-bold border-t pt-1 text-base">
               <span>Total:</span>
               <span>${(total / 100).toFixed(2)}</span>
             </div>
@@ -113,10 +113,10 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
         </div>
       </div>
 
-      {/* Contact Information */}
-      <div className="space-y-3">
+      {/* Contact Information - Increased font sizes */}
+      <div className="space-y-4">
         <div>
-          <Label htmlFor="email" className="text-sm">Email Address *</Label>
+          <Label htmlFor="email" className="text-sm font-medium">Email Address *</Label>
           <Input
             id="email"
             type="email"
@@ -124,28 +124,28 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
             onChange={(e) => onEmailChange(e.target.value)}
             placeholder="your@email.com"
             required
-            className="mt-1"
+            className="mt-1 text-base"
           />
         </div>
 
         <div>
-          <Label htmlFor="discount" className="text-sm">Discount Code (Optional)</Label>
+          <Label htmlFor="discount" className="text-sm font-medium">Discount Code (Optional)</Label>
           <Input
             id="discount"
             value={discountCode}
             onChange={(e) => onDiscountCodeChange(e.target.value.toUpperCase())}
             placeholder="Enter JULY4 for 25% off"
-            className="mt-1"
+            className="mt-1 text-base"
           />
           {discountCode === 'JULY4' && (
-            <p className="text-green-600 text-xs mt-1">✓ 25% off + Free shipping applied!</p>
+            <p className="text-green-600 text-sm mt-1">✓ 25% off + Free shipping applied!</p>
           )}
         </div>
 
         <Button 
           onClick={onConfirmOrder}
           disabled={!canConfirm}
-          className="w-full mt-4"
+          className="w-full mt-4 text-base py-3"
         >
           Confirm Order - ${(total / 100).toFixed(2)}
         </Button>
