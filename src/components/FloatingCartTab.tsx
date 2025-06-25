@@ -26,12 +26,12 @@ const FloatingCartTab: React.FC<FloatingCartTabProps> = ({ onOpenCart }) => {
       {/* Tag Style Cart Button */}
       <div className="relative">
         {/* String/attachment point - always visible */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-2 bg-slate-600"></div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-3 bg-slate-600"></div>
         
         {/* Collapsed state - gray indicator */}
         {!isHovered && (
-          <div className="mt-2 cursor-pointer">
-            <div className="bg-slate-500 hover:bg-slate-400 transition-colors shadow-md rounded-sm h-2 w-8 mx-auto"></div>
+          <div className="mt-3 cursor-pointer">
+            <div className="bg-slate-600 hover:bg-slate-500 transition-colors shadow-lg rounded-sm h-3 w-12 mx-auto border border-slate-500"></div>
           </div>
         )}
         
