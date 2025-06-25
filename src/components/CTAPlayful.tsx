@@ -23,28 +23,28 @@ const CTAPlayful = () => {
       <div className="container mx-auto px-4 text-center">
         <div 
           onClick={scrollToThreePack}
-          className="mb-8 p-4 bg-comet-red/20 rounded-lg border border-comet-red/30 max-w-lg mx-auto cursor-pointer hover:scale-105 transition-transform"
+          className="mb-8 p-4 bg-comet-blue/20 rounded-lg border border-comet-blue/30 max-w-md mx-auto cursor-pointer hover:scale-105 transition-transform"
         >
           <div className="flex items-center justify-center gap-2">
-            <p className="text-comet-red font-semibold flex items-center gap-2">
+            <p className="text-comet-blue font-semibold flex items-center gap-2">
               <AmericanFlag size="md" />
-              🎆 Use code <span className="text-yellow-300">JULY4</span> for <span className="text-yellow-300">25%</span> off + Free Shipping! 🎆
+              Use code <span className="text-yellow-300">JULY4</span> for <span className="text-yellow-300">25%</span> off + Free Shipping!
               <AmericanFlag size="md" />
             </p>
           </div>
         </div>
         
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          🚁 Time to Turn Heads & Drop Jaws! ✨
+          Ready to Light Up the Night?
         </h2>
         <p className="text-lg text-white/70 mb-8 max-w-2xl mx-auto">
-          Your friends will think you've discovered alien technology when they see these bad boys soar 150+ feet into the night sky! 
+          Your friends will think you've discovered alien technology when they see these bad boys soar 150+ feet into the night sky!
         </p>
         <Button 
           onClick={scrollToThreePack}
-          className="bg-gradient-to-r from-comet-red to-comet-green hover:from-comet-red/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-red/30"
+          className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
         >
-          🎯 Launch Into Fun Now!
+          Launch Into Fun Now!
         </Button>
       </div>
     </section>
