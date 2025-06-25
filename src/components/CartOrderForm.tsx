@@ -39,8 +39,8 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      {/* Compact Cart Summary */}
-      <div className="bg-gray-50 p-3 rounded-lg max-h-48 overflow-y-auto">
+      {/* Cart Summary - No scrolling needed */}
+      <div className="bg-gray-50 p-3 rounded-lg">
         <h3 className="font-semibold mb-2 text-sm">Order Summary</h3>
         <div className="space-y-2">
           {cartItems.map((item) => (
@@ -86,7 +86,7 @@ const CartOrderForm: React.FC<CartOrderFormProps> = ({
             </div>
           ))}
           
-          {/* Compact Order Totals */}
+          {/* Order Totals */}
           <div className="border-t pt-2 space-y-1 text-xs">
             <div className="flex justify-between">
               <span>Subtotal:</span>
