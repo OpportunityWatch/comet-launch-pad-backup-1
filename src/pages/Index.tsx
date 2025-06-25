@@ -19,8 +19,8 @@ const Index = () => {
 
   return (
     <>
-      {/* Animated Night Sky Background - temporarily commented out for testing */}
-      {/* <NightSkyBackground /> */}
+      {/* Animated Night Sky Background */}
+      <NightSkyBackground />
       
       {/* Content Overlay - positioned relative to appear above background */}
       <div className="min-h-screen relative z-10">

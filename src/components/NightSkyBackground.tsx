@@ -29,6 +29,12 @@ const NightSkyBackground = () => {
   }, []);
 
   const animate = useCallback((timestamp: number) => {
+    // Skip animation if document is hidden (during saves/builds)
+    if (document.hidden) {
+      animationRef.current = requestAnimationFrame(animate);
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas || dimensions.width === 0 || dimensions.height === 0) return;
 
