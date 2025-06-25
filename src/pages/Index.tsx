@@ -11,26 +11,21 @@ import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import { ShoppingCartProvider } from '@/contexts/ShoppingCartContext';
-// Animation components ready for restoration
-// import NightSkyBackground from '@/components/NightSkyBackground';
-// import StarBackground from '@/components/StarBackground';
+import NightSkyBackground from '@/components/NightSkyBackground';
 
 const Index = () => {
   React.useEffect(() => {
     document.title = "CometCopters - LED Slingshot Helicopters | Up to 150+ Feet High";
   }, []);
 
-  // Animation toggle - can be enabled when save conflicts are resolved
-  const enableAnimations = false;
+  // Animation toggle - enabled to restore full functionality
+  const enableAnimations = true;
 
   return (
     <ShoppingCartProvider>
       {/* Background Layer */}
       {enableAnimations ? (
-        // Uncomment one of these when animations are restored:
-        // <NightSkyBackground />
-        // <StarBackground />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#16537e]" style={{ zIndex: 0 }} />
+        <NightSkyBackground />
       ) : (
         <div className="fixed inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#16537e]" style={{ zIndex: 0 }} />
       )}
