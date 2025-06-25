@@ -95,23 +95,23 @@ const CartPaymentSection: React.FC<CartPaymentSectionProps> = ({
           </CardContent>
         </Card>
 
-        {/* Zelle Option */}
+        {/* CashApp Option */}
         <Card 
           className={`cursor-pointer transition-colors ${
-            paymentMethod === 'zelle' ? 'ring-2 ring-blue-500' : ''
+            paymentMethod === 'cashapp' ? 'ring-2 ring-blue-500' : ''
           }`}
-          onClick={() => onPaymentMethodChange('zelle')}
+          onClick={() => onPaymentMethodChange('cashapp')}
         >
           <CardContent className="p-2">
             <div className="flex items-center space-x-2">
               <input
                 type="radio"
-                checked={paymentMethod === 'zelle'}
-                onChange={() => onPaymentMethodChange('zelle')}
+                checked={paymentMethod === 'cashapp'}
+                onChange={() => onPaymentMethodChange('cashapp')}
                 className="text-blue-500"
               />
               <div>
-                <h4 className="font-medium text-sm">Zelle</h4>
+                <h4 className="font-medium text-sm">CashApp</h4>
                 <p className="text-xs text-gray-600">Payment instructions sent to email</p>
               </div>
             </div>
