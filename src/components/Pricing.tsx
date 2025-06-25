@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
 import PricingPlan from './PricingPlan';
@@ -78,7 +79,8 @@ const Pricing = () => {
             onBuyNow={() => handleBuyNow({
               name: "Single CometCopter",
               price: 695,
-              quantity: 1
+              quantity: 1,
+              coptersIncluded: 1
             })}
             className="border border-white/20 backdrop-blur-sm"
           />
@@ -101,7 +103,8 @@ const Pricing = () => {
             onBuyNow={() => handleBuyNow({
               name: "3-Pack + 1 FREE CometCopters",
               price: 1595,
-              quantity: 4
+              quantity: 1,
+              coptersIncluded: 4
             })}
           />
           
@@ -122,7 +125,8 @@ const Pricing = () => {
             onBuyNow={() => handleBuyNow({
               name: "9-Pack Party Bundle CometCopters",
               price: 3995,
-              quantity: 12
+              quantity: 1,
+              coptersIncluded: 12
             })}
             className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none border border-white/20 backdrop-blur-sm"
           />

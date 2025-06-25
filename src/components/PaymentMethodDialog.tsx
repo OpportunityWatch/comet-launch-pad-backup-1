@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { CreditCard, Smartphone, DollarSign, Send } from "lucide-react";
+import { CreditCard, Smartphone, DollarSign, Send, Plus, Minus } from "lucide-react";
 
 interface PaymentMethodDialogProps {
   isOpen: boolean;
@@ -16,6 +16,7 @@ interface PaymentMethodDialogProps {
     name: string;
     price: number;
     quantity: number;
+    coptersIncluded?: number;
   };
 }
 
@@ -28,10 +29,11 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
   const [discountCode, setDiscountCode] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('venmo');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const { toast } = useToast();
 
   const calculateTotal = () => {
-    const baseAmount = product.price * product.quantity;
+    const baseAmount = product.price * quantity;
     const discount = discountCode === 'JULY4' ? baseAmount * 0.25 : 0;
     const shipping = (discountCode === 'JULY4' || baseAmount >= 1795) ? 0 : 495; // Free shipping for JULY4 or orders $17.95+
     return {
@@ -43,6 +45,12 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
   };
 
   const { baseAmount, discount, shipping, total } = calculateTotal();
+
+  const handleQuantityChange = (newQuantity: number) => {
+    if (newQuantity >= 1) {
+      setQuantity(newQuantity);
+    }
+  };
 
   const handleStripePayment = async () => {
     if (!email) {
@@ -60,7 +68,7 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
         body: {
           email,
           productName: product.name,
-          quantity: product.quantity,
+          quantity: quantity,
           amount: Math.round(total * 100), // Convert to cents
           discountCode: discountCode || null
         }
@@ -101,7 +109,7 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
         .insert({
           email,
           product_name: product.name,
-          quantity: product.quantity,
+          quantity: quantity,
           amount: Math.round(baseAmount * 100),
           discount_code: discountCode || null,
           discount_amount: Math.round((discount || 0) * 100),
@@ -143,10 +151,38 @@ const PaymentMethodDialog: React.FC<PaymentMethodDialogProps> = ({
           <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="font-semibold">{product.name}</h3>
             <div className="text-sm text-gray-600 space-y-1">
-              <div className="flex justify-between">
+              {product.coptersIncluded && (
+                <div className="flex justify-between">
+                  <span>CometCopters included:</span>
+                  <span>{product.coptersIncluded} per pack</span>
+                </div>
+              )}
+              
+              {/* Quantity Selector */}
+              <div className="flex justify-between items-center">
                 <span>Quantity:</span>
-                <span>{product.quantity}</span>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => handleQuantityChange(quantity - 1)}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="w-8 text-center">{quantity}</span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => handleQuantityChange(quantity + 1)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
+              
               <div className="flex justify-between">
                 <span>Subtotal:</span>
                 <span>${(baseAmount / 100).toFixed(2)}</span>
