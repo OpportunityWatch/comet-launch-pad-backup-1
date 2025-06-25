@@ -6,12 +6,12 @@ import { Menu, X, ShoppingCart } from "lucide-react";
 import { useScrollTo } from '@/hooks/useScrollTo';
 import { useShoppingCartContext } from '@/contexts/ShoppingCartContext';
 import FloatingCartTab from './FloatingCartTab';
-import SlidingCart from './SlidingCart';
+import CartCheckoutDialog from './CartCheckoutDialog';
 
 const Navbar = () => {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const [isCartOpen, setIsCartOpen] = React.useState(false);
+  const [isCartCheckoutOpen, setIsCartCheckoutOpen] = React.useState(false);
   const { scrollToThreePack } = useScrollTo();
   const { getCartItemCount } = useShoppingCartContext();
 
@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   const handleOpenCart = () => {
-    setIsCartOpen(true);
+    setIsCartCheckoutOpen(true);
   };
 
   return (
@@ -102,14 +102,10 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Cart Modal */}
-      <SlidingCart 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)}
-        onCheckout={() => {
-          setIsCartOpen(false);
-          // Handle checkout
-        }} 
+      {/* Cart Checkout Dialog */}
+      <CartCheckoutDialog 
+        isOpen={isCartCheckoutOpen} 
+        onClose={() => setIsCartCheckoutOpen(false)}
       />
     </>
   );
