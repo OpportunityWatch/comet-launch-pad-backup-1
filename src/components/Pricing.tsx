@@ -1,13 +1,15 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import PaymentMethodDialog from './PaymentMethodDialog';
-import PricingPlan from './PricingPlan';
+import PricingPlanWithCart from './PricingPlanWithCart';
+import CartSummary from './CartSummary';
+import CartCheckoutDialog from './CartCheckoutDialog';
 import ProductGuarantee from './ProductGuarantee';
 import AmericanFlag from './AmericanFlag';
 import { usePaymentDialog } from '@/hooks/usePaymentDialog';
 
 const Pricing = () => {
   const { selectedProduct, isPaymentDialogOpen, handleBuyNow, handleCloseDialog } = usePaymentDialog();
+  const [isCartCheckoutOpen, setIsCartCheckoutOpen] = useState(false);
 
   return (
     <section id="pricing" className="py-20 bg-black/40">
@@ -28,80 +30,81 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-y-16 max-w-6xl mx-auto">
-          <PricingPlan
-            title="Single CometCopter"
-            price="$6.95"
-            quantity="per copter"
-            description="Perfect for trying out the CometCopter experience"
-            image="/lovable-uploads/abf91c70-a4a3-4ca1-ad37-411309ed353a.png"
-            features={[
-              "1 CometCopter with launcher",
-              "Batteries included",
-              "Extra set of batteries",
-              "Easy setup instructions",
-              "$4.95 shipping & handling"
-            ]}
-            buttonText="Buy Now"
-            onBuyNow={() => handleBuyNow({
-              name: "Single CometCopter",
-              price: 695,
-              quantity: 1,
-              coptersIncluded: 1
-            })}
-            className="border border-white/20 backdrop-blur-sm"
-          />
-          
-          <PricingPlan
-            title="3-Pack + 1 FREE"
-            price="$15.95"
-            quantity="($3.99 each)"
-            description="Our most popular package with bonus CometCopter"
-            image="/lovable-uploads/f9bc0aba-1ac0-44fd-bb47-179144f982c7.png"
-            features={[
-              "3 CometCopters + 1 FREE",
-              "4 launchers included",
-              "Batteries included",
-              "4 extra sets of batteries",
-              "FREE shipping & handling"
-            ]}
-            buttonText="Buy Now"
-            popular={true}
-            onBuyNow={() => handleBuyNow({
-              name: "3-Pack + 1 FREE CometCopters",
-              price: 1595,
-              quantity: 1,
-              coptersIncluded: 4
-            })}
-          />
-          
-          <PricingPlan
-            title="9-Pack Party Bundle"
-            price="$39.95"
-            quantity="($3.33 each)"
-            description="Perfect for parties and large gatherings"
-            image="/lovable-uploads/1e565c7f-c0a0-45fe-a4f6-bf2ddc7e5d53.png"
-            features={[
-              "9 CometCopters + 3 FREE",
-              "12 launchers included",
-              "Batteries included",
-              "12 extra sets of batteries",
-              "FREE shipping & handling"
-            ]}
-            buttonText="Buy Now"
-            onBuyNow={() => handleBuyNow({
-              name: "9-Pack Party Bundle CometCopters",
-              price: 3995,
-              quantity: 1,
-              coptersIncluded: 12
-            })}
-            className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none border border-white/20 backdrop-blur-sm"
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {/* Product Cards */}
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <PricingPlanWithCart
+                id="single-cometcopter"
+                title="Single CometCopter"
+                price="$6.95"
+                priceInCents={695}
+                quantity="per copter"
+                description="Perfect for trying out the CometCopter experience"
+                image="/lovable-uploads/abf91c70-a4a3-4ca1-ad37-411309ed353a.png"
+                features={[
+                  "1 CometCopter with launcher",
+                  "Batteries included",
+                  "Extra set of batteries",
+                  "Easy setup instructions",
+                  "$4.95 shipping & handling"
+                ]}
+                coptersIncluded={1}
+                className="border border-white/20 backdrop-blur-sm"
+              />
+              
+              <PricingPlanWithCart
+                id="3-pack-plus-1-free"
+                title="3-Pack + 1 FREE"
+                price="$15.95"
+                priceInCents={1595}
+                quantity="($3.99 each)"
+                description="Our most popular package with bonus CometCopter"
+                image="/lovable-uploads/f9bc0aba-1ac0-44fd-bb47-179144f982c7.png"
+                features={[
+                  "3 CometCopters + 1 FREE",
+                  "4 launchers included",
+                  "Batteries included",
+                  "4 extra sets of batteries",
+                  "FREE shipping & handling"
+                ]}
+                popular={true}
+                coptersIncluded={4}
+              />
+              
+              <PricingPlanWithCart
+                id="9-pack-party-bundle"
+                title="9-Pack Party Bundle"
+                price="$39.95"
+                priceInCents={3995}
+                quantity="($3.33 each)"
+                description="Perfect for parties and large gatherings"
+                image="/lovable-uploads/1e565c7f-c0a0-45fe-a4f6-bf2ddc7e5d53.png"
+                features={[
+                  "9 CometCopters + 3 FREE",
+                  "12 launchers included",
+                  "Batteries included",
+                  "12 extra sets of batteries",
+                  "FREE shipping & handling"
+                ]}
+                coptersIncluded={12}
+                className="md:col-span-2 md:max-w-sm md:mx-auto lg:col-span-1 lg:max-w-none border border-white/20 backdrop-blur-sm"
+              />
+            </div>
+          </div>
+
+          {/* Cart Summary */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-8">
+              <CartSummary onCheckout={() => setIsCartCheckoutOpen(true)} />
+            </div>
+          </div>
         </div>
         
         <ProductGuarantee />
       </div>
 
+      {/* Keep existing individual product dialog for backwards compatibility */}
       {selectedProduct && (
         <PaymentMethodDialog
           isOpen={isPaymentDialogOpen}
@@ -109,6 +112,12 @@ const Pricing = () => {
           product={selectedProduct}
         />
       )}
+
+      {/* New cart checkout dialog */}
+      <CartCheckoutDialog
+        isOpen={isCartCheckoutOpen}
+        onClose={() => setIsCartCheckoutOpen(false)}
+      />
     </section>
   );
 };

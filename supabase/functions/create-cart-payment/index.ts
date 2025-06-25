@@ -8,15 +8,26 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+interface LineItem {
+  name: string;
+  quantity: number;
+  price: number; // Price per unit in cents
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email, productName, quantity, amount, discountCode } = await req.json();
+    const { email, lineItems, discountCode, totalAmount }: {
+      email: string;
+      lineItems: LineItem[];
+      discountCode?: string;
+      totalAmount: number;
+    } = await req.json();
     
-    console.log("Payment request:", { email, productName, quantity, amount, discountCode });
+    console.log("Cart payment request:", { email, lineItems, discountCode, totalAmount });
 
     // Initialize Stripe
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
@@ -32,11 +43,11 @@ serve(async (req) => {
 
     // Calculate discount
     let discountAmount = 0;
-    let finalAmount = amount;
+    let finalAmount = totalAmount;
     
     if (discountCode === "JULY4") {
-      discountAmount = Math.round(amount * 0.25); // 25% off
-      finalAmount = amount - discountAmount;
+      discountAmount = Math.round(totalAmount * 0.25); // 25% off
+      finalAmount = totalAmount - discountAmount;
     }
 
     // Check if customer exists
@@ -50,41 +61,54 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
+    // Create Stripe line items
+    const stripeLineItems = lineItems.map(item => {
+      let unitAmount = item.price;
+      
+      // Apply discount to each item if applicable
+      if (discountCode === "JULY4") {
+        unitAmount = Math.round(item.price * 0.75); // 25% off
+      }
+      
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: { 
+            name: item.name,
+          },
+          unit_amount: unitAmount,
+        },
+        quantity: item.quantity,
+      };
+    });
+
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : email,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: { 
-              name: productName,
-              description: discountCode === "JULY4" ? "25% off with JULY4 code + Free Shipping!" : undefined
-            },
-            unit_amount: Math.round(finalAmount / quantity),
-          },
-          quantity: quantity,
-        },
-      ],
+      line_items: stripeLineItems,
       mode: "payment",
       success_url: `${req.headers.get("origin")}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/?canceled=true`,
       metadata: {
         discount_code: discountCode || "",
-        original_amount: amount.toString(),
+        original_amount: totalAmount.toString(),
         discount_amount: discountAmount.toString(),
       },
     });
 
     // Save order to database
+    const orderSummary = lineItems.map(item => 
+      `${item.quantity}x ${item.name}`
+    ).join(', ');
+
     const { error: orderError } = await supabaseClient
       .from("orders")
       .insert({
         email,
-        product_name: productName,
-        quantity,
-        amount,
+        product_name: `Cart Order: ${orderSummary}`,
+        quantity: lineItems.reduce((sum, item) => sum + item.quantity, 0),
+        amount: totalAmount,
         discount_code: discountCode || null,
         discount_amount: discountAmount,
         final_amount: finalAmount,
@@ -108,9 +132,9 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           email,
-          productName,
-          quantity,
-          amount,
+          productName: `Cart Order: ${orderSummary}`,
+          quantity: lineItems.reduce((sum, item) => sum + item.quantity, 0),
+          amount: totalAmount,
           finalAmount,
           discountCode,
           paymentMethod: "stripe"
@@ -126,7 +150,7 @@ serve(async (req) => {
       console.error("Error sending order notification:", notificationError);
     }
 
-    console.log("Order saved successfully, session created:", session.id);
+    console.log("Cart order saved successfully, session created:", session.id);
 
     return new Response(
       JSON.stringify({ url: session.url }),
@@ -136,7 +160,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("Payment error:", error);
+    console.error("Cart payment error:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       {

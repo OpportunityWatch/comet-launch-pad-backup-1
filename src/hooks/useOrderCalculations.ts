@@ -21,7 +21,7 @@ export const useOrderCalculations = ({
 }: UseOrderCalculationsProps): OrderCalculations => {
   return useMemo(() => {
     const baseAmount = basePrice * quantity;
-    const discount = discountCode === 'JULY4' ? baseAmount * 0.25 : 0;
+    const discount = discountCode === 'JULY4' ? Math.round(baseAmount * 0.25) : 0;
     const shipping = (discountCode === 'JULY4' || baseAmount >= 1795) ? 0 : 495; // Free shipping for JULY4 or orders $17.95+
     const total = baseAmount - discount + shipping;
 

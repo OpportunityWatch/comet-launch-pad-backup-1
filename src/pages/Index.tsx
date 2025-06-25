@@ -10,6 +10,7 @@ import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import { ShoppingCartProvider } from '@/contexts/ShoppingCartContext';
 // Animation components ready for restoration
 // import NightSkyBackground from '@/components/NightSkyBackground';
 // import StarBackground from '@/components/StarBackground';
@@ -23,7 +24,7 @@ const Index = () => {
   const enableAnimations = false;
 
   return (
-    <>
+    <ShoppingCartProvider>
       {/* Background Layer */}
       {enableAnimations ? (
         // Uncomment one of these when animations are restored:
@@ -48,7 +49,7 @@ const Index = () => {
         <CTA variant="playful" />
         <Footer />
       </div>
-    </>
+    </ShoppingCartProvider>
   );
 };
 
