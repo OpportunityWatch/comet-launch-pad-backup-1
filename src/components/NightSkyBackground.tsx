@@ -1,138 +1,138 @@
-
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useStars } from '../hooks/useStars';
 import { useShootingStars } from '../hooks/useShootingStars';
-import { useStaticStars } from '../hooks/useStaticStars';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const NightSkyBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const lastUpdateRef = useRef<number>(0);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [isMobile, setIsMobile] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const isMobile = useIsMobile();
   
   const { stars, getStarOpacity } = useStars(dimensions.width, dimensions.height, isMobile);
-  const { shootingStars, getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
-  const { canvasRef: staticStarsRef } = useStaticStars(dimensions.width, dimensions.height);
+  const { getUpdatedShootingStars } = useShootingStars(dimensions.width, dimensions.height, isMobile);
 
   useEffect(() => {
     const updateDimensions = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      setDimensions({ width, height });
-      setIsMobile(width < 768);
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     };
-
+    
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
-
-  // Pause animations during document visibility changes (saves)
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsPaused(document.hidden);
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
-
-  const animate = useCallback((timestamp: number) => {
-    // Skip animation if document is hidden or paused
-    if (document.hidden || isPaused) {
-      animationRef.current = requestAnimationFrame(animate);
-      return;
-    }
-
-    const canvas = canvasRef.current;
-    if (!canvas || dimensions.width === 0 || dimensions.height === 0) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Throttle updates to prevent excessive re-renders
-    if (timestamp - lastUpdateRef.current < 16) { // ~60fps
-      animationRef.current = requestAnimationFrame(animate);
-      return;
-    }
-    lastUpdateRef.current = timestamp;
-
-    // Create the gradient background
-    const gradient = ctx.createLinearGradient(0, 0, 0, dimensions.height);
-    gradient.addColorStop(0, '#1a1a2e');
-    gradient.addColorStop(1, '#16537e');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, dimensions.width, dimensions.height);
-
-    const time = Date.now() * 0.001;
-
-    // Draw twinkling stars
-    stars.forEach(star => {
-      const opacity = getStarOpacity(star, time);
-      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-      ctx.fillRect(star.x, star.y, star.size, star.size);
-    });
-
-    // Draw shooting stars
-    const currentShootingStars = getUpdatedShootingStars();
-    currentShootingStars.forEach(star => {
-      // Draw trail
-      if (star.trail && star.trail.length > 1) {
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(100, 150, 255, ${star.trail[0]?.opacity || 0})`;
-        ctx.lineWidth = 2;
-        ctx.moveTo(star.trail[0].x, star.trail[0].y);
-        
-        for (let i = 1; i < star.trail.length; i++) {
-          ctx.lineTo(star.trail[i].x, star.trail[i].y);
-        }
-        ctx.stroke();
-      }
-
-      // Draw star head
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.fill();
-    });
-
-    animationRef.current = requestAnimationFrame(animate);
-  }, [stars, getStarOpacity, getUpdatedShootingStars, dimensions.width, dimensions.height, isPaused]);
-
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Start animation loop
-    if (dimensions.width > 0 && dimensions.height > 0) {
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    canvas.width = dimensions.width;
+    canvas.height = dimensions.height;
+    
+    let startTime = Date.now();
+    
+    const animate = () => {
+      // Skip animation if document is hidden (during saves/builds)
+      if (document.hidden) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      
+      const currentTime = Date.now();
+      const elapsed = (currentTime - startTime) / 1000;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+      
+      // Draw gradient background
+      const gradient = ctx.createLinearGradient(0, 0, 0, dimensions.height);
+      gradient.addColorStop(0, '#1a1a2e');
+      gradient.addColorStop(1, '#16537e');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, dimensions.width, dimensions.height);
+      
+      // Draw twinkling stars
+      stars.forEach(star => {
+        const opacity = getStarOpacity(star, elapsed);
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+      
+      // Get updated shooting stars and draw them
+      const currentShootingStars = getUpdatedShootingStars();
+      
+      currentShootingStars.forEach(star => {
+        // Calculate fade factor based on position near top of screen
+        const fadeZoneHeight = dimensions.height * 0.05;
+        const fadeStartY = fadeZoneHeight;
+        let globalFadeMultiplier = 1;
+        
+        if (star.y < fadeStartY) {
+          globalFadeMultiplier = Math.max(0, star.y / fadeStartY);
+        }
+        
+        // Draw trail with fade effect - smaller, more contiguous dots
+        star.trail.forEach((point, index) => {
+          if (point.opacity > 0) {
+            ctx.save();
+            ctx.globalAlpha = point.opacity * 0.9 * globalFadeMultiplier;
+            
+            // Create lighter blue glow effect with smaller radius for smoother trail
+            const trailSize = isMobile ? 2 : 3;
+            const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, trailSize);
+            gradient.addColorStop(0, '#7dc8ff');
+            gradient.addColorStop(0.3, 'rgba(125, 200, 255, 0.7)');
+            gradient.addColorStop(1, 'rgba(125, 200, 255, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, trailSize * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+        
+        // Draw shooting star core with fade effect
+        ctx.save();
+        ctx.globalAlpha = 1 * globalFadeMultiplier;
+        ctx.fillStyle = '#7dc8ff';
+        ctx.shadowColor = '#7dc8ff';
+        ctx.shadowBlur = (isMobile ? 12 : 16) * globalFadeMultiplier;
+        ctx.beginPath();
+        const coreSize = isMobile ? 2 : 3;
+        ctx.arc(star.x, star.y, coreSize, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+      
       animationRef.current = requestAnimationFrame(animate);
-    }
-
+    };
+    
+    animate();
+    
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animate, dimensions]);
-
+  }, [dimensions, stars, getStarOpacity, getUpdatedShootingStars]);
+  
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{
-        zIndex: 0
-      }}
+      style={{ zIndex: 0 }}
     />
   );
 };
