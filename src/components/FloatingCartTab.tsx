@@ -38,19 +38,17 @@ const FloatingCartTab: React.FC<FloatingCartTabProps> = ({ onOpenCart }) => {
         <div className="mt-4">
           <Button
             onClick={onOpenCart}
-            className="bg-comet-blue hover:bg-comet-blue/80 text-white shadow-lg rounded-md h-8 px-6 border border-slate-300 relative"
+            className="bg-comet-blue hover:bg-comet-blue/80 text-white shadow-lg rounded-md h-8 px-6 border border-slate-300 relative flex items-center gap-2"
             style={{ width: '120px' }} // Match Buy Now button width more precisely
           >
             <ShoppingCart className="w-4 h-4" />
+            <span className="text-sm">{getCartItemCount()}</span>
             
             {/* Cart count badge */}
             <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">
               {getCartItemCount()}
             </span>
           </Button>
-          
-          {/* Tag hole for realistic tag appearance */}
-          <div className="absolute top-1.5 left-2.5 w-1.5 h-1.5 rounded-full border-2 border-slate-300 bg-transparent"></div>
         </div>
       </div>
     </div>
