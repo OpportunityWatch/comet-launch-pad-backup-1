@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import VideoPlayer from './VideoPlayer';
 
@@ -9,13 +10,6 @@ const VideoBridge = () => {
   return (
     <section className="relative z-20 mt-16 md:-mt-24 mb-16 md:mb-24">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience the Magic</h3>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
-            Watch as CometCopters transform an ordinary night into an extraordinary light show.
-          </p>
-        </div>
-
         <div className="relative max-w-md mx-auto md:max-w-2xl px-4">
           <VideoPlayer
             src={videoSrc}

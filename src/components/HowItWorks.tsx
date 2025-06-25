@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import StepCard from './StepCard';
+import VideoPlayer from './VideoPlayer';
 
 const steps = [
   {
@@ -30,9 +31,29 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  const videoSrc = "https://play.gumlet.io/embed/685a9523db962067e0e7667e?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false";
+
   return (
     <section className="py-20 bg-gradient-to-b from-comet-darkblue to-comet-space">
       <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h3>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+            Watch as CometCopters transform an ordinary night into an extraordinary light show.
+          </p>
+        </div>
+
+        <div className="relative max-w-md mx-auto md:max-w-2xl px-4 mb-16">
+          <VideoPlayer
+            src={videoSrc}
+            title="Gumlet video player - How It Works"
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
+          />
+        </div>
+
         <div className="max-w-5xl mx-auto">
           {steps.map((step, index) => (
             <StepCard 
