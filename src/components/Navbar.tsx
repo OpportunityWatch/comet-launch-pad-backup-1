@@ -45,6 +45,21 @@ const Navbar = () => {
           {isMobile ? (
             <>
               <div className="flex items-center gap-2">
+                {/* Mobile Cart Button */}
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleOpenCart}
+                  className="text-white hover:bg-comet-blue/20 relative"
+                >
+                  <ShoppingCart size={20} />
+                  {getCartItemCount() > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                      {getCartItemCount()}
+                    </span>
+                  )}
+                </Button>
+                
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -66,14 +81,6 @@ const Navbar = () => {
                       className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white w-full"
                     >
                       Buy Now
-                    </Button>
-                    <Button 
-                      onClick={handleOpenCart}
-                      variant="outline"
-                      className="border-comet-blue text-comet-blue hover:bg-comet-blue/10 w-full"
-                    >
-                      <ShoppingCart className="w-4 h-4 mr-2" />
-                      Cart ({getCartItemCount()})
                     </Button>
                   </div>
                 </div>
