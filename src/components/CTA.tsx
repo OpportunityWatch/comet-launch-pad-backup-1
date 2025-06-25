@@ -42,7 +42,7 @@ const CTA = () => {
         </p>
         <Button 
           onClick={scrollToThreePack}
-          className="bg-gradient-to-r from-comet-blue to-comet-green hover:from-comet-blue/90 hover:to-comet-green/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
+          className="bg-gradient-to-r from-comet-blue to-comet-pink hover:from-comet-blue/90 hover:to-comet-pink/90 text-white text-lg py-6 px-8 font-semibold shadow-lg shadow-comet-blue/30"
         >
           Get Your CometCopters Now
         </Button>
