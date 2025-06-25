@@ -12,6 +12,12 @@ const FloatingCartTab: React.FC<FloatingCartTabProps> = ({ onOpenCart }) => {
   const { getCartItemCount } = useShoppingCartContext();
   const [isHovered, setIsHovered] = useState(false);
   
+  console.log('FloatingCartTab render:', { 
+    cartCount: getCartItemCount(), 
+    isHovered,
+    shouldShow: getCartItemCount() > 0 
+  });
+  
   // Don't show anything if cart is empty
   if (getCartItemCount() === 0) {
     return null;
@@ -26,12 +32,12 @@ const FloatingCartTab: React.FC<FloatingCartTabProps> = ({ onOpenCart }) => {
       {/* Tag Style Cart Button */}
       <div className="relative">
         {/* String/attachment point - always visible */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-3 bg-slate-600"></div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-3 bg-slate-400"></div>
         
-        {/* Collapsed state - gray indicator */}
+        {/* Collapsed state - gray indicator - make it more visible */}
         {!isHovered && (
           <div className="mt-3 cursor-pointer">
-            <div className="bg-slate-600 hover:bg-slate-500 transition-colors shadow-lg rounded-sm h-3 w-12 mx-auto border border-slate-500"></div>
+            <div className="bg-slate-400 hover:bg-slate-300 transition-colors shadow-lg rounded-sm h-4 w-16 mx-auto border-2 border-slate-300"></div>
           </div>
         )}
         
