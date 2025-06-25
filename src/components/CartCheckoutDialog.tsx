@@ -16,7 +16,7 @@ const CartCheckoutDialog: React.FC<CartCheckoutDialogProps> = ({
   isOpen,
   onClose
 }) => {
-  const { cartItems, getCartTotal, clearCart } = useShoppingCartContext();
+  const { cartItems, getCartTotal, clearCart, updateQuantity, removeFromCart } = useShoppingCartContext();
   
   const {
     email,
@@ -75,6 +75,8 @@ const CartCheckoutDialog: React.FC<CartCheckoutDialogProps> = ({
           discount={discount}
           shipping={shipping}
           total={total}
+          onUpdateQuantity={updateQuantity}
+          onRemoveFromCart={removeFromCart}
         />
 
         <PaymentButton
