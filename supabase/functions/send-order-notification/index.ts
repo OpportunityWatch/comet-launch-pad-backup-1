@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send confirmation email to customer
     console.log("Attempting to send customer confirmation email...");
     const customerEmailResponse = await resend.emails.send({
-      from: "CometCopters <orders@email.cometcopters.com>",
+      from: "CometCopters <orders@send.cometcopters.com>",
       to: [orderData.email],
       subject: `🚁 Your CometCopters Order Confirmation - ${orderData.productName}`,
       html: `
@@ -98,7 +98,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification to store owner
     console.log("Attempting to send owner notification email...");
     const ownerEmailResponse = await resend.emails.send({
-      from: "CometCopters Store <notifications@email.cometcopters.com>",
+      from: "CometCopters Store <notifications@send.cometcopters.com>",
       to: ["rwcampbell2@gmail.com"],
       subject: `🚁 New CometCopters Order - ${orderData.productName}`,
       html: `
