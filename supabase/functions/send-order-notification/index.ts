@@ -17,6 +17,33 @@ interface OrderNotificationRequest {
   paymentMethod: string;
 }
 
+const getPaymentInstructions = (paymentMethod: string, amount: number) => {
+  const formattedAmount = (amount / 100).toFixed(2);
+  
+  switch (paymentMethod.toLowerCase()) {
+    case 'cashapp':
+      return {
+        handle: '$retropatriot',
+        instructions: `Send $${formattedAmount} to $retropatriot on CashApp`
+      };
+    case 'venmo':
+      return {
+        handle: '@robbiescramble',
+        instructions: `Send $${formattedAmount} to @robbiescramble on Venmo`
+      };
+    case 'paypal':
+      return {
+        handle: 'paypal.me/retropatriot',
+        instructions: `Send $${formattedAmount} via PayPal to paypal.me/retropatriot`
+      };
+    default:
+      return {
+        handle: '',
+        instructions: `Send $${formattedAmount} via ${paymentMethod}`
+      };
+  }
+};
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -49,11 +76,14 @@ const handler = async (req: Request): Promise<Response> => {
          <p><strong>Final Amount:</strong> $${(orderData.finalAmount / 100).toFixed(2)}</p>`
       : `<p><strong>Amount:</strong> $${(orderData.amount / 100).toFixed(2)}</p>`;
 
+    const paymentInfo = getPaymentInstructions(orderData.paymentMethod, orderData.finalAmount);
+
     // Send confirmation email to customer
     console.log("Attempting to send customer confirmation email...");
     
     let customerEmailResponse;
     try {
+      // Try sending to customer email - this might fail due to domain restrictions
       customerEmailResponse = await resend.emails.send({
         from: "CometCopters <onboarding@resend.dev>",
         to: [orderData.email],
@@ -71,11 +101,18 @@ const handler = async (req: Request): Promise<Response> => {
             </div>
             
             ${orderData.paymentMethod !== 'stripe' ? `
-            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
-              <p style="margin: 0; color: #92400e;">
-                <strong>Payment Instructions:</strong><br>
-                Please send $${(orderData.finalAmount / 100).toFixed(2)} via ${orderData.paymentMethod} to complete your order.<br>
-                We'll send detailed payment instructions shortly.
+            <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
+              <h3 style="margin-top: 0; color: #92400e;">Payment Instructions:</h3>
+              <p style="margin: 10px 0; color: #92400e; font-size: 16px;">
+                <strong>${paymentInfo.instructions}</strong>
+              </p>
+              ${paymentInfo.handle ? `
+              <p style="margin: 10px 0; color: #92400e;">
+                <strong>Payment Handle:</strong> ${paymentInfo.handle}
+              </p>
+              ` : ''}
+              <p style="margin: 10px 0; color: #92400e; font-size: 14px;">
+                Please include your email address (${orderData.email}) in the payment note so we can match your payment to your order.
               </p>
             </div>
             ` : `
@@ -101,6 +138,56 @@ const handler = async (req: Request): Promise<Response> => {
       
       if (customerEmailResponse.error) {
         console.error("Customer email failed:", customerEmailResponse.error);
+        // If customer email fails, send a copy to owner with customer details
+        console.log("Customer email failed, sending customer copy to owner...");
+        
+        try {
+          const customerCopyResponse = await resend.emails.send({
+            from: "CometCopters <onboarding@resend.dev>",
+            to: ["rwcampbell2@gmail.com"],
+            subject: `🚁 CUSTOMER COPY - Order for ${orderData.email} - ${orderData.productName}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #fef2f2; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444; margin-bottom: 20px;">
+                  <p style="margin: 0; color: #dc2626;">
+                    <strong>⚠️ CUSTOMER EMAIL FAILED</strong><br>
+                    This is a copy of the confirmation email that should have been sent to: <strong>${orderData.email}</strong><br>
+                    Please manually send payment instructions to the customer.
+                  </p>
+                </div>
+                
+                <h1 style="color: #3b82f6;">🚁 CometCopters Order Confirmation</h1>
+                <p><strong>Customer Email:</strong> ${orderData.email}</p>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h2 style="color: #1e40af; margin-top: 0;">Order Details</h2>
+                  <p><strong>Product:</strong> ${orderData.productName}</p>
+                  <p><strong>Quantity:</strong> ${orderData.quantity}</p>
+                  ${discountText}
+                  <p><strong>Payment Method:</strong> ${orderData.paymentMethod}</p>
+                </div>
+                
+                ${orderData.paymentMethod !== 'stripe' ? `
+                <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
+                  <h3 style="margin-top: 0; color: #92400e;">Payment Instructions for Customer:</h3>
+                  <p style="margin: 10px 0; color: #92400e; font-size: 16px;">
+                    <strong>${paymentInfo.instructions}</strong>
+                  </p>
+                  ${paymentInfo.handle ? `
+                  <p style="margin: 10px 0; color: #92400e;">
+                    <strong>Payment Handle:</strong> ${paymentInfo.handle}
+                  </p>
+                  ` : ''}
+                </div>
+                ` : ''}
+              </div>
+            `,
+          });
+          
+          console.log("Customer copy to owner sent:", customerCopyResponse.data?.id);
+        } catch (copyError) {
+          console.error("Failed to send customer copy to owner:", copyError);
+        }
       } else {
         console.log("Customer email sent successfully:", customerEmailResponse.data?.id);
       }
@@ -131,12 +218,29 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>Customer Email:</strong> ${orderData.email}</p>
             </div>
             
+            ${orderData.paymentMethod !== 'stripe' ? `
+            <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
+              <h3 style="margin-top: 0; color: #92400e;">Payment Instructions Sent to Customer:</h3>
+              <p style="margin: 10px 0; color: #92400e; font-size: 16px;">
+                <strong>${paymentInfo.instructions}</strong>
+              </p>
+              ${paymentInfo.handle ? `
+              <p style="margin: 10px 0; color: #92400e;">
+                <strong>Payment Handle:</strong> ${paymentInfo.handle}
+              </p>
+              ` : ''}
+              <p style="margin: 10px 0; color: #92400e;">
+                Customer should include their email (${orderData.email}) in the payment note.
+              </p>
+            </div>
+            ` : ''}
+            
             <div style="background: #ecfdf5; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
               <p style="margin: 0; color: #065f46;">
                 <strong>Action Required:</strong> 
                 ${orderData.paymentMethod === 'stripe' 
                   ? 'Payment processed automatically via Stripe. Prepare for shipping!' 
-                  : `Customer will pay via ${orderData.paymentMethod}. Check your ${orderData.paymentMethod} account for payment.`}
+                  : `Customer will pay via ${orderData.paymentMethod}. Check your ${orderData.paymentMethod} account for payment using handle: ${paymentInfo.handle || 'N/A'}`}
               </p>
             </div>
             
