@@ -49,7 +49,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  try {
+  try {    
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (!resendApiKey) {
       console.error("RESEND_API_KEY not found in environment variables");
@@ -76,11 +76,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     const paymentInfo = getPaymentInstructions(orderData.paymentMethod, orderData.finalAmount);
 
-    // Send confirmation email to customer using verified domain
+    // Send confirmation email to customer using verified subdomain
     console.log("Sending customer confirmation email...");
     
     const customerEmailResponse = await resend.emails.send({
-      from: "CometCopters <orders@cometcopters.com>",
+      from: "CometCopters <orders@send.cometcopters.com>",
       to: [orderData.email],
       subject: `🚁 Your CometCopters Order Confirmation - ${orderData.productName}`,
       html: `
@@ -123,7 +123,7 @@ const handler = async (req: Request): Promise<Response> => {
           </p>
           
           <p style="color: #6b7280;">
-            Questions? Reply to this email or contact us at orders@cometcopters.com
+            Questions? Reply to this email or contact us at orders@send.cometcopters.com
           </p>
         </div>
       `,
@@ -135,7 +135,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Sending owner notification email...");
     
     const ownerEmailResponse = await resend.emails.send({
-      from: "CometCopters Store <orders@cometcopters.com>",
+      from: "CometCopters Store <orders@send.cometcopters.com>",
       to: ["rwcampbell2@gmail.com"],
       subject: `🚁 New CometCopters Order - ${orderData.productName}`,
       html: `
